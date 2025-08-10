@@ -1,5 +1,6 @@
 package com.example.Marketplace.service;
 
+import com.example.Marketplace.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
@@ -11,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
-public class VerificationService {
+public class VerificationCodeService {
 
     private final RedisTemplate<String, String> redisTemplate;
     private final JavaMailSender javaMailSender;
@@ -22,8 +23,8 @@ public class VerificationService {
         sendEmail(email, code);
     }
 
-    public boolean verifyCode(String email, String code) {
-        String storedCode = redisTemplate.opsForValue().get(email);
+    public boolean verifyCode(UserDto userDto, String code) {
+        String storedCode = redisTemplate.opsForValue().get(userDto.getEmail());
 
         return code != null && code.equals(storedCode);
     }

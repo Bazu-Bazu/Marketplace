@@ -15,28 +15,17 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final VerificationService verificationService;
+    private final VerificationCodeService verificationService;
 
-    public void startUserRegistration(String email) {
-        if (userRepository.existsByEmail(email)) {
-            throw new IllegalArgumentException("Email already in use");
-        }
-
-        verificationService.sendVerificationCode(email);
-    }
-
-    public User completeUserRegistration(UserDto userDto, String email, String code) {
-        if (!verificationService.verifyCode(email, code)) {
-            throw new IllegalArgumentException("Incorrect code");
-        }
-
+    public User registerUser(UserDto userDto) {
         User user = new User();
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
-        user.setEmail(email);
+        user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setBirthDate(userDto.getBirthDate());
         user.setCreatedAt(LocalDate.now());
+        user.setEnabled(true);
 
         return userRepository.save(user);
     }
