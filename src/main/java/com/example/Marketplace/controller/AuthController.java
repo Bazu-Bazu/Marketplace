@@ -6,6 +6,8 @@ import com.example.Marketplace.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,6 +29,21 @@ public class AuthController {
         User user = authService.finishRegistration(userDto, code);
 
         return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/start-login")
+    public ResponseEntity<?> startLogin(@RequestParam String email, @RequestParam String password) {
+        authService.startLogin(email, password);
+
+        return ResponseEntity.ok("A code was sent to the mail");
+    }
+
+    @PostMapping("/finish-login")
+    public ResponseEntity<?> finishLogin(@RequestParam String email, @RequestParam String code) {
+        Authentication authentication = authService.finishLogin(email, code);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        return ResponseEntity.ok("Login successful");
     }
 
 }

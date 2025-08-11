@@ -23,8 +23,8 @@ public class VerificationCodeService {
         sendEmail(email, code);
     }
 
-    public boolean verifyCode(UserDto userDto, String code) {
-        String storedCode = redisTemplate.opsForValue().get(userDto.getEmail());
+    public boolean verifyCode(String email, String code) {
+        String storedCode = redisTemplate.opsForValue().get(email);
 
         return code != null && code.equals(storedCode);
     }
