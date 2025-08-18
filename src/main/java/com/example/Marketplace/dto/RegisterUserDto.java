@@ -1,20 +1,27 @@
 package com.example.Marketplace.dto;
 
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-public class UserDto {
+public class RegisterUserDto {
 
+    @NotBlank
     private String firstName;
+
+    @NotBlank
     private String lastName;
+
+    @NotBlank
     private String email;
 
-    @Size(min = 8, message = "Password must be at least 8 characters")
+    @NotBlank
     private String password;
 
+    @Past
     private LocalDate birthDate;
 
 }

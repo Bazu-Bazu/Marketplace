@@ -1,6 +1,5 @@
 package com.example.Marketplace.service;
 
-import com.example.Marketplace.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
