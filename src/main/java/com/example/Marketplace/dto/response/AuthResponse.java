@@ -1,4 +1,4 @@
-package com.example.Marketplace.dto;
+package com.example.Marketplace.dto.response;
 
 import lombok.Builder;
 import lombok.Data;

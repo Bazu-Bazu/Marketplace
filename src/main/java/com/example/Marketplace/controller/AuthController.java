@@ -1,6 +1,6 @@
 package com.example.Marketplace.controller;
 
-import com.example.Marketplace.dto.AuthResponse;
+import com.example.Marketplace.dto.response.AuthResponse;
 import com.example.Marketplace.dto.LoginUserDto;
 import com.example.Marketplace.dto.RegisterUserDto;
 import com.example.Marketplace.dto.VerifyUserDto;
