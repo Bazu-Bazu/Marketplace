@@ -47,6 +47,9 @@ public class SecurityConfig {
                                 "/auth/verify",
                                 "/auth/resend-code",
                                 "/app/**").permitAll()
+                        .requestMatchers(
+                                "/product/**"
+                        ).hasRole("SELLER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

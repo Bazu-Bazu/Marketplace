@@ -6,14 +6,17 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
+import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 @Getter
@@ -28,7 +31,13 @@ public class JwtService {
     @Value("${jwt.refresh-token.expiration}")
     private long refreshTokenExpiration;
 
-    public String generateAccessToken(String email) {
+    public String generateAccessToken(UserDetails userDetails) {
+        Map<String, Object> claims = new HashMap<>();
+
+        claims.put("authorities", userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList()));
+
         Date date = Date.from(
                 LocalDateTime.now()
                         .plusSeconds(accessTokenExpiration/1000)
@@ -37,13 +46,14 @@ public class JwtService {
         );
 
         return Jwts.builder()
-                .subject(email)
+                .claims(claims)
+                .subject(userDetails.getUsername())
                 .expiration(date)
                 .signWith(getSignInKey())
                 .compact();
     }
 
-    public String generateRefreshToken(String email) {
+    public String generateRefreshToken(UserDetails userDetails) {
         Date date = Date.from(
                 LocalDateTime.now()
                         .plusSeconds(refreshTokenExpiration/1000)
@@ -52,10 +62,25 @@ public class JwtService {
         );
 
         return Jwts.builder()
-                .subject(email)
+                .subject(userDetails.getUsername())
                 .expiration(date)
                 .signWith(getSignInKey())
                 .compact();
+    }
+
+    public Collection<? extends GrantedAuthority> extractAuthorities(String token) {
+        Claims claims = extractAllClaims(token);
+
+        @SuppressWarnings("unchecked")
+        List<String> authorities = (List<String>) claims.get("authorities");
+
+        if (authorities == null) {
+            return List.of();
+        }
+
+        return authorities.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
     public String extractUsername(String token) {

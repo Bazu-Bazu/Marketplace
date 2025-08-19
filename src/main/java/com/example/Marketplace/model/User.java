@@ -1,9 +1,11 @@
 package com.example.Marketplace.model;
 
+import com.example.Marketplace.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
@@ -42,11 +44,13 @@ public class User implements UserDetails {
     private LocalDate createdAt;
 
     private boolean enabled = false;
-    private String roles = "ROLE_USER";
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override

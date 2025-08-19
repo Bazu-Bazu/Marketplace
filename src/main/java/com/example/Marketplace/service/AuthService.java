@@ -4,6 +4,7 @@ import com.example.Marketplace.dto.response.AuthResponse;
 import com.example.Marketplace.dto.LoginUserDto;
 import com.example.Marketplace.dto.RegisterUserDto;
 import com.example.Marketplace.dto.VerifyUserDto;
+import com.example.Marketplace.enums.Role;
 import com.example.Marketplace.exception.*;
 import com.example.Marketplace.model.RefreshToken;
 import com.example.Marketplace.model.User;
@@ -44,6 +45,7 @@ public class AuthService {
         user.setEmail(registerUserDto.getEmail());
         user.setPassword(passwordEncoder.encode(registerUserDto.getPassword()));
         user.setBirthDate(registerUserDto.getBirthDate());
+        user.setRole(Role.ROLE_USER);
 
         userRepository.save(user);
 
@@ -76,8 +78,8 @@ public class AuthService {
             throw new AuthenticationServiceException("Authentication failed due to configuration error");
         }
 
-        String accessToken = jwtService.generateAccessToken(user.getEmail());
-        String refreshToken = jwtService.generateRefreshToken(user.getEmail());
+        String accessToken = jwtService.generateAccessToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
 
         saveRefreshToken(user, refreshToken);
 
@@ -98,8 +100,8 @@ public class AuthService {
             user.setEnabled(true);
             userRepository.save(user);
 
-            String accessToken = jwtService.generateAccessToken(user.getEmail());
-            String refreshToken = jwtService.generateRefreshToken(user.getEmail());
+            String accessToken = jwtService.generateAccessToken(user);
+            String refreshToken = jwtService.generateRefreshToken(user);
 
             return AuthResponse.builder()
                     .accessToken(accessToken)
@@ -146,8 +148,8 @@ public class AuthService {
             throw new InvalidTokenException("Refresh token is invalid or expired.");
         }
 
-        String newAccessToken = jwtService.generateAccessToken(email);
-        String newRefreshToken = jwtService.generateRefreshToken(email);
+        String newAccessToken = jwtService.generateAccessToken(user);
+        String newRefreshToken = jwtService.generateRefreshToken(user);
         saveRefreshToken(user, newRefreshToken);
 
         refreshTokenRepository.delete(storedToken);

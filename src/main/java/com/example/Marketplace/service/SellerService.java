@@ -1,6 +1,7 @@
 package com.example.Marketplace.service;
 
 import com.example.Marketplace.dto.response.SellerResponse;
+import com.example.Marketplace.enums.Role;
 import com.example.Marketplace.model.Seller;
 import com.example.Marketplace.model.User;
 import com.example.Marketplace.repository.SellerRepository;
@@ -22,9 +23,9 @@ public class SellerService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
 
-        if (sellerRepository.existsByUser(user)) {
+        if (user.getRole() == Role.ROLE_SELLER) {
             return SellerResponse.builder()
-                    .message("You are already registered as a seller")
+                    .message("You already as a seller")
                     .build();
         }
 
@@ -33,6 +34,9 @@ public class SellerService {
         seller.setName(name);
         seller.setEmail(email);
         sellerRepository.save(seller);
+
+        user.setRole(Role.ROLE_SELLER);
+        userRepository.save(user);
 
         return SellerResponse.builder()
                 .message("You have successfully registered as a seller")
