@@ -51,4 +51,4 @@ build/
 /service-order/mvnw.cmd
 /service-product/mvnw.cmd
 
-/.mvn
+.mvn/
