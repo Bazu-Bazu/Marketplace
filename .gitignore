@@ -1,0 +1,52 @@
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+/service-auth/src/main/resources/application.yaml
+/service-order/src/main/resources/application.yaml
+/service-product/src/main/resources/application.yaml
+
+/.gitattributes
+/service-auth/.gitattributes
+/service-order/.gitattributes
+/service-product/.gitattributes
+
+/mvnw
+/service-auth/mvnw
+/service-order/mvnw
+/service-product/mvnw
+
+/mvnw.cmd
+/service-auth/mvnw.cmd
+/service-order/mvnw.cmd
+/service-product/mvnw.cmd
