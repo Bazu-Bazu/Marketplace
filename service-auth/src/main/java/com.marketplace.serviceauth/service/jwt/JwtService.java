@@ -1,5 +1,6 @@
 package com.marketplace.serviceauth.service.jwt;
 
+import com.marketplace.serviceauth.dto.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -34,9 +35,13 @@ public class JwtService {
     public String generateAccessToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
 
-        claims.put("authorities", userDetails.getAuthorities().stream()
+        List<String> authorities = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList()));
+                .toList();
+
+        claims.put("authorities", authorities);
+
+        addRoleSpecificId(claims, userDetails);
 
         Date date = createExpirationDate(accessTokenExpiration);
 
@@ -95,6 +100,16 @@ public class JwtService {
         Claims claims = extractAllClaims(token);
 
         return claimsResolver.apply(claims);
+    }
+
+    private void addRoleSpecificId(Map<String, Object> claims, UserDetails userDetails) {
+        if (userDetails instanceof CustomUserDetails customUserDetails) {
+            claims.put("user_id", customUserDetails.getUserId());
+
+            if (customUserDetails.isSeller()) {
+                claims.put("seller_id", customUserDetails.getSellerId());
+            }
+        }
     }
 
     private Date createExpirationDate(long expirationMillis) {
