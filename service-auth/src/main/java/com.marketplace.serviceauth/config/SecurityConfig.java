@@ -43,8 +43,8 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/seller/update",
                                 "/seller/get",
-                                "/seller/delete"
-                        ).hasRole("SELLER")
+                                "/seller/delete")
+                        .hasRole("SELLER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
