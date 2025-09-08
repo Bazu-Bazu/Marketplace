@@ -19,7 +19,7 @@ public class ProductPhotoService {
     private final ProductPhotoRepository productPhotoRepository;
 
     @Transactional
-    public void saveProductPhotos(Long productId, List<MultipartFile> imageFiles) throws IOException {
+    public List<ProductPhoto> saveProductPhotos(Long productId, List<MultipartFile> imageFiles) throws IOException {
         List<ProductPhoto> photos = new ArrayList<>();
 
         for (int i = 0; i < imageFiles.size(); i++) {
@@ -34,7 +34,7 @@ public class ProductPhotoService {
             photos.add(photo);
         }
 
-        productPhotoRepository.saveAll(photos);
+        return productPhotoRepository.saveAll(photos);
     }
 
     public List<ProductPhoto> getProductPhotos(Long productId) {

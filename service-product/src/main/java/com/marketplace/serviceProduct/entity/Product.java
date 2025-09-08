@@ -27,9 +27,8 @@ public class Product {
     @Column(nullable = false)
     private Integer count;
 
-//    @ManyToOne
-//    @JoinColumn(name = "seller_id")
-//    private Seller seller;
+    @Column(nullable = false)
+    private Long sellerId;
 
     @ManyToMany
     @JoinTable(
