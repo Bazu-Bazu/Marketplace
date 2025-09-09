@@ -31,7 +31,7 @@ public class ProductService {
     @Transactional
     public ProductResponse addProduct(Long sellerId, AddProductRequest request,
                                       List<MultipartFile> imageFiles) throws IOException {
-        Set<Category> categories = categoryRepository.findAllById(request.getCategoryIds());
+        Set<Category> categories = categoryRepository.findAllByIdIn(request.getCategoryIds());
         if (categories.size() != request.getCategoryIds().size()) {
             throw new InvalidCategoryException("Some categories not found.");
         }
