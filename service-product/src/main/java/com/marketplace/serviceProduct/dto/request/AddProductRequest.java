@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 import java.util.List;
-import java.util.Set;
 
 @Data
 public class AddProductRequest {
@@ -23,9 +22,6 @@ public class AddProductRequest {
     private Integer count;
 
     @NotEmpty
-    private Set<Long> categoryIds;
-
-    @NotBlank
-    private List<String> photoUrls;
+    private List<Long> categoryIds;
 
 }

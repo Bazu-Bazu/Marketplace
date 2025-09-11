@@ -32,9 +32,9 @@ public class ProductService {
     public ProductResponse addProduct(Long sellerId, AddProductRequest request,
                                       List<MultipartFile> imageFiles) throws IOException {
         Set<Category> categories = categoryRepository.findAllByIdIn(request.getCategoryIds());
-        if (categories.size() != request.getCategoryIds().size()) {
-            throw new InvalidCategoryException("Some categories not found.");
-        }
+//        if (categories.size() != request.getCategoryIds().size()) {
+//            throw new InvalidCategoryException("Some categories not found.");
+//        }
 
         Product product = new Product();
         product.setName(request.getName());
