@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         if (user.getRole() == Role.ROLE_SELLER) {
-            Seller seller = sellerRepository.findByEmail(user.getEmail())
+            Seller seller = sellerRepository.findByUserId(user.getId())
                     .orElseThrow(() -> new UsernameNotFoundException("Seller not found."));
 
             return new CustomUserDetails(user, seller);

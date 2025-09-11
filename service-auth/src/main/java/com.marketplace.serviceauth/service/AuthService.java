@@ -6,12 +6,15 @@ import com.marketplace.serviceauth.dto.request.RegisterUserRequest;
 import com.marketplace.serviceauth.dto.request.VerifyUserRequest;
 import com.marketplace.serviceauth.dto.response.AuthResponse;
 import com.marketplace.serviceauth.entity.RefreshToken;
+import com.marketplace.serviceauth.entity.Seller;
 import com.marketplace.serviceauth.entity.User;
+import com.marketplace.serviceauth.enums.Role;
 import com.marketplace.serviceauth.exception.AccountNotVerifiedException;
 import com.marketplace.serviceauth.exception.AccountVerifiedException;
 import com.marketplace.serviceauth.exception.InvalidTokenException;
 import com.marketplace.serviceauth.exception.InvalidVerificationCodeException;
 import com.marketplace.serviceauth.repository.RefreshTokenRepository;
+import com.marketplace.serviceauth.repository.SellerRepository;
 import com.marketplace.serviceauth.repository.UserRepository;
 import com.marketplace.serviceauth.service.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +38,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final RefreshTokenRepository refreshTokenRepository;
     private final RefreshTokenService refreshTokenService;
+    private final SellerRepository sellerRepository;
 
     public AuthResponse signUp(RegisterUserRequest request) {
         userService.registerUser(request);
@@ -65,7 +69,7 @@ public class AuthService {
                 )
         );
 
-        UserDetails userDetails = new CustomUserDetails(user);
+        UserDetails userDetails = createUserDetails(user);
         String accessToken = jwtService.generateAccessToken(userDetails);
         String refreshToken = jwtService.generateRefreshToken(userDetails);
 
@@ -77,6 +81,21 @@ public class AuthService {
                 .refreshToken(refreshToken)
                 .email(user.getEmail())
                 .build();
+    }
+
+    private UserDetails createUserDetails(User user) {
+        UserDetails userDetails;
+        if (user.getRole() == Role.ROLE_SELLER) {
+            Seller seller = sellerRepository.findByUserId(user.getId())
+                    .orElseThrow(() -> new UsernameNotFoundException("Seller not found."));
+
+            userDetails = new CustomUserDetails(user, seller);
+        }
+        else {
+            userDetails = new CustomUserDetails(user);
+        }
+
+        return userDetails;
     }
 
     @Transactional
@@ -130,7 +149,7 @@ public class AuthService {
             throw new InvalidTokenException("Refresh token is invalid or expired.");
         }
 
-        UserDetails userDetails = new CustomUserDetails(user);
+        UserDetails userDetails = createUserDetails(user);
         String newAccessToken = jwtService.generateAccessToken(userDetails);
         String newRefreshToken = jwtService.generateRefreshToken(userDetails);
 
