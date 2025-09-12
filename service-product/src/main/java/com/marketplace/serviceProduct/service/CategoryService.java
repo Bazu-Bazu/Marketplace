@@ -24,17 +24,21 @@ public class CategoryService {
 
         Category newCategory = new Category();
         newCategory.setName(request.getName());
-        Optional<Category> parentCategory = categoryRepository.findById(request.getParentId());
-        if (parentCategory.isPresent()) {
-            newCategory.setParent(parentCategory.get());
+
+        Long parentId = request.getParentId();
+        if (parentId != null) {
+            Optional<Category> parentCategory = categoryRepository.findById(parentId);
+            if (parentCategory.isPresent()) {
+                newCategory.setParent(parentCategory.get());
+            }
         }
         categoryRepository.save(newCategory);
 
         CategoryResponse response = CategoryResponse.builder()
                 .name(newCategory.getName())
                 .build();
-        if (parentCategory.isPresent()) {
-            response.setParentName(parentCategory.get().getName());
+        if (newCategory.getParent() != null) {
+            response.setParentName(newCategory.getParent().getName());
         }
 
         return response;
