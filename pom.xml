@@ -13,7 +13,6 @@
         <module>service-auth</module>
         <module>service-order</module>
         <module>service-product</module>
-        <module>proto</module>
     </modules>
 
     <properties>
@@ -49,18 +48,6 @@
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt-jackson</artifactId>
                 <version>${jjwt.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.grpc</groupId>
-                <artifactId>grpc-protobuf</artifactId>
-                <version>${grpc.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.grpc</groupId>
-                <artifactId>grpc-stub</artifactId>
-                <version>${grpc.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
