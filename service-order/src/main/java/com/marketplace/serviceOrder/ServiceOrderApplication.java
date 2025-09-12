@@ -1,4 +1,4 @@
-package com.marketplace.serviceorder;
+package com.marketplace.serviceOrder;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
