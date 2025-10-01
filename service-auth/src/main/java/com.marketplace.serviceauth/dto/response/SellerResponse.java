@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class SellerResponse {
 
-    private String message;
+    private Long id;
     private String name;
     private String email;
 
