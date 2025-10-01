@@ -1,6 +1,5 @@
 package com.marketplace.serviceauth.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marketplace.serviceauth.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -31,7 +30,6 @@ public class User {
     private String phone;
 
     @Column(nullable = false)
-    @JsonIgnore
     private String password;
 
     @Column(name = "birth_date", nullable = false)
@@ -51,7 +49,6 @@ public class User {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    @JsonIgnore
     private List<RefreshToken> refreshTokens = new ArrayList<>();
 
 }
