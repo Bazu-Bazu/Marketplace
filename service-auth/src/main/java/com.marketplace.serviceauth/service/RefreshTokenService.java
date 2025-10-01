@@ -2,6 +2,7 @@ package com.marketplace.serviceauth.service;
 
 import com.marketplace.serviceauth.entity.RefreshToken;
 import com.marketplace.serviceauth.entity.User;
+import com.marketplace.serviceauth.exception.RefreshTokenException;
 import com.marketplace.serviceauth.repository.RefreshTokenRepository;
 import com.marketplace.serviceauth.service.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -18,26 +20,50 @@ public class RefreshTokenService {
     private final JwtService jwtService;
 
     @Transactional
-    public void addRefreshToken(User user, String token) {
+    public void createRefreshToken(User user, String token, String deviceInfo, String ipAddress) {
         Instant expiresAt = Instant.now().plusMillis(jwtService.getRefreshTokenExpiration());
 
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setToken(token);
         refreshToken.setUser(user);
         refreshToken.setExpiresAt(expiresAt);
-        refreshToken.setRevoked(false);
+        refreshToken.setCreatedAt(Instant.now());
+        refreshToken.setDeviceInfo(deviceInfo);
+        refreshToken.setIpAddress(ipAddress);
 
         refreshTokenRepository.save(refreshToken);
     }
 
-    @Transactional
-    public void deleteByToken(RefreshToken token) {
-        refreshTokenRepository.delete(token);
+    public RefreshToken verifyExpiration(RefreshToken token) {
+        if (token.isExpired()) {
+            refreshTokenRepository.delete(token);
+            throw new RefreshTokenException("Refresh token was expired.");
+        }
+
+        return token;
     }
 
     @Transactional
-    public void deleteByUser(User user) {
-        refreshTokenRepository.deleteAllByUser(user);
+    public void revokeToken(String token) {
+        refreshTokenRepository.findByToken(token)
+                .ifPresent(refreshToken -> {
+                    refreshToken.setRevokedAt(Instant.now());
+                    refreshTokenRepository.save(refreshToken);
+                });
+    }
+
+    @Transactional
+    public void revokeAllUserTokens(User user) {
+        List<RefreshToken> tokens = refreshTokenRepository.findAllByUserId(user.getId());
+        tokens.forEach(token -> token.setRevokedAt(Instant.now()));
+        refreshTokenRepository.saveAll(tokens);
+    }
+
+    @Transactional
+    public void revokeTokenByDevice(User user, String deviceInfo) {
+        List<RefreshToken> tokens = refreshTokenRepository.findAllActiveByUserIdAndDeviceInfo(user.getId(), deviceInfo);
+        tokens.forEach(token -> token.setRevokedAt(Instant.now()));
+        refreshTokenRepository.saveAll(tokens);
     }
 
 }
