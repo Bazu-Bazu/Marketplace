@@ -41,12 +41,6 @@ public class UserService {
     }
 
     @Transactional
-    public void enableTheUser(User user) {
-       user.setEnabled(true);
-       userRepository.save(user);
-    }
-
-    @Transactional
     public UserResponse updateUser(String email, UpdateUserRequest request) {
         User user = findUserByEmail(email);
 
@@ -65,6 +59,13 @@ public class UserService {
     private <T> void updateIfNotNull(T value, Consumer<T> setter) {
         if (value != null) {
             setter.accept(value);
+        }
+    }
+
+    public  <T> void updateIfNotNullAndSave(T value, Consumer<T> setter, Runnable saveAction) {
+        if (value != null) {
+            setter.accept(value);
+            saveAction.run();
         }
     }
 
