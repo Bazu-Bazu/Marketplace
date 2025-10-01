@@ -20,7 +20,7 @@ public class RefreshTokenService {
     private final JwtService jwtService;
 
     @Transactional
-    public void createRefreshToken(User user, String token, String deviceInfo, String ipAddress) {
+    public void addRefreshToken(User user, String token, String deviceInfo, String ipAddress) {
         Instant expiresAt = Instant.now().plusMillis(jwtService.getRefreshTokenExpiration());
 
         RefreshToken refreshToken = new RefreshToken();
