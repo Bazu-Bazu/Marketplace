@@ -1,6 +1,7 @@
 package com.marketplace.serviceauth.service.jwt;
 
 import com.marketplace.serviceauth.service.CustomUserDetailsService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,19 +40,26 @@ public class JwtFilter extends OncePerRequestFilter {
 
         final String email = jwtService.extractUsername(jwt);
 
-        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
+        try {
+            if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
 
-            if (jwtService.isTokenValid(jwt, userDetails)) {
-                Collection<? extends GrantedAuthority> authorities = jwtService.extractAuthorities(jwt);
+                if (jwtService.isTokenValid(jwt, userDetails)) {
+                    Collection<? extends GrantedAuthority> authorities = jwtService.extractAuthorities(jwt);
 
-                UsernamePasswordAuthenticationToken authenticationToken =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
+                    UsernamePasswordAuthenticationToken authenticationToken =
+                            new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
 
-                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                }
             }
+        } catch (ExpiredJwtException e) {
+            request.setAttribute("expired", e);
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
         }
 
         filterChain.doFilter(request, response);
