@@ -22,6 +22,7 @@ public class RegisterUserRequest {
     private String password;
 
     @Past
+    @NotBlank
     private LocalDate birthDate;
 
 }

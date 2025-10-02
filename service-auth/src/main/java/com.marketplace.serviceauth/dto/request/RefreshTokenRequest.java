@@ -4,9 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class RegisterSellerRequest {
+public class RefreshTokenRequest {
 
     @NotBlank
-    private String name;
+    String refreshToken;
 
 }
