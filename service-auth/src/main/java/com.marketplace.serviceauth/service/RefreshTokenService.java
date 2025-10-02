@@ -34,8 +34,8 @@ public class RefreshTokenService {
         refreshTokenRepository.save(refreshToken);
     }
 
-    public void verifyExpiration(RefreshToken token) {
-        if (token.isExpired()) {
+    public void verifyActivity(RefreshToken token) {
+        if (!token.isActive()) {
             refreshTokenRepository.delete(token);
             throw new RefreshTokenException("Refresh token was expired.");
         }

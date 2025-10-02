@@ -120,7 +120,8 @@ public class AuthService {
         RefreshToken storedToken = refreshTokenRepository.findByToken(refreshToken)
                 .orElseThrow(() -> new RefreshTokenException("Refresh token not found."));
 
-        refreshTokenService.verifyExpiration(storedToken);
+        refreshTokenService.verifyActivity(storedToken);
+        refreshTokenService.revokeToken(refreshToken);
 
         if (!storedToken.getDeviceInfo().equals(deviceInfo)) {
             throw new AuthenticationException("Invalid device for refresh token.");

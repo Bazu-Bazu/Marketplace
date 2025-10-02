@@ -35,7 +35,8 @@ public class SecurityConfig {
                                 "/auth/signup",
                                 "/auth/login",
                                 "/auth/verify",
-                                "/auth/resend-code")
+                                "/auth/resend-code",
+                                "/auth/refresh")
                                 .permitAll()
                         .requestMatchers(
                                 "/seller/register")
