@@ -5,6 +5,7 @@ import com.marketplace.serviceauth.dto.request.UpdateSellerRequest;
 import com.marketplace.serviceauth.dto.response.SellerResponse;
 import com.marketplace.serviceauth.service.SellerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,41 +19,65 @@ public class SellerController {
     private final SellerService sellerService;
 
     @PostMapping("/register")
-    public ResponseEntity<SellerResponse> registerSeller(@AuthenticationPrincipal UserDetails userDetails,
-                                                         @RequestBody RegisterSellerRequest request) {
-        String email = userDetails.getUsername();
+    public ResponseEntity<?> registerSeller(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody RegisterSellerRequest request)
+    {
+        try {
+            String email = userDetails.getUsername();
 
-        SellerResponse response = sellerService.registerSeller(email, request);
+            SellerResponse response = sellerService.registerSeller(email, request);
 
-        return ResponseEntity.ok(response);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage());
+        }
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<SellerResponse> updateSeller(@AuthenticationPrincipal UserDetails userDetails,
-                                                       @RequestBody UpdateSellerRequest request) {
-        String email = userDetails.getUsername();
+    @PatchMapping("/update")
+    public ResponseEntity<?> updateSeller(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody UpdateSellerRequest request)
+    {
+        try {
+            String email = userDetails.getUsername();
 
-        SellerResponse response = sellerService.updateSeller(email, request);
+            SellerResponse response = sellerService.updateSeller(email, request);
 
-        return ResponseEntity.ok(response);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage());
+        }
     }
 
     @GetMapping("/get")
-    public ResponseEntity<SellerResponse> getSeller(@AuthenticationPrincipal UserDetails userDetails) {
-        String email = userDetails.getUsername();
+    public ResponseEntity<?> getSeller(@AuthenticationPrincipal UserDetails userDetails) {
+        try {
+            String email = userDetails.getUsername();
 
-        SellerResponse response = sellerService.getSeller(email);
+            SellerResponse response = sellerService.getSeller(email);
 
-        return ResponseEntity.ok(response);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<SellerResponse> deleteSeller(@AuthenticationPrincipal UserDetails userDetails) {
-        String email = userDetails.getUsername();
+    public ResponseEntity<?> deleteSeller(@AuthenticationPrincipal UserDetails userDetails) {
+        try {
+            String email = userDetails.getUsername();
 
-        SellerResponse response = sellerService.deleteSeller(email);
+            sellerService.deleteSeller(email);
 
-        return ResponseEntity.ok(response);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(e.getMessage());
+        }
     }
 
 }
