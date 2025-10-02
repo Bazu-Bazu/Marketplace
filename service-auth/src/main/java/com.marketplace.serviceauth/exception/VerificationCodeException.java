@@ -1,8 +1,8 @@
 package com.marketplace.serviceauth.exception;
 
-public class InvalidVerificationCodeException extends RuntimeException {
+public class VerificationCodeException extends RuntimeException {
 
-    public InvalidVerificationCodeException(String message) {
+    public VerificationCodeException(String message) {
         super(message);
     }
 

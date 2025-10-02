@@ -34,13 +34,11 @@ public class RefreshTokenService {
         refreshTokenRepository.save(refreshToken);
     }
 
-    public RefreshToken verifyExpiration(RefreshToken token) {
+    public void verifyExpiration(RefreshToken token) {
         if (token.isExpired()) {
             refreshTokenRepository.delete(token);
             throw new RefreshTokenException("Refresh token was expired.");
         }
-
-        return token;
     }
 
     @Transactional

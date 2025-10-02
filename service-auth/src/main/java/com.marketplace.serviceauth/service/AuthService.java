@@ -2,6 +2,7 @@ package com.marketplace.serviceauth.service;
 
 import com.marketplace.serviceauth.dto.CustomUserDetails;
 import com.marketplace.serviceauth.dto.request.LoginUserRequest;
+import com.marketplace.serviceauth.dto.request.RefreshTokenRequest;
 import com.marketplace.serviceauth.dto.request.RegisterUserRequest;
 import com.marketplace.serviceauth.dto.request.VerifyUserRequest;
 import com.marketplace.serviceauth.dto.response.AuthResponse;
@@ -9,23 +10,18 @@ import com.marketplace.serviceauth.entity.RefreshToken;
 import com.marketplace.serviceauth.entity.Seller;
 import com.marketplace.serviceauth.entity.User;
 import com.marketplace.serviceauth.enums.Role;
-import com.marketplace.serviceauth.exception.AccountNotVerifiedException;
-import com.marketplace.serviceauth.exception.AccountVerifiedException;
-import com.marketplace.serviceauth.exception.InvalidTokenException;
-import com.marketplace.serviceauth.exception.InvalidVerificationCodeException;
+import com.marketplace.serviceauth.exception.AuthenticationException;
+import com.marketplace.serviceauth.exception.RefreshTokenException;
+import com.marketplace.serviceauth.exception.VerificationCodeException;
 import com.marketplace.serviceauth.repository.RefreshTokenRepository;
-import com.marketplace.serviceauth.repository.SellerRepository;
 import com.marketplace.serviceauth.repository.UserRepository;
 import com.marketplace.serviceauth.service.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.Instant;
 
 @Service
 @RequiredArgsConstructor
@@ -38,28 +34,19 @@ public class AuthService {
     private final JwtService jwtService;
     private final RefreshTokenRepository refreshTokenRepository;
     private final RefreshTokenService refreshTokenService;
-    private final SellerRepository sellerRepository;
+    private final SellerService sellerService;
 
-    public AuthResponse signUp(RegisterUserRequest request) {
+    public void signUp(RegisterUserRequest request) {
         userService.registerUser(request);
 
-        String email = request.getEmail();
-
-        verificationCodeService.sendVerificationCode(email);
-
-        return AuthResponse.builder()
-                .message("Verification code sent to your email.")
-                .email(email)
-                .build();
-
+        verificationCodeService.sendVerificationCode(request.getEmail());
     }
 
-    public AuthResponse authenticate(LoginUserRequest request) {
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
+    public AuthResponse authenticate(LoginUserRequest request, String deviceInfo, String ipAddress) {
+        User user = userService.findUserByEmail(request.getEmail());
 
         if (!user.isEnabled()) {
-            throw new AccountNotVerifiedException("Account not verified.");
+            throw new AuthenticationException("Account not verified.");
         }
 
         authenticationManager.authenticate(
@@ -73,21 +60,15 @@ public class AuthService {
         String accessToken = jwtService.generateAccessToken(userDetails);
         String refreshToken = jwtService.generateRefreshToken(userDetails);
 
-        refreshTokenService.addRefreshToken(user, refreshToken);
+        refreshTokenService.addRefreshToken(user, refreshToken, deviceInfo, ipAddress);
 
-        return AuthResponse.builder()
-                .message("You are logged in to your account.")
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .email(user.getEmail())
-                .build();
+        return buildAuthResponse(user.getId(), accessToken, refreshToken);
     }
 
     private UserDetails createUserDetails(User user) {
         UserDetails userDetails;
         if (user.getRole() == Role.ROLE_SELLER) {
-            Seller seller = sellerRepository.findByUserId(user.getId())
-                    .orElseThrow(() -> new UsernameNotFoundException("Seller not found."));
+            Seller seller = sellerService.findSellerByEmail(user.getEmail());
 
             userDetails = new CustomUserDetails(user, seller);
         }
@@ -100,79 +81,75 @@ public class AuthService {
 
     @Transactional
     public AuthResponse verifyUser(VerifyUserRequest request) {
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
+        User user = userService.findUserByEmail(request.getEmail());
 
         if (verificationCodeService.verifyCode(request.getEmail(), request.getVerificationCode())) {
-            user.setEnabled(true);
-            userRepository.save(user);
+            userService.updateIfNotNullAndSave(
+                    true,
+                    user::setEnabled,
+                    () -> userRepository.save(user)
+            );
 
-            return AuthResponse.builder()
-                    .email(user.getEmail())
-                    .message("Account successfully verified.")
-                    .build();
+            return buildAuthResponse(user.getId(), null, null);
         }
         else {
-            throw new InvalidVerificationCodeException("Invalid verification code.");
+            throw new VerificationCodeException("Invalid verification code.");
         }
     }
 
     public AuthResponse resendVerificationCode(String email) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
+        User user = userService.findUserByEmail(email);
 
         if (user.isEnabled()) {
-            throw new AccountVerifiedException("Account is already verified.");
+            throw new AuthenticationException("Account is already verified.");
         }
 
         verificationCodeService.sendVerificationCode(email);
 
-        return AuthResponse.builder()
-                .message("Verification code sent to your email again.")
-                .email(email)
-                .build();
+        return buildAuthResponse(user.getId(), null, null);
     }
 
-    public AuthResponse updateTokens(String refreshToken) {
+    public AuthResponse refresh(String refreshToken, String deviceInfo, String ipAddress) {
         if (!jwtService.isRefreshToken(refreshToken)) {
-            throw new InvalidTokenException("Provided token is not a refresh token.");
+            throw new RefreshTokenException("Provided token is not a refresh token.");
         }
 
         String email = jwtService.extractUsername(refreshToken);
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
+        User user = userService.findUserByEmail(email);
 
         RefreshToken storedToken = refreshTokenRepository.findByToken(refreshToken)
-                .orElseThrow(() -> new InvalidTokenException("Refresh token not found."));
+                .orElseThrow(() -> new RefreshTokenException("Refresh token not found."));
 
-        if (storedToken.isRevoked() || storedToken.getExpiresAt().isBefore(Instant.now())) {
-            throw new InvalidTokenException("Refresh token is invalid or expired.");
+        refreshTokenService.verifyExpiration(storedToken);
+
+        if (!storedToken.getDeviceInfo().equals(deviceInfo)) {
+            throw new AuthenticationException("Invalid device for refresh token.");
         }
 
         UserDetails userDetails = createUserDetails(user);
         String newAccessToken = jwtService.generateAccessToken(userDetails);
         String newRefreshToken = jwtService.generateRefreshToken(userDetails);
 
-        refreshTokenService.addRefreshToken(user, newRefreshToken);
+        refreshTokenService.addRefreshToken(user, newRefreshToken, deviceInfo, ipAddress);
 
-        refreshTokenService.deleteByToken(storedToken);
-
-        return AuthResponse.builder()
-                .accessToken(newAccessToken)
-                .refreshToken(newRefreshToken)
-                .build();
+        return buildAuthResponse(user.getId(), newAccessToken, newRefreshToken);
     }
 
-    public AuthResponse logout(String accessToken) {
-        String email = jwtService.extractUsername(accessToken);
+    public void logout(RefreshTokenRequest request) {
+        refreshTokenService.revokeToken(request.getRefreshToken());
+    }
 
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
+    public void logoutAll(String email) {
+        User user = userService.findUserByEmail(email);
 
-        refreshTokenService.deleteByUser(user);
+        refreshTokenService.revokeAllUserTokens(user);
+    }
 
+    private AuthResponse buildAuthResponse(Long userId, String accessToken, String refreshToken) {
         return AuthResponse.builder()
-                .message("You have logged out of your account.")
+                .userId(userId)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 
