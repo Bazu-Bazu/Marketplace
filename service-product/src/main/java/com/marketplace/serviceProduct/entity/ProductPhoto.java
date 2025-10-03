@@ -1,12 +1,11 @@
 package com.marketplace.serviceProduct.entity;
 
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document(collection = "products_photo")
+@Document(collection = "product_photos")
 @Data
 public class ProductPhoto {
 
@@ -16,13 +15,17 @@ public class ProductPhoto {
     @Field(name = "product_id")
     private Long productId;
 
-    @Field(name = "image_data")
-    private byte[] imageData;
+    @Field(name = "file_name")
+    private String fileName;
+
+    @Field(name = "content_type")
+    private String contentType;
+
+    private Long size;
+
+    private String url;
 
     @Field(name = "is_main")
     private Boolean isMain;
-
-    @Field(name = "sort_order")
-    private Integer sortOrder;
 
 }
