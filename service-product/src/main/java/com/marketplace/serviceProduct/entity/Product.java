@@ -3,6 +3,7 @@ package com.marketplace.serviceProduct.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,7 +39,9 @@ public class Product {
     )
     private Set<Category> categories = new HashSet<>();
 
-    @Transient
-    private List<ProductPhoto> photos;
+    @ElementCollection
+    @CollectionTable(name = "product_photos", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "photo_url")
+    private List<String> urls = new ArrayList<>();
 
 }
