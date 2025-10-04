@@ -17,7 +17,7 @@ public class ProductResponse {
     Integer price;
     Integer count;
     Long sellerId;
-    Set<Category> categories;
+    Set<Long> categoryIds;
     List<String> photoUrls;
 
 }
