@@ -30,9 +30,7 @@ public class CategoryService {
         Long parentId = request.getParentId();
         if (parentId != null) {
             Category parentCategory = findCategoryById(parentId);
-
-            parentCategory.addChild(newCategory);
-            categoryRepository.save(parentCategory);
+            newCategory.setParent(parentCategory);
         }
         categoryRepository.save(newCategory);
 
