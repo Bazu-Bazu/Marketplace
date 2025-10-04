@@ -1,6 +1,6 @@
 package com.marketplace.serviceProduct.service.jwt;
 
-import com.marketplace.serviceProduct.exception.InvalidHttpServletRequestException;
+import com.marketplace.serviceProduct.exception.HttpServletRequestException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -88,7 +88,7 @@ public class JwtService {
             return authHeader.substring(7);
         }
 
-        throw new InvalidHttpServletRequestException("JWT token not found in Authorization header");
+        throw new HttpServletRequestException("JWT token not found in Authorization header");
     }
 
 }

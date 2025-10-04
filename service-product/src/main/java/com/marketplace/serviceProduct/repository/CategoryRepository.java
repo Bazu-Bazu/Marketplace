@@ -11,7 +11,7 @@ import java.util.Set;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
-    Set<Category> findAllByIdIn(List<Long> ids);
+    Set<Category> findAllByIdIn(Set<Long> ids);
     Optional<Category> findByName(String name);
 
 }
