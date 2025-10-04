@@ -2,10 +2,8 @@ package com.marketplace.serviceProduct.service;
 
 import com.marketplace.serviceProduct.entity.Category;
 import com.marketplace.serviceProduct.entity.Product;
-import com.marketplace.serviceProduct.entity.ProductPhoto;
-import com.marketplace.serviceProduct.exception.InvalidCategoryException;
-import com.marketplace.serviceProduct.exception.InvalidSellerIdException;
-import com.marketplace.serviceProduct.exception.ProductNotFoundException;
+import com.marketplace.serviceProduct.exception.CategoryException;
+import com.marketplace.serviceProduct.exception.ProductException;
 import com.marketplace.serviceProduct.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import com.marketplace.serviceProduct.dto.request.AddProductRequest;
@@ -13,12 +11,10 @@ import com.marketplace.serviceProduct.dto.response.ProductResponse;
 import com.marketplace.serviceProduct.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,51 +22,62 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
-    private final ProductPhotoService productPhotoService;
 
     @Transactional
-    public ProductResponse addProduct(Long sellerId, AddProductRequest request,
-                                      List<MultipartFile> imageFiles) throws IOException {
-        Set<Category> categories = categoryRepository.findAllByIdIn(request.getCategoryIds());
-        if (categories.size() != request.getCategoryIds().size()) {
-            throw new InvalidCategoryException("Some categories not found.");
+    public List<ProductResponse> addProducts(Long sellerId, List<AddProductRequest> requests) {
+        Set<Long> allCategoryIds = requests.stream()
+                .flatMap(request -> request.getCategoryIds().stream())
+                .collect(Collectors.toSet());
+
+        Map<Long, Category> categoryMap = categoryRepository.findAllByIdIn(allCategoryIds).stream()
+                .collect(Collectors.toMap(Category::getId, Function.identity()));
+
+        validateCategoriesExist(allCategoryIds, categoryMap.keySet());
+
+        List<Product> newProducts = requests.stream()
+                .map(request -> createNewProduct(sellerId, request, categoryMap))
+                .toList();
+
+        List<Product> savedProducts = productRepository.saveAll(newProducts);
+
+        return savedProducts.stream()
+                .map(this::buildProductResponse)
+                .toList();
+    }
+
+    private void validateCategoriesExist(Set<Long> requestedIds, Set<Long> existingIds) {
+        Set<Long> missingIds = requestedIds.stream()
+                .filter(id -> !existingIds.contains(id))
+                .collect(Collectors.toSet());
+
+        if (!missingIds.isEmpty()) {
+            throw new CategoryException("Categories not found: " + missingIds);
         }
+    }
+
+    private Product createNewProduct(Long sellerId, AddProductRequest request, Map<Long, Category> categoryMap) {
+        Set<Category> categories = request.getCategoryIds().stream()
+                .map(categoryMap::get)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
 
         Product product = new Product();
         product.setName(request.getName());
-        product.setDescription(request.getDescription());
         product.setPrice(request.getPrice());
         product.setCount(request.getCount());
-        product.setSellerId(sellerId);
+        product.setDescription(request.getDescription());
         product.setCategories(categories);
+        product.setSellerId(sellerId);
 
-        Product saveProduct = productRepository.save(product);
-
-        if (imageFiles != null && !imageFiles.isEmpty()) {
-            List<ProductPhoto> photos = productPhotoService.saveProductPhotos(saveProduct.getId(), imageFiles);
-            saveProduct.setPhotos(photos);
-        }
-
-        return mapToProductResponse(saveProduct);
+        return product;
     }
 
-    public ProductResponse getProductById(Long id) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found."));
-
-        List<ProductPhoto> photos = productPhotoService.getProductPhotos(id);
-        product.setPhotos(photos);
-
-        return mapToProductResponse(product);
+    private Product findProductByEmail(Long productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new ProductException("Product not found."));
     }
 
-    private ProductResponse mapToProductResponse(Product product) {
-        List<String> photoUrls = product.getPhotos() != null ?
-                product.getPhotos().stream()
-                        .map(photo -> "/products/" + product.getId() + "/photos/" + photo.getId())
-                        .toList() :
-                Collections.emptyList();
-
+    private ProductResponse buildProductResponse(Product product) {
         return ProductResponse.builder()
                 .id(product.getId())
                 .name(product.getName())
@@ -78,23 +85,11 @@ public class ProductService {
                 .price(product.getPrice())
                 .count(product.getCount())
                 .sellerId(product.getSellerId())
-                .categories(product.getCategories())
-                .photoUrls(photoUrls)
+                .categoryIds(product.getCategories().stream()
+                        .map(Category::getId)
+                        .collect(Collectors.toSet()))
+                .photoUrls(product.getUrls())
                 .build();
-    }
-
-    @Transactional
-    public void deleteProduct(Long productId, Long sellerId) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found."));
-
-        if (!product.getId().equals(sellerId)) {
-            throw new InvalidSellerIdException("Invalid seller id.");
-        }
-
-        productPhotoService.deleteProductPhotos(productId);
-
-        productRepository.delete(product);
     }
 
 }
