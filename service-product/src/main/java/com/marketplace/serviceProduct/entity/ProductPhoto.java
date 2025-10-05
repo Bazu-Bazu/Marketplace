@@ -25,7 +25,4 @@ public class ProductPhoto {
 
     private String url;
 
-    @Field(name = "is_main")
-    private Boolean isMain;
-
 }

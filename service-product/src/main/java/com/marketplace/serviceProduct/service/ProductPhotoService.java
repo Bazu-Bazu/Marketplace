@@ -1,15 +1,17 @@
 package com.marketplace.serviceProduct.service;
 
+import com.marketplace.serviceProduct.dto.response.ProductPhotoResponse;
 import com.marketplace.serviceProduct.entity.ProductPhoto;
-import com.marketplace.serviceProduct.exception.ProductNotFoundException;
+import com.marketplace.serviceProduct.exception.ProductPhotoException;
 import com.marketplace.serviceProduct.repository.ProductPhotoRepository;
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,42 +19,54 @@ import java.util.List;
 public class ProductPhotoService {
 
     private final ProductPhotoRepository productPhotoRepository;
+    private final ProductService productService;
+    private final GridFsTemplate gridFsTemplate;
 
     @Transactional
-    public List<ProductPhoto> saveProductPhotos(Long productId, List<MultipartFile> imageFiles) throws IOException {
-        List<ProductPhoto> photos = new ArrayList<>();
+    public List<ProductPhotoResponse> addProductPhotos(List<MultipartFile> photos, Long productId) {
+        productService.findProductById(productId);
 
-        for (int i = 0; i < imageFiles.size(); i++) {
-            MultipartFile file = imageFiles.get(i);
+        List<ProductPhoto> newPhotos = photos.stream()
+                .map(photo -> createNewProductPhoto(photo, productId))
+                .toList();
 
-            ProductPhoto photo = new ProductPhoto();
-            photo.setProductId(productId);
-            photo.setImageData(file.getBytes());
-            photo.setSortOrder(i);
-            photo.setIsMain(i == 0);
+        List<ProductPhoto> savedPhotos = productPhotoRepository.saveAll(newPhotos);
 
-            photos.add(photo);
+        return savedPhotos.stream()
+                .map(this::buildProductPhotoResponse)
+                .toList();
+    }
+
+    private ProductPhoto createNewProductPhoto(MultipartFile photo, Long productId) {
+        try {
+            ObjectId fileId = gridFsTemplate.store(
+                    photo.getInputStream(),
+                    photo.getOriginalFilename(),
+                    photo.getContentType()
+            );
+
+            ProductPhoto newPhoto = new ProductPhoto();
+            newPhoto.setProductId(productId);
+            newPhoto.setFileName(photo.getOriginalFilename());
+            newPhoto.setContentType(photo.getContentType());
+            newPhoto.setSize(photo.getSize());
+            newPhoto.setUrl("/product-photo/" + fileId);
+
+            return newPhoto;
+        } catch (IOException e) {
+            throw new ProductPhotoException("Creating ProductPhoto error.");
         }
-
-        return productPhotoRepository.saveAll(photos);
     }
 
-    public List<ProductPhoto> getProductPhotos(Long productId) {
-        return productPhotoRepository.findByProductIdOrderBySortOrderAsc(productId);
-    }
-
-    public byte[] getProductPhotoImage(String photoId) {
-        return productPhotoRepository.findById(photoId)
-                .map(ProductPhoto::getImageData)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found."));
-    }
-
-    public void deleteProductPhotos(Long productId) {
-        productPhotoRepository.deleteByProductId(productId);
-    }
-
-    public void deleteProductPhoto(String productPhotoId) {
-        productPhotoRepository.deleteById(productPhotoId);
+    private ProductPhotoResponse buildProductPhotoResponse(ProductPhoto photo) {
+        return ProductPhotoResponse.builder()
+                .id(photo.getId())
+                .name(photo.getFileName())
+                .contentType(photo.getContentType())
+                .size(photo.getSize())
+                .productId(photo.getProductId())
+                .url(photo.getUrl())
+                .build();
     }
 
 }
