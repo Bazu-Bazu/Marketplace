@@ -72,7 +72,7 @@ public class ProductService {
         return product;
     }
 
-    private Product findProductByEmail(Long productId) {
+    public Product findProductById(Long productId) {
         return productRepository.findById(productId)
                 .orElseThrow(() -> new ProductException("Product not found."));
     }
