@@ -12,6 +12,7 @@ import com.marketplace.serviceProduct.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.AccessDeniedException;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -90,6 +91,14 @@ public class ProductService {
                         .collect(Collectors.toSet()))
                 .photoUrls(product.getUrls())
                 .build();
+    }
+
+    public void validateProductOwnership(Long sellerId, Long productId) throws AccessDeniedException {
+        Product product = findProductById(productId);
+
+        if (!sellerId.equals(product.getSellerId())) {
+            throw new AccessDeniedException("Product doesn't belong to current seller.");
+        }
     }
 
 }
