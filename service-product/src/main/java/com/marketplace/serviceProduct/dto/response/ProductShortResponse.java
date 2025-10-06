@@ -3,20 +3,15 @@ package com.marketplace.serviceProduct.dto.response;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
-import java.util.Set;
-
 @Data
 @Builder
-public class ProductResponse {
+public class ProductShortResponse {
 
     private Long id;
     private String name;
-    private String description;
+    private Byte rating;
     private Integer price;
-    private Integer count;
     private Long sellerId;
-    private Set<Long> categoryIds;
-    private List<String> photoUrls;
+    private String photoUrl;
 
 }
