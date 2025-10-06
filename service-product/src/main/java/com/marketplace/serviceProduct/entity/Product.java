@@ -31,6 +31,8 @@ public class Product {
     @Column(nullable = false)
     private Long sellerId;
 
+    private Byte rating;
+
     @ManyToMany
     @JoinTable(
             name = "product_category",
