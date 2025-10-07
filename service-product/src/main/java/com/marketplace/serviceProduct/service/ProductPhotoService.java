@@ -4,9 +4,17 @@ import com.marketplace.serviceProduct.dto.response.ProductPhotoResponse;
 import com.marketplace.serviceProduct.entity.ProductPhoto;
 import com.marketplace.serviceProduct.exception.ProductPhotoException;
 import com.marketplace.serviceProduct.repository.ProductPhotoRepository;
+import com.mongodb.client.gridfs.model.GridFSFile;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -73,6 +81,19 @@ public class ProductPhotoService {
                 .productId(photo.getProductId())
                 .url(photo.getUrl())
                 .build();
+    }
+
+    public ResponseEntity<Resource> downloadPhoto(String fileId) {
+        GridFSFile gridFSFile = gridFsTemplate.findOne(
+            new Query(Criteria.where("_id").is(new ObjectId(fileId))));
+
+        GridFsResource resource =gridFsTemplate.getResource(gridFSFile);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(resource.getContentType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
     }
 
 }

@@ -25,7 +25,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
-                                HttpMethod.GET, "/product/**")
+                                HttpMethod.GET, "/product/**",
+                                "product-photo/**")
                         .permitAll()
                         .requestMatchers(
                                 "/product/add",
