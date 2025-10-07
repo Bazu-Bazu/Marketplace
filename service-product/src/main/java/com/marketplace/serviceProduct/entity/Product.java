@@ -31,6 +31,9 @@ public class Product {
     @Column(nullable = false)
     private Long sellerId;
 
+    @Column(nullable = false)
+    private String sellerName;
+
     private Byte rating;
 
     @ManyToMany

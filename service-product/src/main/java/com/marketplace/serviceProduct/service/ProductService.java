@@ -1,5 +1,7 @@
 package com.marketplace.serviceProduct.service;
 
+import com.marketplace.serviceProduct.dto.response.ProductDetailsResponse;
+import com.marketplace.serviceProduct.dto.response.ProductShortResponse;
 import com.marketplace.serviceProduct.entity.Category;
 import com.marketplace.serviceProduct.entity.Product;
 import com.marketplace.serviceProduct.exception.CategoryException;
@@ -9,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import com.marketplace.serviceProduct.dto.request.AddProductRequest;
 import com.marketplace.serviceProduct.dto.response.ProductResponse;
 import com.marketplace.serviceProduct.repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +29,7 @@ public class ProductService {
     private final CategoryRepository categoryRepository;
 
     @Transactional
-    public List<ProductResponse> addProducts(Long sellerId, List<AddProductRequest> requests) {
+    public List<ProductResponse> addProducts(Long sellerId, String sellerName, List<AddProductRequest> requests) {
         Set<Long> allCategoryIds = requests.stream()
                 .flatMap(request -> request.getCategoryIds().stream())
                 .collect(Collectors.toSet());
@@ -36,7 +40,7 @@ public class ProductService {
         validateCategoriesExist(allCategoryIds, categoryMap.keySet());
 
         List<Product> newProducts = requests.stream()
-                .map(request -> createNewProduct(sellerId, request, categoryMap))
+                .map(request -> createNewProduct(sellerId, sellerName, request, categoryMap))
                 .toList();
 
         List<Product> savedProducts = productRepository.saveAll(newProducts);
@@ -56,7 +60,10 @@ public class ProductService {
         }
     }
 
-    private Product createNewProduct(Long sellerId, AddProductRequest request, Map<Long, Category> categoryMap) {
+    private Product createNewProduct(
+            Long sellerId, String sellerName,
+            AddProductRequest request, Map<Long, Category> categoryMap)
+    {
         Set<Category> categories = request.getCategoryIds().stream()
                 .map(categoryMap::get)
                 .filter(Objects::nonNull)
@@ -69,6 +76,7 @@ public class ProductService {
         product.setDescription(request.getDescription());
         product.setCategories(categories);
         product.setSellerId(sellerId);
+        product.setSellerName(sellerName);
 
         return product;
     }

@@ -27,8 +27,9 @@ public class ProductController {
             @RequestBody List<AddProductRequest> requests) {
         try {
             Long sellerId = jwtService.extractSellerId(request);
+            String sellerName = jwtService.extractSellerName(request);
 
-            List<ProductResponse> responses = productService.addProducts(sellerId, requests);
+            List<ProductResponse> responses = productService.addProducts(sellerId, sellerName, requests);
 
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(responses);
