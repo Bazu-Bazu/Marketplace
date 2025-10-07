@@ -9,7 +9,6 @@ import com.marketplace.serviceProduct.exception.ProductException;
 import com.marketplace.serviceProduct.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import com.marketplace.serviceProduct.dto.request.AddProductRequest;
-import com.marketplace.serviceProduct.dto.response.ProductResponse;
 import com.marketplace.serviceProduct.repository.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +28,7 @@ public class ProductService {
     private final CategoryRepository categoryRepository;
 
     @Transactional
-    public List<ProductResponse> addProducts(Long sellerId, String sellerName, List<AddProductRequest> requests) {
+    public List<ProductDetailsResponse> addProducts(Long sellerId, String sellerName, List<AddProductRequest> requests) {
         Set<Long> allCategoryIds = requests.stream()
                 .flatMap(request -> request.getCategoryIds().stream())
                 .collect(Collectors.toSet());
@@ -46,7 +45,7 @@ public class ProductService {
         List<Product> savedProducts = productRepository.saveAll(newProducts);
 
         return savedProducts.stream()
-                .map(this::buildProductResponse)
+                .map(this::buildProductDetailsResponse)
                 .toList();
     }
 
@@ -86,17 +85,43 @@ public class ProductService {
                 .orElseThrow(() -> new ProductException("Product not found."));
     }
 
-    private ProductResponse buildProductResponse(Product product) {
-        return ProductResponse.builder()
+    public Page<ProductShortResponse> getProductShort(Pageable pageable) {
+        Page<Product> products = productRepository.findAll(pageable);
+
+        return products.map(this::buildProductShortResponse);
+    }
+
+    private ProductShortResponse buildProductShortResponse(Product product) {
+        return ProductShortResponse.builder()
                 .id(product.getId())
                 .name(product.getName())
-                .description(product.getDescription())
+                .rating(product.getRating())
+                .price(product.getPrice())
+                .photoUrl(!product.getUrls().isEmpty() ? product.getUrls().get(0) : null)
+                .sellerId(product.getSellerId())
+                .build();
+    }
+
+    public ProductDetailsResponse getProductDetail(Long productId) {
+        Product product = findProductById(productId);
+
+        return buildProductDetailsResponse(product);
+    }
+
+    private ProductDetailsResponse buildProductDetailsResponse(Product product) {
+        return  ProductDetailsResponse.builder()
+                .id(product.getId())
+                .name(product.getName())
                 .price(product.getPrice())
                 .count(product.getCount())
-                .sellerId(product.getSellerId())
                 .categoryIds(product.getCategories().stream()
                         .map(Category::getId)
                         .collect(Collectors.toSet()))
+                .categoryNames(product.getCategories().stream()
+                        .map(Category::getName)
+                        .collect(Collectors.toSet()))
+                .sellerId(product.getSellerId())
+                .sellerName(product.getSellerName())
                 .photoUrls(product.getUrls())
                 .build();
     }
@@ -107,6 +132,14 @@ public class ProductService {
         if (!sellerId.equals(product.getSellerId())) {
             throw new AccessDeniedException("Product doesn't belong to current seller.");
         }
+    }
+
+    @Transactional
+    public void addPhotos(Long productId, List<String> photoUrls) {
+        Product product = findProductById(productId);
+        product.getUrls().addAll(photoUrls);
+
+        productRepository.save(product);
     }
 
 }
