@@ -82,6 +82,14 @@ public class JwtService {
         return claims.get("seller_id", Long.class);
     }
 
+    public String extractSellerName(HttpServletRequest request) {
+        String token = extractToken(request);
+
+        Claims claims = extractAllClaims(token);
+
+        return claims.get("seller_name", String.class);
+    }
+
     private String extractToken(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {

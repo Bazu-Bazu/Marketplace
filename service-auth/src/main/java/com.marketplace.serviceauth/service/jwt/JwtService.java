@@ -108,6 +108,7 @@ public class JwtService {
 
             if (customUserDetails.isSeller()) {
                 claims.put("seller_id", customUserDetails.getSellerId());
+                claims.put("seller_name", customUserDetails.getSeller().getName());
             }
         }
     }
