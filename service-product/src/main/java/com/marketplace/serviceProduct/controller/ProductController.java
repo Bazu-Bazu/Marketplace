@@ -59,10 +59,15 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<ProductDetailsResponse> getProductDetail(@PathVariable("productId") Long productId) {
-        ProductDetailsResponse response = productService.getProductDetail(productId);
+    public ResponseEntity<?> getProductDetail(@PathVariable("productId") Long productId) {
+        try {
+            ProductDetailsResponse response = productService.getProductDetail(productId);
 
-        return ResponseEntity.ok(response);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage());
+        }
     }
 
 }
