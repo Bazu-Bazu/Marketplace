@@ -32,6 +32,12 @@ public class ProductPhotoService {
 
         List<ProductPhoto> savedPhotos = productPhotoRepository.saveAll(newPhotos);
 
+        List<String> photoUrls = savedPhotos.stream()
+                .map(ProductPhoto::getUrl)
+                .toList();
+
+        productService.addPhotos(productId, photoUrls);
+
         return savedPhotos.stream()
                 .map(this::buildProductPhotoResponse)
                 .toList();
