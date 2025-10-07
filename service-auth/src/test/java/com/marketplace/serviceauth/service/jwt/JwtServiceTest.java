@@ -56,6 +56,7 @@ public class JwtServiceTest {
         seller = new Seller();
         seller.setId(10L);
         seller.setEmail("sellerUserEmail");
+        seller.setName("Company");
         seller.setUser(sellerUser);
 
         regularUserDetails = new CustomUserDetails(regularUser);
@@ -187,9 +188,12 @@ public class JwtServiceTest {
                 claims.get("user_id", Long.class)).toString();
         String sellerId = jwtService.extractClaim(token, claims ->
                 claims.get("seller_id", Long.class)).toString();
+        String sellerName = jwtService.extractClaim(token, claims ->
+                claims.get("seller_name", String.class));
 
         assertThat(userId).isEqualTo("2");
         assertThat(sellerId).isEqualTo("10");
+        assertThat(sellerName).isEqualTo("Company");
     }
 
     @Test
