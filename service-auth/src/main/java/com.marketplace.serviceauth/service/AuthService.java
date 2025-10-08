@@ -1,6 +1,7 @@
 package com.marketplace.serviceauth.service;
 
 import com.marketplace.serviceauth.dto.CustomUserDetails;
+import com.marketplace.serviceauth.dto.event.UserEvent;
 import com.marketplace.serviceauth.dto.request.LoginUserRequest;
 import com.marketplace.serviceauth.dto.request.RefreshTokenRequest;
 import com.marketplace.serviceauth.dto.request.RegisterUserRequest;
@@ -15,6 +16,7 @@ import com.marketplace.serviceauth.exception.RefreshTokenException;
 import com.marketplace.serviceauth.exception.VerificationCodeException;
 import com.marketplace.serviceauth.repository.RefreshTokenRepository;
 import com.marketplace.serviceauth.repository.UserRepository;
+import com.marketplace.serviceauth.service.event.UserEventPublisher;
 import com.marketplace.serviceauth.service.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,6 +37,7 @@ public class AuthService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final RefreshTokenService refreshTokenService;
     private final SellerService sellerService;
+    private final UserEventPublisher userEventPublisher;
 
     public void signUp(RegisterUserRequest request) {
         userService.registerUser(request);
@@ -90,11 +93,22 @@ public class AuthService {
                     () -> userRepository.save(user)
             );
 
+            userEventPublisher.sendUserIdToKafka(buildUserEvent(user));
+
             return buildAuthResponse(user.getId(), null, null);
         }
         else {
             throw new VerificationCodeException("Invalid verification code.");
         }
+    }
+
+    private UserEvent buildUserEvent(User user) {
+        return UserEvent.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .build();
     }
 
     public AuthResponse resendVerificationCode(String email) {
