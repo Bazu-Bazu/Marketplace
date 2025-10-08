@@ -20,14 +20,4 @@ public class Basket {
     @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BasketItem> items;
 
-    public void addItem(BasketItem item) {
-        items.add(item);
-        item.setBasket(this);
-    }
-
-    public void removeItem(BasketItem item) {
-        items.remove(item);
-        item.setBasket(null);
-    }
-
 }

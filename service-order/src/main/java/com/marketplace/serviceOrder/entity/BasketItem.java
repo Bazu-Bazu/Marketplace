@@ -24,6 +24,9 @@ public class BasketItem {
     @Column(nullable = false)
     private Integer price;
 
+    @Column(nullable = false)
+    private Integer count;
+
     @Column(name = "seller_name", nullable = false)
     private String sellerName;
 
