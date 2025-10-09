@@ -1,6 +1,7 @@
 package com.marketplace.serviceauth.service;
 
 import com.marketplace.serviceauth.dto.CustomUserDetails;
+import com.marketplace.serviceauth.dto.event.UserEvent;
 import com.marketplace.serviceauth.dto.request.LoginUserRequest;
 import com.marketplace.serviceauth.dto.request.RefreshTokenRequest;
 import com.marketplace.serviceauth.dto.request.RegisterUserRequest;
@@ -14,6 +15,7 @@ import com.marketplace.serviceauth.exception.AuthenticationException;
 import com.marketplace.serviceauth.exception.RefreshTokenException;
 import com.marketplace.serviceauth.exception.VerificationCodeException;
 import com.marketplace.serviceauth.repository.RefreshTokenRepository;
+import com.marketplace.serviceauth.service.event.UserEventPublisher;
 import com.marketplace.serviceauth.service.jwt.JwtService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -60,6 +62,9 @@ class AuthServiceTest {
 
     @Mock
     private SellerService sellerService;
+
+    @Mock
+    private UserEventPublisher userEventPublisher;
 
     @InjectMocks
     private AuthService authService;
@@ -209,6 +214,7 @@ class AuthServiceTest {
 
         verify(userService).updateIfNotNullAndSave(eq(true), any(), any());
         verify(verificationCodeService).verifyCode(verifyRequest.getEmail(), verifyRequest.getVerificationCode());
+        verify(userEventPublisher).sendUserToKafka(any(UserEvent.class));
     }
 
     @Test
@@ -224,6 +230,7 @@ class AuthServiceTest {
 
         assertEquals("Invalid verification code.", exception.getMessage());
         verify(userService, never()).updateIfNotNullAndSave(any(), any(), any());
+        verify(userEventPublisher, never()).sendUserToKafka(any(UserEvent.class));
     }
 
     @Test
