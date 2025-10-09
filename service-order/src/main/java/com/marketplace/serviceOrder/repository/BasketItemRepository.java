@@ -1,14 +1,15 @@
 package com.marketplace.serviceOrder.repository;
 
 import com.marketplace.serviceOrder.entity.Basket;
+import com.marketplace.serviceOrder.entity.BasketItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface BasketRepository extends JpaRepository<Basket, Long> {
+public interface BasketItemRepository extends JpaRepository<BasketItem, Long> {
 
-    Optional<Basket> findByUserId(Long userId);
+    Optional<BasketItem> findByBasketAndProductId(Basket basket, Long productId);
 
 }

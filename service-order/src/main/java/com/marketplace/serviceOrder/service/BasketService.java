@@ -1,6 +1,7 @@
 package com.marketplace.serviceOrder.service;
 
 import com.marketplace.serviceOrder.entity.Basket;
+import com.marketplace.serviceOrder.exception.BasketException;
 import com.marketplace.serviceOrder.repository.BasketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,11 @@ public class BasketService {
         basket.setUserId(userId);
 
         basketRepository.save(basket);
+    }
+
+    public Basket findBasketByUserId(Long userId) {
+        return basketRepository.findByUserId(userId)
+                .orElseThrow(() -> new BasketException("Basket not found."));
     }
 
 }
