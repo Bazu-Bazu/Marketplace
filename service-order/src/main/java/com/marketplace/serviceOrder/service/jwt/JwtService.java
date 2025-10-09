@@ -1,9 +1,11 @@
 package com.marketplace.serviceOrder.service.jwt;
 
+import com.marketplace.serviceOrder.exception.HttpServletRequestException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -70,6 +72,23 @@ public class JwtService {
         byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
 
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public Long extractUserId(HttpServletRequest request) {
+        String token = extractToken(request);
+
+        Claims claims = extractAllClaims(token);
+
+        return claims.get("user_id", Long.class);
+    }
+
+    private String extractToken(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7);
+        }
+
+        throw new HttpServletRequestException("JWT token not found in Authorization header");
     }
 
 }
