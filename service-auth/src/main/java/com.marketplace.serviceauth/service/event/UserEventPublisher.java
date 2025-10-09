@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserEventPublisher {
 
-    private final KafkaTemplate<String, UserEvent> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
-    public void sendUserIdToKafka(UserEvent event) {
+    public void sendUserToKafka(UserEvent event) {
         kafkaTemplate.send("users", event.getId().toString(), event);
     }
 

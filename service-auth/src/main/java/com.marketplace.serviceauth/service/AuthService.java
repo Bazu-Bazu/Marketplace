@@ -93,7 +93,7 @@ public class AuthService {
                     () -> userRepository.save(user)
             );
 
-            userEventPublisher.sendUserIdToKafka(buildUserEvent(user));
+            userEventPublisher.sendUserToKafka(buildUserEvent(user));
 
             return buildAuthResponse(user.getId(), null, null);
         }
