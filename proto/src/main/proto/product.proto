@@ -1,0 +1,14 @@
+syntax = "proto3";
+package com.marketplace.grpc;
+
+message ValidateProductRequest {
+  int64 product_id = 1;
+}
+
+message ValidateProductResponse {
+  bool product_exist = 1;
+}
+
+service ProductService {
+  rpc ValidateProduct(ValidateProductRequest) returns (ValidateProductResponse);
+}
