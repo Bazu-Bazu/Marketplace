@@ -12,7 +12,6 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -41,9 +40,6 @@ public class ProductPhotoController {
                     .body(responses);
         } catch (AccessDeniedException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(e.getMessage());
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
