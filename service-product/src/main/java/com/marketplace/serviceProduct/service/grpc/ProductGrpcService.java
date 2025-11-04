@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 @GrpcService
 @RequiredArgsConstructor
@@ -22,20 +24,22 @@ public class ProductGrpcService extends ProductServiceGrpc.ProductServiceImplBas
             StreamObserver<Product.ValidateProductResponse> responseObserver)
     {
         try {
-            productService.findProductById(request.getProductId());
+            Map<String, Integer> map = productService.validateProduct(request.getProductId());
 
-            sendValidateProductResponse(responseObserver, true);
+            sendValidateProductResponse(responseObserver, true, map.get("price"), map.get("count"));
         } catch (ProductException e) {
-            sendValidateProductResponse(responseObserver, false);
+            sendValidateProductResponse(responseObserver, false, 0, 0);
         }
     }
 
     private void sendValidateProductResponse(
             StreamObserver<Product.ValidateProductResponse> responseObserver,
-            boolean productExist)
+            boolean productExist, int price, int count)
     {
         Product.ValidateProductResponse response = Product.ValidateProductResponse.newBuilder()
                 .setProductExist(productExist)
+                .setPrice(price)
+                .setCount(count)
                 .build();
 
         responseObserver.onNext(response);
