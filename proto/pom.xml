@@ -12,11 +12,6 @@
     <artifactId>proto</artifactId>
     <packaging>jar</packaging>
 
-    <properties>
-        <grpc.version>1.58.0</grpc.version>
-        <protobuf.version>3.25.1</protobuf.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>javax.annotation</groupId>
@@ -58,8 +53,10 @@
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <version>${protobuf.plugin.version}</version>
                 <configuration>
+                    <!--suppress UnresolvedMavenProperty -->
                     <protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protocArtifact>
                     <pluginId>grpc-java</pluginId>
+                    <!--suppress UnresolvedMavenProperty -->
                     <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
                     <protoSourceRoot>${project.basedir}/src/main/proto</protoSourceRoot>
                 </configuration>
