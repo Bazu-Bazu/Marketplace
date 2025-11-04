@@ -12,6 +12,9 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,17 +34,25 @@ class ProductGrpcServiceTest {
     }
 
     @Test
-    void validateProduct_WithExistingProduct_ShouldReturnTrue() {
+    void validateProduct_WithExistingProduct_ShouldReturnTrueAndPriceAndCount() {
         Long productId = 1L;
         Product.ValidateProductRequest request = Product.ValidateProductRequest.newBuilder()
                 .setProductId(productId)
                 .build();
 
+        Map<String, Integer> validationResult = new HashMap<>();
+        validationResult.put("price", 100);
+        validationResult.put("count", 5);
+
+        when(productService.validateProduct(productId)).thenReturn(validationResult);
+
         productGrpcService.validateProduct(request, responseObserver);
 
-        verify(productService).findProductById(productId);
+        verify(productService).validateProduct(productId);
         verify(responseObserver).onNext(argThat(response ->
-                response.getProductExist() == true
+                response.getProductExist() == true &&
+                        response.getPrice() == 100 &&
+                        response.getCount() == 5
         ));
         verify(responseObserver).onCompleted();
         verifyNoMoreInteractions(responseObserver);
@@ -55,13 +66,15 @@ class ProductGrpcServiceTest {
                 .build();
 
         doThrow(new ProductException("Product not found"))
-                .when(productService).findProductById(productId);
+                .when(productService).validateProduct(productId);
 
         productGrpcService.validateProduct(request, responseObserver);
 
-        verify(productService).findProductById(productId);
+        verify(productService).validateProduct(productId);
         verify(responseObserver).onNext(argThat(response ->
-                response.getProductExist() == false
+                response.getProductExist() == false &&
+                        response.getPrice() == 0 &&
+                        response.getCount() == 0
         ));
         verify(responseObserver).onCompleted();
         verifyNoMoreInteractions(responseObserver);
@@ -73,6 +86,12 @@ class ProductGrpcServiceTest {
         Product.ValidateProductRequest request = Product.ValidateProductRequest.newBuilder()
                 .setProductId(productId)
                 .build();
+
+        Map<String, Integer> validationResult = new HashMap<>();
+        validationResult.put("price", 150);
+        validationResult.put("count", 10);
+
+        when(productService.validateProduct(productId)).thenReturn(validationResult);
 
         productGrpcService.validateProduct(request, responseObserver);
 
