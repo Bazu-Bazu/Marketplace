@@ -18,6 +18,9 @@ public class BasketItem {
     @Column(nullable = false)
     private Integer count;
 
+    @Column(nullable = false)
+    private Integer price;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "basket_id", nullable = false)
     private Basket basket;

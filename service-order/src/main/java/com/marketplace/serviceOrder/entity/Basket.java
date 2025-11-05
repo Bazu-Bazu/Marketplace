@@ -17,6 +17,9 @@ public class Basket {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
+    @Column(name = "total_price")
+    private Integer totalPrice;
+
     @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BasketItem> items;
 
