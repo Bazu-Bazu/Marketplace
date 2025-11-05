@@ -7,8 +7,6 @@ message ValidateProductRequest {
 
 message ValidateProductResponse {
   bool product_exist = 1;
-  int32 count = 2;
-  int32 price = 3;
 }
 
 service ProductService {

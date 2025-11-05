@@ -142,14 +142,4 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public Map<String, Integer> validateProduct(Long productId) {
-        Product product = findProductById(productId);
-
-        Map<String, Integer> map = new HashMap<>();
-        map.put("price", product.getPrice());
-        map.put("count", product.getCount());
-
-        return map;
-    }
-
 }
