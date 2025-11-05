@@ -9,6 +9,29 @@ message ValidateProductResponse {
   bool product_exist = 1;
 }
 
+message BasketValidationRequest {
+  repeated BasketItemRequest items = 1;
+}
+
+message BasketItemRequest {
+  int64 product_id = 1;
+  int32 count = 2;
+}
+
+message BasketValidationResponse {
+  repeated ProductValidationResult results = 1;
+}
+
+message ProductValidationResult {
+  int64 product_id = 1;
+  bool product_exists = 2;
+  int32 current_price = 3;
+  int32 available_count = 4;
+  bool is_price_changed = 5;
+  bool is_count_sufficient = 6;
+}
+
 service ProductService {
   rpc ValidateProduct(ValidateProductRequest) returns (ValidateProductResponse);
+  rpc ValidateBasketProducts(BasketValidationRequest) returns (BasketValidationResponse);
 }
