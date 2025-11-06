@@ -9,7 +9,7 @@ public class BasketValidationResult {
 
     private final Map<Long, BasketItemValidationResult> resultsByProductId;
 
-    public BasketItemValidationResult getResultForItems(Long productId) {
+    public BasketItemValidationResult getResultForItem(Long productId) {
         return resultsByProductId.get(productId);
     }
 

@@ -9,8 +9,8 @@ public class BasketItemValidationResult {
 
     private boolean productExist;
     private int currentPrice;
+    private int requestedCount;
     private int availableCount;
-    private boolean priceChanged;
     private boolean countSufficient;
 
 }

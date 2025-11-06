@@ -7,5 +7,6 @@ public class AddItemRequest {
 
     private Long productId;
     private Integer count;
+    private Integer price;
 
 }
