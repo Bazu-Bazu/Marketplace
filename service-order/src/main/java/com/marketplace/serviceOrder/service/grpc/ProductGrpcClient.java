@@ -59,8 +59,8 @@ public class ProductGrpcClient {
                         result -> new BasketItemValidationResult(
                                 result.getProductExists(),
                                 result.getCurrentPrice(),
+                                result.getRequestedCount(),
                                 result.getAvailableCount(),
-                                result.getIsPriceChanged(),
                                 result.getIsCountSufficient()
                         )
                 ));
