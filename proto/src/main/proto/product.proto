@@ -26,8 +26,8 @@ message ProductValidationResult {
   int64 product_id = 1;
   bool product_exists = 2;
   int32 current_price = 3;
-  int32 available_count = 4;
-  bool is_price_changed = 5;
+  int32 requested_count = 4;
+  int32 available_count = 5;
   bool is_count_sufficient = 6;
 }
 
