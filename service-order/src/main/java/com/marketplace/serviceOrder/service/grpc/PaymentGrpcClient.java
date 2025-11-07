@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class PaymentGrpcClient {
 
     public String createPayment(Order order) {
-        return "";
+        return "paymentID";
     }
 
 }
