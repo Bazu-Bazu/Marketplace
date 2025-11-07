@@ -13,10 +13,14 @@ public class BasketValidationResult {
         return resultsByProductId.get(productId);
     }
 
-    public boolean hasErrors() {
+    public boolean hasNotExistItems() {
         return resultsByProductId.values().stream()
-                .anyMatch(result -> !result.isProductExist() ||
-                                                          !result.isCountSufficient());
+                .anyMatch(result -> !result.isProductExist());
+    }
+
+    public boolean hasNotCountSufficientItems() {
+        return resultsByProductId.values().stream()
+                .anyMatch(result -> !result.isCountSufficient());
     }
 
 }

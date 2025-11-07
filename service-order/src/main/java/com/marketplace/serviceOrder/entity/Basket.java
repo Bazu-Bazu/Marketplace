@@ -3,6 +3,7 @@ package com.marketplace.serviceOrder.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,6 +22,6 @@ public class Basket {
     private Integer totalPrice;
 
     @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BasketItem> items;
+    private List<BasketItem> items = new ArrayList<>();
 
 }

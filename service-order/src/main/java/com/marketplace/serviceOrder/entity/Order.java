@@ -4,6 +4,7 @@ import com.marketplace.serviceOrder.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,13 +22,13 @@ public class Order {
     @Column(nullable = false)
     private OrderStatus status;
 
-    @Column(nullable = false)
+    @Column(name = "total_price", nullable = false)
     private Integer totalPrice;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItem> items;
+    private List<OrderItem> items = new ArrayList<>();
 
-    @Column(nullable = false)
+    @Column(name = "payment_id")
     private String paymentId;
 
     @Column(nullable = false)
