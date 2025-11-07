@@ -42,4 +42,56 @@ public class ProductGrpcService extends ProductServiceGrpc.ProductServiceImplBas
         responseObserver.onCompleted();
     }
 
+    @Override
+    public void validateBasketProducts(Product.BasketValidationRequest request,
+                                       StreamObserver<Product.BasketValidationResponse> responseObserver)
+    {
+        Product.BasketValidationResponse.Builder responseBuilder = Product.BasketValidationResponse.newBuilder();
+
+        for (Product.BasketItemRequest basketItem : request.getItemsList()) {
+            Product.ProductValidationResult validationResult = validateProductForBasket(basketItem);
+            responseBuilder.addResults(validationResult);
+        }
+
+        Product.BasketValidationResponse response = responseBuilder.build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    private Product.ProductValidationResult validateProductForBasket(Product.BasketItemRequest basketItem) {
+        long productId = basketItem.getProductId();
+        int requestedCount = basketItem.getCount();
+
+        try {
+            var product = productService.findProductById(productId);
+            return createFoundProductResult(product, requestedCount);
+        } catch (Exception e) {
+            return createNotFoundProductResult(productId, requestedCount);
+        }
+    }
+
+    private Product.ProductValidationResult createNotFoundProductResult(long productId, int requestedCount) {
+        return Product.ProductValidationResult.newBuilder()
+                .setProductId(productId)
+                .setProductExists(false)
+                .setRequestedCount(requestedCount)
+                .setAvailableCount(0)
+                .setIsCountSufficient(false)
+                .setCurrentPrice(0)
+                .build();
+    }
+
+    private Product.ProductValidationResult createFoundProductResult(
+            com.marketplace.serviceProduct.entity.Product product, int requestedCount)
+    {
+        return Product.ProductValidationResult.newBuilder()
+                .setProductId(product.getId())
+                .setProductExists(true)
+                .setRequestedCount(requestedCount)
+                .setAvailableCount(product.getCount())
+                .setIsCountSufficient(requestedCount <= product.getCount())
+                .setCurrentPrice(product.getPrice())
+                .build();
+    }
+
 }
