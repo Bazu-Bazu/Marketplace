@@ -9,7 +9,7 @@ public class ProductShortResponse {
 
     private Long id;
     private String name;
-    private Byte rating;
+    private Double rating;
     private Integer price;
     private Long sellerId;
     private String photoUrl;

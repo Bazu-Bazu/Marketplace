@@ -142,4 +142,23 @@ public class ProductService {
         productRepository.save(product);
     }
 
+    @Transactional
+    public void changeProductRating(Long productId, Integer rating) {
+        if (rating < 1 || rating > 5) {
+            throw new ProductException("Illegal rating.");
+        }
+
+        Product product = findProductById(productId);
+
+        int newRatingCount = (product.getCount() != null ? product.getCount() : 0) + 1;
+        int newTotalRating = (product.getTotalRating() != null ? product.getTotalRating() : 0) + rating;
+        double newRating = (double) newTotalRating / newRatingCount;
+
+        product.setRatingCount(newRatingCount);
+        product.setTotalRating(newTotalRating);
+        product.setRating(newRating);
+
+        productRepository.save(product);
+    }
+
 }

@@ -34,7 +34,13 @@ public class Product {
     @Column(nullable = false)
     private String sellerName;
 
-    private Byte rating;
+    private Double rating;
+
+    @Column(name = "rating_count")
+    private Integer ratingCount;
+
+    @Column(name = "total_rating")
+    private Integer totalRating;
 
     @ManyToMany
     @JoinTable(
