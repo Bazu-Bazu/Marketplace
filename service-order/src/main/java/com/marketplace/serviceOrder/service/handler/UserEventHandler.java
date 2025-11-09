@@ -19,7 +19,6 @@ public class UserEventHandler {
     public void createBasketForUser(String message) throws JsonProcessingException {
         UserEvent userEvent = objectMapper.readValue(message, UserEvent.class);
         basketService.createBasket(userEvent.getId());
-        System.out.println("order");
     }
 
 }
