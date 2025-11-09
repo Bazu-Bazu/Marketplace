@@ -8,10 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/order")
@@ -35,6 +32,54 @@ public class OrderController {
         } catch (HttpServletRequestException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage());
+        }
+    }
+
+    @PatchMapping("/process/{orderId}")
+    public ResponseEntity<?> processOrder(@PathVariable Long orderId) {
+        try {
+            OrderResponse response = orderService.processOrder(orderId);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage());
+        }
+    }
+
+    @PatchMapping("/ship/{orderId}")
+    public ResponseEntity<?> shipOrder(@PathVariable Long orderId) {
+        try {
+            OrderResponse response = orderService.shipOrder(orderId);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(e.getMessage());
+        }
+    }
+
+    @PatchMapping("/deliver/{orderId}")
+    public ResponseEntity<?> deliverOrder(@PathVariable Long orderId) {
+        try {
+            OrderResponse response = orderService.deliverOrder(orderId);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage());
+        }
+    }
+
+    @PatchMapping("/cancel/{orderId}")
+    public ResponseEntity<?> cancelOrder(@PathVariable Long orderId) {
+        try {
+            OrderResponse response = orderService.cancelOrder(orderId);
+
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(e.getMessage());

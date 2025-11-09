@@ -1,6 +1,5 @@
 package com.marketplace.serviceOrder.service;
 
-import com.marketplace.serviceOrder.dto.grpc.BasketValidationResult;
 import com.marketplace.serviceOrder.dto.response.OrderItemResponse;
 import com.marketplace.serviceOrder.dto.response.OrderResponse;
 import com.marketplace.serviceOrder.entity.Basket;
@@ -25,6 +24,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemService orderItemService;
     private final PaymentGrpcClient paymentGrpcClient;
+    private final OrderStatusService orderStatusService;
 
     @Transactional
     public OrderResponse createOrder(Long userId, String address) {
@@ -34,7 +34,7 @@ public class OrderService {
             throw new BasketException("Cannot create order from empty basket.");
         }
 
-        BasketValidationResult validationResult = basketService.validateBasket(basket);
+        basketService.validateBasket(basket);
 
         Order order = createOrderFromBasket(basket, address);
 
@@ -42,11 +42,11 @@ public class OrderService {
             String paymentId = paymentGrpcClient.createPayment(order);
             order.setPaymentId(paymentId);
             orderRepository.save(order);
+            orderStatusService.transitionTo(order, OrderStatus.PAID);
 
             return createOrderResponse(order);
         } catch (Exception e) {
-            order.setStatus(OrderStatus.CANCELLED);
-            orderRepository.save(order);
+            orderStatusService.transitionTo(order, OrderStatus.CANCELLED);
 
             throw new OrderException("Cannot create payment.");
         }
@@ -72,9 +72,9 @@ public class OrderService {
     protected Order createOrderFromBasket(Basket basket, String address) {
         Order order = new Order();
         order.setUserId(basket.getUserId());
-        order.setStatus(OrderStatus.PENDING);
         order.setAddress(address);
         order.setTotalPrice(basket.getTotalPrice());
+        orderStatusService.transitionTo(order, OrderStatus.PENDING);
 
         orderRepository.save(order);
 
@@ -82,6 +82,39 @@ public class OrderService {
         order.setItems(orderItems);
 
         return order;
+    }
+
+    public Order findOrderById(Long orderId) {
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new OrderException("Order not found."));
+    }
+
+    public OrderResponse processOrder(Long orderId) {
+        Order order = findOrderById(orderId);
+        Order changedOrder = orderStatusService.transitionTo(order, OrderStatus.PROCESSING);
+
+        return createOrderResponse(changedOrder);
+    }
+
+    public OrderResponse shipOrder(Long orderId) {
+        Order order = findOrderById(orderId);
+        Order changedOrder = orderStatusService.transitionTo(order, OrderStatus.SHIPPED);
+
+        return createOrderResponse(changedOrder);
+    }
+
+    public OrderResponse deliverOrder(Long orderId) {
+        Order order = findOrderById(orderId);
+        Order changedOrder = orderStatusService.transitionTo(order, OrderStatus.DELIVERED);
+
+        return createOrderResponse(changedOrder);
+    }
+
+    public OrderResponse cancelOrder(Long orderId) {
+        Order order = findOrderById(orderId);
+        Order changedOrder = orderStatusService.transitionTo(order, OrderStatus.CANCELLED);
+
+        return createOrderResponse(changedOrder);
     }
 
 }

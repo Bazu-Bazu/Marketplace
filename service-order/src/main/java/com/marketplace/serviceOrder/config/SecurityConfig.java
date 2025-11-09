@@ -24,8 +24,13 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/basket-item/**",
-                                "/order/**")
+                                "/order/create")
                         .hasRole("USER")
+                        .requestMatchers("/order/process/",
+                                "/order/deliver/",
+                                "/order/ship/",
+                                "/order/cancel/")
+                        .hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
