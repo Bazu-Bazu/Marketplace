@@ -150,7 +150,7 @@ public class ProductService {
 
         Product product = findProductById(productId);
 
-        int newRatingCount = (product.getCount() != null ? product.getCount() : 0) + 1;
+        int newRatingCount = (product.getRatingCount() != null ? product.getRatingCount() : 0) + 1;
         int newTotalRating = (product.getTotalRating() != null ? product.getTotalRating() : 0) + rating;
         double newRating = (double) newTotalRating / newRatingCount;
 
