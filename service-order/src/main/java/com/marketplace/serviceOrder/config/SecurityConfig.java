@@ -24,7 +24,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/basket-item/**",
-                                "/order/create")
+                                "/order/create",
+                                "order-item/**")
                         .hasRole("USER")
                         .requestMatchers("/order/process/",
                                 "/order/deliver/",

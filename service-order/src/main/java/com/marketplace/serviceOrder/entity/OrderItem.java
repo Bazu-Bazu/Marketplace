@@ -21,6 +21,8 @@ public class OrderItem {
     @Column(nullable = false)
     private Integer count;
 
+    private Integer rating;
+
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;

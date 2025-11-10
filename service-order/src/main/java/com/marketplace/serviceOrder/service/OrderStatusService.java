@@ -6,6 +6,7 @@ import com.marketplace.serviceOrder.exception.OrderStatusException;
 import com.marketplace.serviceOrder.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 import java.util.Set;
@@ -25,10 +26,11 @@ public class OrderStatusService {
             OrderStatus.CANCELLED, Set.of()
     );
 
+    @Transactional
     public Order transitionTo(Order order, OrderStatus newStatus) {
         OrderStatus currentStatus = order.getStatus();
 
-        if (!isTransitionAllowed(currentStatus, newStatus)) {
+        if (currentStatus != null && !isTransitionAllowed(currentStatus, newStatus)) {
             throw new OrderStatusException(
                     String.format("Cannot transition from %s to %s", currentStatus, newStatus)
             );

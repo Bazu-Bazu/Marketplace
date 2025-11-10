@@ -11,5 +11,6 @@ public class OrderItemResponse {
     private Long productId;
     private Integer price;
     private Integer count;
+    private Integer rating;
 
 }
