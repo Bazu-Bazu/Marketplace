@@ -71,16 +71,6 @@ public class BasketItemService {
         }
     }
 
-    public void changeItemsCount(List<BasketItem> items, BasketValidationResult validationResult) {
-        items.forEach(item -> {
-            BasketItemValidationResult result = validationResult.getResultForItem(item.getProductId());
-            if (!result.isCountSufficient()) {
-                item.setCount(result.getAvailableCount());
-                basketItemRepository.save(item);
-            }
-        });
-    }
-
     private BasketItem createBasketItem(Basket basket, AddItemRequest request) {
         BasketItem item = new BasketItem();
         item.setProductId(request.getProductId());

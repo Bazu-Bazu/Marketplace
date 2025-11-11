@@ -3,6 +3,7 @@ package com.marketplace.serviceProduct.service.grpc;
 import com.marketplace.grpc.Product;
 import com.marketplace.grpc.ProductServiceGrpc;
 import com.marketplace.serviceProduct.exception.ProductException;
+import com.marketplace.serviceProduct.repository.ProductRepository;
 import com.marketplace.serviceProduct.service.ProductService;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class ProductGrpcService extends ProductServiceGrpc.ProductServiceImplBase {
 
     private final ProductService productService;
+    private final ProductRepository productRepository;
 
     @Override
     public void validateProduct(
@@ -64,6 +66,12 @@ public class ProductGrpcService extends ProductServiceGrpc.ProductServiceImplBas
 
         try {
             var product = productService.findProductById(productId);
+
+            if (requestedCount <= product.getCount()) {
+                product.setCount(product.getCount() - requestedCount);
+                productRepository.save(product);
+            }
+
             return createFoundProductResult(product, requestedCount);
         } catch (Exception e) {
             return createNotFoundProductResult(productId, requestedCount);
@@ -91,6 +99,32 @@ public class ProductGrpcService extends ProductServiceGrpc.ProductServiceImplBas
                 .setAvailableCount(product.getCount())
                 .setIsCountSufficient(requestedCount <= product.getCount())
                 .setCurrentPrice(product.getPrice())
+                .build();
+    }
+
+    @Override
+    public void cancelBasketReservation(Product.CancelBasketReservationRequest request,
+                                        StreamObserver<Product.CancelBasketReservationResult> responseObserver)
+    {
+        Product.CancelBasketReservationResult.Builder responseBuilder =
+                Product.CancelBasketReservationResult.newBuilder();
+
+        for (Product.CancelProductReservationRequest productRequest : request.getProductsList()) {
+            var product = productService.findProductById(productRequest.getProductId());
+            product.setCount(product.getCount() + productRequest.getCount());
+            productRepository.save(product);
+
+            responseBuilder.addResults(createCancelProductReservationResult(product.getId()));
+        }
+
+        Product.CancelBasketReservationResult response = responseBuilder.build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    private Product.CancelProductReservationResult createCancelProductReservationResult(Long productId) {
+        return Product.CancelProductReservationResult.newBuilder()
+                .setProductId(productId)
                 .build();
     }
 

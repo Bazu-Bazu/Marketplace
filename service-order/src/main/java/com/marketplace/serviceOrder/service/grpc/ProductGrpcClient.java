@@ -5,6 +5,7 @@ import com.marketplace.grpc.ProductServiceGrpc;
 import com.marketplace.serviceOrder.dto.grpc.BasketItemValidationResult;
 import com.marketplace.serviceOrder.dto.grpc.BasketValidationResult;
 import com.marketplace.serviceOrder.entity.BasketItem;
+import com.marketplace.serviceOrder.entity.OrderItem;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
@@ -66,6 +67,27 @@ public class ProductGrpcClient {
                 ));
 
         return new BasketValidationResult(resultMap);
+    }
+
+    public void cancelBasketReservation(List<OrderItem> items) {
+        Product.CancelBasketReservationRequest request = createCancelBasketReservationRequest(items);
+        Product.CancelBasketReservationResult result = blockingStub.cancelBasketReservation(request);
+    }
+
+    private Product.CancelBasketReservationRequest createCancelBasketReservationRequest(List<OrderItem> items) {
+        Product.CancelBasketReservationRequest.Builder requestBuilder =
+                Product.CancelBasketReservationRequest.newBuilder();
+
+        items.forEach(item -> {
+            Product.CancelProductReservationRequest request = Product.CancelProductReservationRequest.newBuilder()
+                    .setProductId(item.getProductId())
+                    .setCount(item.getCount())
+                    .build();
+
+            requestBuilder.addProducts(request);
+        });
+
+        return requestBuilder.build();
     }
 
 }

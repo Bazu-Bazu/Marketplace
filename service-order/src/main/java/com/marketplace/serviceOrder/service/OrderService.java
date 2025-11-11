@@ -48,6 +48,8 @@ public class OrderService {
         } catch (Exception e) {
             orderStatusService.transitionTo(order, OrderStatus.CANCELLED);
 
+            basketService.CancelBasketReservation(order.getItems());
+
             throw new OrderException("Cannot create payment.");
         }
     }

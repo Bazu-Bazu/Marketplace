@@ -3,7 +3,9 @@ package com.marketplace.serviceOrder.service;
 import com.marketplace.serviceOrder.dto.grpc.BasketValidationResult;
 import com.marketplace.serviceOrder.entity.Basket;
 import com.marketplace.serviceOrder.entity.BasketItem;
+import com.marketplace.serviceOrder.entity.OrderItem;
 import com.marketplace.serviceOrder.exception.BasketException;
+import com.marketplace.serviceOrder.exception.OrderItemException;
 import com.marketplace.serviceOrder.repository.BasketRepository;
 import com.marketplace.serviceOrder.service.grpc.ProductGrpcClient;
 import org.springframework.context.annotation.Lazy;
@@ -69,13 +71,17 @@ public class BasketService {
         }
 
         if (validationResult.hasNotCountSufficientItems()) {
-            basketItemService.changeItemsCount(items, validationResult);
+            throw new OrderItemException("There is not enough product.");
         }
 
         basketItemService.updateBasketItemPrices(items, validationResult);
         updateBasketTotalPrice(basket);
 
         return validationResult;
+    }
+
+    public void CancelBasketReservation(List<OrderItem> items) {
+        productGrpcClient.cancelBasketReservation(items);
     }
 
 }
