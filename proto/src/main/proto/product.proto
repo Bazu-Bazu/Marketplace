@@ -31,7 +31,25 @@ message ProductValidationResult {
   bool is_count_sufficient = 6;
 }
 
+message CancelBasketReservationRequest {
+  repeated CancelProductReservationRequest products = 1;
+}
+
+message CancelProductReservationRequest {
+  int64 product_id = 1;
+  int32 count = 2;
+}
+
+message CancelBasketReservationResult {
+  repeated CancelProductReservationResult results = 1;
+}
+
+message CancelProductReservationResult {
+  int64 product_id = 1;
+}
+
 service ProductService {
   rpc ValidateProduct(ValidateProductRequest) returns (ValidateProductResponse);
   rpc ValidateBasketProducts(BasketValidationRequest) returns (BasketValidationResponse);
+  rpc CancelBasketReservation(CancelBasketReservationRequest) returns (CancelBasketReservationResult);
 }
