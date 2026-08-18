@@ -61,26 +61,6 @@ services:
     depends_on:
       - zookeeper
 
-
-#  spring_app:
-#    build: .
-#    depends_on:
-#      postgres:
-#        condition: service_healthy
-#      redis:
-#        condition: service_started
-#    environment:
-#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_db:5432/postgres
-#      SPRING_DATASOURCE_USERNAME: postgres
-#      SPRING_DATASOURCE_PASSWORD: postgresч
-#      SPRING_REDIS_HOST: redis
-#      SPRING_REDIS_PORT: 6379
-#      SPRING_PROFILES_ACTIVE: docker
-#    ports:
-#      - "8080:8080"
-#    networks:
-#      - app_network
-
 volumes:
   redis_data:
   postgres_data:
