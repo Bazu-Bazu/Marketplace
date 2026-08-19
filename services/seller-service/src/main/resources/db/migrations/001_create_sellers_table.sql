@@ -1,0 +1,14 @@
+CREATE TABLE sellers (
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    avatar_url VARCHAR(255),
+    status VARCHAR(50) NOT NULL DEFAULT 'NEW',
+    inn VARCHAR(255) NOT NULL UNIQUE,
+    address VARCHAR(255) NOT NULL UNIQUE,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP WITH TIME ZONE,
+
+    CONSTRAINT chk_seller_status CHECK (status IN ('NEW', 'ACTIVE', 'LOCKED', 'DELETED'))
+);

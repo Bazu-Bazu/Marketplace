@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  postgres_seller:
+    image: postgres:16
+    container_name: postgres_seller
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: seller_db
+    ports:
+      - "5442:5432"
+    volumes:
+      - postgres_seller:/var/lib/postgresql/data
+
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    container_name: kafka-marketplace
+    hostname: kafka
+    ports:
+      - '9092:9092'
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+    depends_on:
+      - zookeeper
+
+  seller-service:
+    build:
+      context: ./services/seller-service
+      dockerfile: Dockerfile
+    container_name: seller-service
+    depends_on:
+      - postgres_seller
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_seller:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SERVER_PORT: 8080
+    ports:
+      - "8091:8080"
+
+volumes:
+  postgres_seller:
+
+networks:
+  app_network:
+    driver: bridge

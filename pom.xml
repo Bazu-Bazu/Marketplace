@@ -12,6 +12,7 @@
     <modules>
         <module>services/order-service</module>
         <module>services/product-service</module>
+        <module>services/seller-service</module>
     </modules>
 
     <parent>

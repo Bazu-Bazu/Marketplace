@@ -33,7 +33,6 @@ build/
 ### VS Code ###
 .vscode/
 
-/service-auth/src/main/resources/application.yaml
 /service-order/src/main/resources/application.yaml
 /service-product/src/main/resources/application.yaml
 
@@ -43,18 +42,15 @@ build/
 /service-product/.gitattributes
 
 /mvnw
-/service-auth/mvnw
 /service-order/mvnw
 /service-product/mvnw
 
 /mvnw.cmd
-/service-auth/mvnw.cmd
 /service-order/mvnw.cmd
 /service-product/mvnw.cmd
 
 .mvn
-/service-auth/.mvn
 /service-order/.mvn
 /service-product/.mvn
 
-service-auth/src/main/java/com/marketplace/serviceauth/forDevelopment/
+/services/seller-service/src/main/resources/public.pem

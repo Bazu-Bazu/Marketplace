@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - include:
+      file: db/migrations/001_create_sellers_table.sql
+  - include:
+      file: db/migrations/002_create_seller_phones_table.sql
+  - include:
+      file: db/migrations/003_create_seller_emails_table.sql
+  - include:
+      file: db/migrations/004_create_seller_bank_accounts_table.sql
