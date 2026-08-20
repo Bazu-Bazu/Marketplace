@@ -1,11 +1,10 @@
 package com.burkina.marketplace.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.util.Objects;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -35,5 +34,17 @@ public class SellerEmail {
         if (this.seller == null && seller != null) {
             this.seller = seller;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        SellerEmail that = (SellerEmail) o;
+        return Objects.equals(email, that.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(email);
     }
 }

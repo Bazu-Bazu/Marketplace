@@ -56,9 +56,9 @@ public record SellerLongResponse(
                 seller.getInn(),
                 seller.getAddress(),
                 seller.getCreatedAt(),
-                mapEmails(seller.getEmails()),
-                mapPhones(seller.getPhones()),
-                mapBankAccounts(seller.getBankAccounts())
+                mapEmails(seller.getEmails().stream().toList()),
+                mapPhones(seller.getPhones().stream().toList()),
+                mapBankAccounts(seller.getBankAccounts().stream().toList())
         );
     }
 

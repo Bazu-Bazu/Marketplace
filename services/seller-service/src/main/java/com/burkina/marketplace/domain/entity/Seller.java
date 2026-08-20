@@ -1,17 +1,14 @@
 package com.burkina.marketplace.domain.entity;
 
 import com.burkina.marketplace.domain.enums.SellerStatus;
+import com.burkina.marketplace.dto.data.SellerData;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -34,15 +31,15 @@ public class Seller {
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
-    private List<SellerEmail> emails = new ArrayList<>();
+    private Set<SellerEmail> emails = new HashSet<>();
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
-    private List<SellerPhone> phones = new ArrayList<>();
+    private Set<SellerPhone> phones = new HashSet<>();
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
-    private List<SellerBankAccount> bankAccounts = new ArrayList<>();
+    private Set<SellerBankAccount> bankAccounts = new HashSet<>();
 
     @Column(nullable = false)
     private String description;
@@ -53,12 +50,12 @@ public class Seller {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Builder.Default
-    private SellerStatus status = SellerStatus.NEW;
+    private SellerStatus status = SellerStatus.ACTIVE;
 
     @Column(nullable = false, unique = true)
     private String inn;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String address;
 
     @CreatedDate
@@ -68,42 +65,46 @@ public class Seller {
     @Column
     private Instant deletedAt;
 
-    public void addPhones(List<SellerPhone> phones) {
-        phones.forEach(this::addPhone);
-    }
-
-    private void addPhone(SellerPhone phone) {
-        if (this.phones == null) {
-            this.phones = new ArrayList<>();
-        }
-
+    public void addPhone(SellerPhone phone) {
         this.phones.add(phone);
         phone.setSeller(this);
     }
 
-    public void addEmails(List<SellerEmail> emails) {
-        emails.forEach(this::addEmail);
-    }
-
-    private void addEmail(SellerEmail email) {
-        if (this.emails == null) {
-            this.emails = new ArrayList<>();
-        }
-
+    public void addEmail(SellerEmail email) {
         this.emails.add(email);
         email.setSeller(this);
     }
 
-    public void addBankAccounts(List<SellerBankAccount> bankAccounts) {
-        bankAccounts.forEach(this::addBankAccount);
-    }
-
-    private void addBankAccount(SellerBankAccount bankAccount) {
-        if (this.bankAccounts == null) {
-            this.bankAccounts = new ArrayList<>();
-        }
-
+    public void addBankAccount(SellerBankAccount bankAccount) {
         this.bankAccounts.add(bankAccount);
         bankAccount.setSeller(this);
+    }
+
+    public void update(SellerData data) {
+        Optional.ofNullable(data.name())
+                .ifPresent(value -> this.name = value);
+
+        Optional.ofNullable(data.description())
+                .ifPresent(value -> this.description = value);
+
+        Optional.ofNullable(data.avatarUrl())
+                .ifPresent(value -> this.avatarUrl = value);
+
+        Optional.ofNullable(data.inn())
+                .ifPresent(value -> this.inn = value);
+
+        Optional.ofNullable(data.address())
+                .ifPresent(value -> this.address = value);
+    }
+
+    public boolean delete() {
+        if (this.status != SellerStatus.DELETED) {
+            this.status = SellerStatus.DELETED;
+            this.deletedAt = Instant.now();
+
+            return true;
+        }
+
+        return false;
     }
 }

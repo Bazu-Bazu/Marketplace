@@ -2,7 +2,8 @@ package com.burkina.marketplace.service;
 
 import com.burkina.marketplace.domain.entity.Seller;
 import com.burkina.marketplace.domain.repository.SellerRepository;
-import com.burkina.marketplace.dto.request.SellerRegisterRequest;
+import com.burkina.marketplace.dto.request.*;
+import com.burkina.marketplace.mapper.SellerMapper;
 import com.burkina.marketplace.service.event.SellerEventPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,11 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class SellerService {
+public class SellerCommandService {
 
+    private final SellerMapper sellerMapper;
     private final SellerRepository sellerRepository;
-    private final SellerPhoneService sellerPhoneService;
-    private final SellerEmailService sellerEmailService;
+    private final SellerQueryService sellerQueryService;
     private final SellerEventPublisher sellerEventPublisher;
 
     @Transactional
@@ -28,13 +29,28 @@ public class SellerService {
                 .address(request.address())
                 .build();
 
-        newSeller.addPhones(sellerPhoneService.createPhones(request.phones()));
-        newSeller.addEmails(sellerEmailService.createEmails(request.emails()));
-
         Seller savedSeller = sellerRepository.save(newSeller);
 
         sellerEventPublisher.publishSellerRegistration(savedSeller);
 
         return savedSeller;
+    }
+
+    @Transactional
+    public Seller updateSellerInfo(Long userId, SellerUpdateInfoRequest request) {
+        Seller seller = sellerQueryService.getSellerByUserId(userId);
+        seller.update(sellerMapper.toData(request));
+
+        return seller;
+    }
+
+    @Transactional
+    public void delete(Long userId) {
+        Seller seller = sellerQueryService.getSellerByUserId(userId);
+        boolean deleted = seller.delete();
+
+        if (deleted) {
+            sellerEventPublisher.publishSellerDeleted(seller);
+        }
     }
 }
