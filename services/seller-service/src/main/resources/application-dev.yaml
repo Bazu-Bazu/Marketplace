@@ -28,6 +28,9 @@ spring:
   liquibase:
     change-log: classpath:db/migrations/db.migrations.yaml
 
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS}
+
   security:
     oauth2:
       resourceserver:

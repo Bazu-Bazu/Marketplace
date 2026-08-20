@@ -11,3 +11,5 @@ databaseChangeLog:
       file: db/migrations/005_delete_unique_constraint.sql
   - include:
       file: db/migrations/006_delete_unique_constraint_#2.sql
+  - include:
+      file: db/migrations/007_create_outbox_events_table.sql
