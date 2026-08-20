@@ -1,0 +1,8 @@
+ALTER TABLE seller_phones
+DROP CONSTRAINT seller_phones_phone_key;
+
+ALTER TABLE seller_emails
+DROP CONSTRAINT seller_emails_email_key;
+
+ALTER TABLE seller_bank_accounts
+DROP CONSTRAINT seller_bank_accounts_account_number_key;

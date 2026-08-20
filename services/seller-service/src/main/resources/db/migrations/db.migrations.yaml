@@ -7,3 +7,5 @@ databaseChangeLog:
       file: db/migrations/003_create_seller_emails_table.sql
   - include:
       file: db/migrations/004_create_seller_bank_accounts_table.sql
+  - include:
+      file: db/migrations/005_delete_unique_constraint.sql

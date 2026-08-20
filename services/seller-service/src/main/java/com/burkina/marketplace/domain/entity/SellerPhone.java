@@ -24,7 +24,7 @@ public class SellerPhone {
     @JoinColumn(name = "seller_id")
     private Seller seller;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String phone;
 
     public SellerPhone(String phone) {

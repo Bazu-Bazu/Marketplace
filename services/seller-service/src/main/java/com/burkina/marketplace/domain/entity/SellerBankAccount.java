@@ -27,7 +27,7 @@ public class SellerBankAccount {
     @Column(nullable = false)
     private String bankName;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String accountNumber;
 
     public void setSeller(Seller seller) {
