@@ -45,6 +45,26 @@ public class SellerCommandService {
     }
 
     @Transactional
+    public void lock(Long sellerId) {
+        Seller seller = sellerQueryService.getSellerById(sellerId);
+
+        boolean locked = seller.lock();
+        if (locked) {
+            sellerEventPublisher.publishSellerLocked(seller);
+        }
+    }
+
+    @Transactional
+    public void unlock(Long sellerId) {
+        Seller seller = sellerQueryService.getSellerById(sellerId);
+
+        boolean unlocked = seller.unlock();
+        if (unlocked) {
+            sellerEventPublisher.publishSellerUnlocked(seller);
+        }
+    }
+
+    @Transactional
     public void delete(Long userId) {
         Seller seller = sellerQueryService.getSellerByUserId(userId);
         boolean deleted = seller.delete();

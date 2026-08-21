@@ -97,6 +97,26 @@ public class Seller {
                 .ifPresent(value -> this.address = value);
     }
 
+    public boolean lock() {
+        if (this.status == SellerStatus.ACTIVE) {
+            this.status = SellerStatus.LOCKED;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean unlock() {
+        if (this.status == SellerStatus.LOCKED) {
+            this.status = SellerStatus.ACTIVE;
+
+            return true;
+        }
+
+        return false;
+    }
+
     public boolean delete() {
         if (this.status != SellerStatus.DELETED) {
             this.status = SellerStatus.DELETED;

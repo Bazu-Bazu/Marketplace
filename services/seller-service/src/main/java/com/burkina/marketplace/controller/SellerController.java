@@ -7,6 +7,7 @@ import com.burkina.marketplace.dto.response.SellerLongResponse;
 import com.burkina.marketplace.dto.response.SellerShortResponse;
 import com.burkina.marketplace.mapper.SellerMapper;
 import com.burkina.marketplace.service.SellerCommandService;
+import com.burkina.marketplace.service.SellerQueryService;
 import com.burkina.marketplace.validation.validator.SellerValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,9 @@ import org.springframework.web.bind.annotation.*;
 public class SellerController {
 
     private final SellerMapper sellerMapper;
-    private final SellerCommandService sellerService;
     private final SellerValidator sellerValidator;
+    private final SellerQueryService sellerQueryService;
+    private final SellerCommandService sellerCommandService;
 
     @PostMapping
     public ResponseEntity<SellerShortResponse> createSeller(
@@ -33,9 +35,18 @@ public class SellerController {
        Long userId = Long.valueOf(jwt.getSubject());
        sellerValidator.validateUserIsNotSeller(userId);
 
-       Seller seller = sellerService.registerSeller(userId, request);
+       Seller seller = sellerCommandService.registerSeller(userId, request);
 
        return ResponseEntity.status(HttpStatus.CREATED).body(sellerMapper.toShortResponse(seller));
+    }
+
+    @GetMapping
+    public ResponseEntity<SellerLongResponse> getSeller(@AuthenticationPrincipal Jwt jwt) {
+        Long userId = Long.valueOf(jwt.getSubject());
+
+        Seller seller = sellerQueryService.getSellerByUserId(userId);
+
+        return ResponseEntity.ok().body(sellerMapper.toLongResponse(seller));
     }
 
     @PatchMapping
@@ -45,7 +56,7 @@ public class SellerController {
     ) {
         Long userId = Long.valueOf(jwt.getSubject());
 
-        Seller seller = sellerService.updateSellerInfo(userId, request);
+        Seller seller = sellerCommandService.updateSellerInfo(userId, request);
 
         return ResponseEntity.ok().body(sellerMapper.toLongResponse(seller));
     }
@@ -54,7 +65,7 @@ public class SellerController {
     public ResponseEntity<Void> delete(@AuthenticationPrincipal Jwt jwt) {
         Long userId = Long.valueOf(jwt.getSubject());
 
-        sellerService.delete(userId);
+        sellerCommandService.delete(userId);
 
         return ResponseEntity.noContent().build();
     }

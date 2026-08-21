@@ -22,6 +22,14 @@ public class SellerQueryService {
     }
 
     @Transactional(readOnly = true)
+    public Seller getSellerById(Long id) {
+        return sellerRepository.findById(id)
+                .orElseThrow(() -> new SellerNotFoundException(
+                        String.format("Seller by id %d not found", id)
+                ));
+    }
+
+    @Transactional(readOnly = true)
     public Seller getSellerWithPhonesByUserId(Long userId) {
         return sellerRepository.findWithPhonesByUserId(userId)
                 .orElseThrow(() -> new SellerNotFoundException(
