@@ -1,14 +1,15 @@
 package com.burkina.marketplace.domain.entity;
 
+import com.burkina.marketplace.domain.enums.CategoryStatus;
 import jakarta.persistence.*;
-import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
+import lombok.*;
 
 @Entity
 @Table(name = "categories")
-@Data
+@Builder
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Category {
 
     @Id
@@ -18,14 +19,36 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Category parent;
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Category> children = new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @Builder.Default
+    private CategoryStatus status = CategoryStatus.ACTIVE;
 
-    @ManyToMany(mappedBy = "categories")
-    private List<Product> products;
+    public void setParent(Category parent) {
+        this.parent = parent;
+    }
 
+    public boolean inactivate() {
+        if (this.status == CategoryStatus.ACTIVE) {
+            this.status = CategoryStatus.INACTIVE;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean activate() {
+        if (this.status == CategoryStatus.INACTIVE) {
+            this.status = CategoryStatus.ACTIVE;
+
+            return true;
+        }
+
+        return false;
+    }
 }

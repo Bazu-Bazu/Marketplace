@@ -1,61 +1,68 @@
-package com.marketplace.serviceProduct.service;
+package com.burkina.marketplace.service;
 
-import com.marketplace.serviceProduct.dto.request.AddCategoryRequest;
-import com.marketplace.serviceProduct.dto.response.CategoryResponse;
-import com.marketplace.serviceProduct.entity.Category;
-import com.marketplace.serviceProduct.exception.CategoryException;
+import com.burkina.marketplace.dto.request.AddCategoryRequest;
+import com.burkina.marketplace.domain.entity.Category;
+import com.burkina.marketplace.exception.CategoryNotFoundException;
+import com.burkina.marketplace.service.event.CategoryEventPublisher;
 import lombok.RequiredArgsConstructor;
-import com.marketplace.serviceProduct.repository.CategoryRepository;
+import com.burkina.marketplace.domain.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final CategoryEventPublisher categoryEventPublisher;
 
     @Transactional
-    public CategoryResponse addCategory(AddCategoryRequest request) {
-        Optional<Category> category = categoryRepository.findByName(request.getName().toLowerCase());
-        if (category.isPresent()) {
-            throw new CategoryException("Category already exists.");
-        }
-
-        Category newCategory = new Category();
-        newCategory.setName(request.getName().toLowerCase());
-
-        Long parentId = request.getParentId();
-        if (parentId != null) {
-            Category parentCategory = findCategoryById(parentId);
-            newCategory.setParent(parentCategory);
-        }
-        categoryRepository.save(newCategory);
-
-        return buildCategoryResponse(newCategory);
-    }
-
-    @Transactional
-    public void deleteCategory(Long categoryId) {
-        Category category = findCategoryById(categoryId);
-
-        categoryRepository.delete(category);
-    }
-
-    private Category findCategoryById(Long id) {
-        return categoryRepository.findById(id)
-                .orElseThrow(() -> new CategoryException("Category not found."));
-    }
-
-    private CategoryResponse buildCategoryResponse(Category category) {
-        return CategoryResponse.builder()
-                .id(category.getId())
-                .name(category.getName())
-                .parentId(category.getParent() != null ? category.getParent().getId() : null)
-                .parentName(category.getParent() != null ? category.getParent().getName() : null)
+    public Category addCategory(AddCategoryRequest request) {
+        Category newCategory = Category.builder()
+                .name(request.name())
                 .build();
+
+        if (request.parentId() != null) {
+            Category parent = getCategoryById(request.parentId());
+            newCategory.setParent(parent);
+        }
+
+        Category savedCategory = categoryRepository.save(newCategory);
+
+        categoryEventPublisher.publishCategoryCreated(savedCategory);
+
+        return savedCategory;
     }
 
+    @Transactional
+    public Category inactivateCategory(Long categoryId) {
+        Category category = getCategoryById(categoryId);
+        boolean inactivated = category.inactivate();
+
+        if (inactivated) {
+            categoryEventPublisher.publishCategoryInactivated(category);
+        }
+
+        return category;
+    }
+
+    @Transactional
+    public Category activateCategory(Long categoryId) {
+        Category category = getCategoryById(categoryId);
+        boolean activated = category.activate();
+
+        if (activated) {
+            categoryEventPublisher.publishCategoryActivated(category);
+        }
+
+        return category;
+    }
+
+    @Transactional(readOnly = true)
+    public Category getCategoryById(Long categoryId) {
+        return categoryRepository.findByIdWithParent(categoryId)
+                .orElseThrow(() -> new CategoryNotFoundException(
+                    String.format("Category with id %s not found", categoryId)
+                ));
+    }
 }

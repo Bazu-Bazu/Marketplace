@@ -1,42 +1,51 @@
-package com.marketplace.serviceProduct.controller;
+package com.burkina.marketplace.controller;
 
-import com.marketplace.serviceProduct.dto.request.AddCategoryRequest;
-import com.marketplace.serviceProduct.dto.response.CategoryResponse;
-import com.marketplace.serviceProduct.service.CategoryService;
+import com.burkina.marketplace.domain.entity.Category;
+import com.burkina.marketplace.dto.request.AddCategoryRequest;
+import com.burkina.marketplace.dto.response.CategoryResponse;
+import com.burkina.marketplace.mapper.CategoryMapper;
+import com.burkina.marketplace.service.CategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/admin/categories")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class CategoryController {
 
+    private final CategoryMapper categoryMapper;
     private final CategoryService categoryService;
 
-    @PostMapping("/add")
-    public ResponseEntity<?> addCategory(@RequestBody AddCategoryRequest request) {
-        try {
-            CategoryResponse response = categoryService.addCategory(request);
+    @PostMapping
+    public ResponseEntity<CategoryResponse> addCategory(@Valid @RequestBody AddCategoryRequest request) {
+        Category category = categoryService.addCategory(request);
 
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(e.getMessage());
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoryMapper.toResponse(category));
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteCategory(@RequestParam Long categoryId) {
-        try {
-            categoryService.deleteCategory(categoryId);
+    @PatchMapping("/{categoryId}/inactivate")
+    public ResponseEntity<CategoryResponse> inactivateCategory(@PathVariable Long categoryId) {
+        Category category = categoryService.inactivateCategory(categoryId);
 
-            return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(e.getMessage());
-        }
+        return ResponseEntity.ok().body(categoryMapper.toResponse(category));
     }
 
+    @PatchMapping("/{categoryId}/activate")
+    public ResponseEntity<CategoryResponse> activateCategory(@PathVariable Long categoryId) {
+        Category category = categoryService.activateCategory(categoryId);
+
+        return ResponseEntity.ok().body(categoryMapper.toResponse(category));
+    }
+
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<CategoryResponse> getCategory(@PathVariable Long categoryId) {
+        Category category = categoryService.getCategoryById(categoryId);
+
+        return ResponseEntity.ok().body(categoryMapper.toResponse(category));
+    }
 }

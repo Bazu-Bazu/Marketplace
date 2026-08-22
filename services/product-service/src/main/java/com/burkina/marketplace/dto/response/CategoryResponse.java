@@ -1,15 +1,14 @@
-package com.marketplace.serviceProduct.dto.response;
+package com.burkina.marketplace.dto.response;
 
+import com.burkina.marketplace.domain.enums.CategoryStatus;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Setter;
 
-@Data
 @Builder
+@Setter
 public class CategoryResponse {
-
     private Long id;
     private String name;
     private Long parentId;
-    private String parentName;
-
+    private CategoryStatus status;
 }
