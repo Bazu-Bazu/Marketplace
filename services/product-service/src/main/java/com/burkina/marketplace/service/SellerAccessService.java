@@ -6,6 +6,7 @@ import com.burkina.common.dto.event.SellerRegisteredEvent;
 import com.burkina.common.dto.event.SellerUnlockedEvent;
 import com.burkina.marketplace.domain.entity.SellerAccess;
 import com.burkina.marketplace.domain.repository.SellerAccessRepository;
+import com.burkina.marketplace.exception.SellerNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,5 +40,13 @@ public class SellerAccessService {
     @Transactional
     public void deleteSeller(SellerDeletedEvent event) {
         sellerAccessRepository.deleteSeller(event.sellerId());
+    }
+
+    @Transactional(readOnly = true)
+    public Long getSellerIdByUserId(Long userId) {
+        return sellerAccessRepository.findSellerIdByUserId(userId)
+                .orElseThrow(() -> new SellerNotFoundException(
+                        String.format("Seller not found for user with id: %d", userId)
+                ));
     }
 }

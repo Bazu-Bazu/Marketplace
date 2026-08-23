@@ -2,12 +2,15 @@ package com.burkina.marketplace.service;
 
 import com.burkina.marketplace.dto.request.AddCategoryRequest;
 import com.burkina.marketplace.domain.entity.Category;
+import com.burkina.marketplace.exception.CategoryAssignmentException;
 import com.burkina.marketplace.exception.CategoryNotFoundException;
 import com.burkina.marketplace.service.event.CategoryEventPublisher;
 import lombok.RequiredArgsConstructor;
 import com.burkina.marketplace.domain.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -64,5 +67,24 @@ public class CategoryService {
                 .orElseThrow(() -> new CategoryNotFoundException(
                     String.format("Category with id %s not found", categoryId)
                 ));
+    }
+
+    @Transactional(readOnly = true)
+    public Set<Category> getExistingNotAssignedToProduct(Set<Long> categoryIds, Long productId) {
+        Set<Category> existingCategories = categoryRepository.findExistingNotAssignedToProduct(categoryIds, productId);
+
+        if (existingCategories.isEmpty()) {
+            throw new CategoryNotFoundException(
+                    String.format("Categories which are not assigned to product with id %s are not found", categoryIds)
+            );
+        }
+
+        if (existingCategories.size() != categoryIds.size()) {
+            throw new CategoryAssignmentException(
+                    String.format("Some categories do not exist or are already assigned to product with id %d", productId)
+            );
+        }
+
+        return existingCategories;
     }
 }
