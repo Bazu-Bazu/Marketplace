@@ -1,8 +1,8 @@
 package com.burkina.marketplace.controller;
 
-import com.burkina.marketplace.dto.request.AddProductCategoriesRequest;
-import com.burkina.marketplace.dto.request.DeleteProductCategoriesRequest;
-import com.burkina.marketplace.dto.response.ProductCategoriesResponse;
+import com.burkina.marketplace.domain.entity.ProductCategory;
+import com.burkina.marketplace.dto.request.AddProductCategoryRequest;
+import com.burkina.marketplace.dto.response.ProductCategoryResponse;
 import com.burkina.marketplace.mapper.ProductCategoryMapper;
 import com.burkina.marketplace.service.ProductCategoryService;
 import jakarta.validation.Valid;
@@ -21,28 +21,28 @@ public class ProductCategoryController {
     private final ProductCategoryMapper productCategoryMapper;
     private final ProductCategoryService productCategoryService;
 
-    @PostMapping("/{productId}/categories}")
-    public ResponseEntity<ProductCategoriesResponse> addCategoriesToProduct(
+    @PostMapping("/{productId}/categories")
+    public ResponseEntity<ProductCategoryResponse> addCategoryToProduct(
             @AuthenticationPrincipal Jwt jwt,
             @PathVariable Long productId,
-            @Valid @RequestBody AddProductCategoriesRequest request
+            @Valid @RequestBody AddProductCategoryRequest request
     ) {
         Long userId = Long.valueOf(jwt.getSubject());
 
-        var productCategories = productCategoryService.addProductCategories(userId, productId, request);
+        ProductCategory productCategory = productCategoryService.addProductCategory(userId, productId, request);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(productCategoryMapper.toResponse(productCategories));
+        return ResponseEntity.status(HttpStatus.CREATED).body(productCategoryMapper.toResponse(productCategory));
     }
 
-    @DeleteMapping("/{productId}/categories}")
-    public ResponseEntity<Void> removeCategoriesFromProduct(
+    @DeleteMapping("/{productId}/categories/{categoryId}")
+    public ResponseEntity<Void> removeCategoryFromProduct(
             @AuthenticationPrincipal Jwt jwt,
             @PathVariable Long productId,
-            @Valid @RequestBody DeleteProductCategoriesRequest request
+            @PathVariable Long categoryId
     ) {
         Long userId = Long.valueOf(jwt.getSubject());
 
-        productCategoryService.removeProductCategories(userId, productId, request);
+        productCategoryService.removeProductCategory(userId, productId, categoryId);
 
         return ResponseEntity.noContent().build();
     }

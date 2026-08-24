@@ -3,6 +3,7 @@ package com.burkina.marketplace.service;
 import com.burkina.marketplace.dto.request.AddCategoryRequest;
 import com.burkina.marketplace.domain.entity.Category;
 import com.burkina.marketplace.exception.CategoryAssignmentException;
+import com.burkina.marketplace.exception.CategoryNotActiveException;
 import com.burkina.marketplace.exception.CategoryNotFoundException;
 import com.burkina.marketplace.service.event.CategoryEventPublisher;
 import lombok.RequiredArgsConstructor;
@@ -67,6 +68,18 @@ public class CategoryService {
                 .orElseThrow(() -> new CategoryNotFoundException(
                     String.format("Category with id %s not found", categoryId)
                 ));
+    }
+
+    public Category getActiveCategoryById(Long categoryId) {
+        Category category = getCategoryById(categoryId);
+
+        if (!category.isActive()) {
+            throw new CategoryNotActiveException(
+                    String.format("Category with id %s is not active", categoryId)
+            );
+        }
+
+        return category;
     }
 
     @Transactional(readOnly = true)

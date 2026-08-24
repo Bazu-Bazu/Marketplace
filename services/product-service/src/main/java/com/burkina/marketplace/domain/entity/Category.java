@@ -51,4 +51,8 @@ public class Category {
 
         return false;
     }
+
+    public boolean isActive() {
+        return this.status == CategoryStatus.ACTIVE;
+    }
 }
