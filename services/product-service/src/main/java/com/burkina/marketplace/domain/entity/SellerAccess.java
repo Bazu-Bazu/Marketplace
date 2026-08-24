@@ -25,4 +25,8 @@ public class SellerAccess {
     @Column(nullable = false)
     @Builder.Default
     private SellerStatus status = SellerStatus.ACTIVE;
+
+    public boolean isActive() {
+        return status == SellerStatus.ACTIVE;
+    }
 }

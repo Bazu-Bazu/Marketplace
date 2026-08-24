@@ -36,5 +36,5 @@ public interface SellerAccessRepository extends JpaRepository<SellerAccess, Long
     """)
     void deleteSeller(@Param("sellerId") Long sellerId);
 
-    Optional<Long> findSellerIdByUserId(Long userId);
+    Optional<SellerAccess> findByUserId(Long userId);
 }

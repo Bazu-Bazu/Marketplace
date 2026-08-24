@@ -14,14 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ProductCategoryService {
 
-    private final ProductService productService;
     private final CategoryService categoryService;
+    private final ProductQueryService productQueryService;
     private final ProductEventPublisher productEventPublisher;
     private final ProductCategoryRepository productCategoryRepository;
 
     @Transactional
     public ProductCategory addProductCategory(Long userId, Long productId, AddProductCategoryRequest request) {
-        Product product = productService.getProductByUserIdAndProductIdWithDetails(userId, productId);
+        Product product = productQueryService.getProductByUserIdAndProductIdWithDetails(userId, productId);
 
         Category category = categoryService.getActiveCategoryById(request.categoryId());
 
@@ -40,10 +40,18 @@ public class ProductCategoryService {
 
     @Transactional
     public void removeProductCategory(Long userId, Long productId, Long productCategoryId) {
-        Product product = productService.getProductByUserIdAndProductIdWithDetails(userId, productId);
+        Product product = productQueryService.getProductByUserIdAndProductIdWithDetails(userId, productId);
 
         product.removeCategory(productCategoryId);
 
         productEventPublisher.publishCategoriesRemovedFromProduct(product);
+
+        if (!product.complete()) {
+            boolean isRecalled = product.recall();
+
+            if (isRecalled) {
+                productEventPublisher.publishProductLocked(product);
+            }
+        }
     }
 }

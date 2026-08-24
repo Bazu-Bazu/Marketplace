@@ -13,13 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ProductMediaService {
 
-    private final ProductService productService;
-    private final ProductMediaRepository productMediaRepository;
+    private final ProductQueryService productQueryService;
     private final ProductEventPublisher productEventPublisher;
+    private final ProductMediaRepository productMediaRepository;
 
     @Transactional
     public ProductMedia addProductMedia(Long userId, Long productId, AddProductMediaRequest request) {
-        Product product = productService.getProductByUserIdAndProductIdWithDetails(userId, productId);
+        Product product = productQueryService.getProductByUserIdAndProductIdWithDetails(userId, productId);
 
         ProductMedia newProductMedia = ProductMedia.builder()
                 .url(request.url())
@@ -38,12 +38,20 @@ public class ProductMediaService {
 
     @Transactional
     public void removeProductMedia(Long userId, Long productId, Long mediaId) {
-        Product product = productService.getProductByUserIdAndProductIdWithDetails(userId, productId);
+        Product product = productQueryService.getProductByUserIdAndProductIdWithDetails(userId, productId);
 
         ProductMedia removedMedia = product.removeMedia(mediaId);
 
         if (removedMedia.getSortOrder() == 0) {
             productEventPublisher.publishProductMainPictureChanged(product);
+        }
+
+        if (!product.complete()) {
+            boolean isRecalled = product.recall();
+
+            if (isRecalled) {
+                productEventPublisher.publishProductLocked(product);
+            }
         }
     }
 }
