@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface SellerAccessRepository extends JpaRepository<SellerAccess, Long> {
 
@@ -33,4 +35,6 @@ public interface SellerAccessRepository extends JpaRepository<SellerAccess, Long
         WHERE sa.sellerId = :sellerId
     """)
     void deleteSeller(@Param("sellerId") Long sellerId);
+
+    Optional<Long> findSellerIdByUserId(Long userId);
 }
