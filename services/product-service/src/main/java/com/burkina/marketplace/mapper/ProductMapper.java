@@ -1,6 +1,8 @@
 package com.burkina.marketplace.mapper;
 
+import com.burkina.common.dto.event.*;
 import com.burkina.marketplace.domain.entity.Product;
+import com.burkina.marketplace.domain.entity.ProductMedia;
 import com.burkina.marketplace.dto.data.ProductData;
 import com.burkina.marketplace.dto.request.UpdateProductRequest;
 import com.burkina.marketplace.dto.response.ProductResponse;
@@ -48,6 +50,59 @@ public class ProductMapper {
                 .name(request.name())
                 .description(request.description())
                 .price(request.price())
+                .build();
+    }
+
+    public ProductPublishedEvent toProductPublishedEvent(Product product) {
+        return ProductPublishedEvent.builder()
+                .productId(product.getId())
+                .sellerId(product.getSellerId())
+                .name(product.getName())
+                .description(product.getDescription())
+                .price(product.getPrice())
+                .imageUrl(product.getMedias().stream()
+                        .filter(media -> media.getSortOrder() == 0)
+                        .map(ProductMedia::getUrl)
+                        .findFirst()
+                        .orElse(null))
+                .categoryIds(product.getCategories().stream()
+                        .map(pc -> pc.getCategory().getId())
+                        .toList())
+                .build();
+    }
+
+    public ProductUpdatedEvent toProductUpdatedEvent(Product product) {
+        return ProductUpdatedEvent.builder()
+                .productId(product.getId())
+                .name(product.getName())
+                .description(product.getDescription())
+                .price(product.getPrice())
+                .imageUrl(product.getMedias().stream()
+                        .filter(media -> media.getSortOrder() == 0)
+                        .map(ProductMedia::getUrl)
+                        .findFirst()
+                        .orElse(null))
+                .categoryIds(product.getCategories().stream()
+                        .map(pc -> pc.getCategory().getId())
+                        .toList())
+                .build();
+    }
+
+    public ProductLockedEvent toProductLockedEvent(Product product) {
+        return ProductLockedEvent.builder()
+                .productId(product.getId())
+                .build();
+    }
+
+    public ProductUnlockedEvent toProductUnlockedEvent(Product product) {
+        return ProductUnlockedEvent.builder()
+                .productId(product.getId())
+                .build();
+    }
+
+    public ProductRecalledEvent toProductRecalledEvent(Product product) {
+        return ProductRecalledEvent.builder()
+                .productId(product.getId())
                 .build();
     }
 }

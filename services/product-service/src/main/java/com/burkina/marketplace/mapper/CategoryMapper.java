@@ -1,5 +1,8 @@
 package com.burkina.marketplace.mapper;
 
+import com.burkina.common.dto.event.CategoryActivatedEvent;
+import com.burkina.common.dto.event.CategoryCreatedEvent;
+import com.burkina.common.dto.event.CategoryInactivatedEvent;
 import com.burkina.marketplace.domain.entity.Category;
 import com.burkina.marketplace.dto.response.CategoryResponse;
 import org.springframework.stereotype.Component;
@@ -19,5 +22,25 @@ public class CategoryMapper {
         }
 
         return response;
+    }
+
+    public CategoryCreatedEvent toCategoryCreatedEvent(Category category) {
+        return CategoryCreatedEvent.builder()
+                .categoryId(category.getId())
+                .parentId(category.getParent().getId())
+                .name(category.getName())
+                .build();
+    }
+
+    public CategoryInactivatedEvent toCategoryInactivatedEvent(Category category) {
+        return CategoryInactivatedEvent.builder()
+                .categoryId(category.getId())
+                .build();
+    }
+
+    public CategoryActivatedEvent toCategoryActivatedEvent(Category category) {
+        return CategoryActivatedEvent.builder()
+                .categoryId(category.getId())
+                .build();
     }
 }
