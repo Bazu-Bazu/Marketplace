@@ -52,3 +52,8 @@ build/
 
 /services/seller-service/src/main/resources/public.pem
 /services/product-service/src/main/resources/public.pem
+/services/cart-service/src/main/resources/public.pem
+/services/inventory-service/src/main/resources/public.pem
+/services/payment-service/src/main/resources/public.pem
+/services/search-service/src/main/resources/public.pem
+/services/order-service/src/main/resources/public.pem
