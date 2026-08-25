@@ -33,7 +33,7 @@ public class ProductCategoryService {
 
         ProductCategory savedProductCategory = productCategoryRepository.save(productCategory);
 
-        productEventPublisher.publishCategoriesAddedToProduct(product);
+        productEventPublisher.publishProductUpdated(product);
 
         return savedProductCategory;
     }
@@ -44,7 +44,7 @@ public class ProductCategoryService {
 
         product.removeCategory(productCategoryId);
 
-        productEventPublisher.publishCategoriesRemovedFromProduct(product);
+        productEventPublisher.publishProductUpdated(product);
 
         if (!product.complete()) {
             boolean isRecalled = product.recall();

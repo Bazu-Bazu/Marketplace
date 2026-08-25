@@ -30,7 +30,7 @@ public class ProductMediaService {
         ProductMedia savedProductMedia = productMediaRepository.save(newProductMedia);
 
         if (savedProductMedia.getSortOrder() == 0) {
-            productEventPublisher.publishProductMainPictureChanged(product);
+            productEventPublisher.publishProductUpdated(product);
         }
 
         return savedProductMedia;
@@ -43,7 +43,7 @@ public class ProductMediaService {
         ProductMedia removedMedia = product.removeMedia(mediaId);
 
         if (removedMedia.getSortOrder() == 0) {
-            productEventPublisher.publishProductMainPictureChanged(product);
+            productEventPublisher.publishProductUpdated(product);
         }
 
         if (!product.complete()) {

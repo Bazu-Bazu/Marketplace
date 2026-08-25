@@ -47,7 +47,7 @@ public class ProductCommandService {
 
     @Transactional
     public Product publishProduct(Long userId, Long productId) {
-        Product product = productQueryService.getProductByUserIdAndProductId(userId, productId);
+        Product product = productQueryService.getProductByUserIdAndProductIdWithDetails(userId, productId);
 
         boolean isPublished = product.publish();
 
