@@ -12,12 +12,30 @@ services:
       - "5442:5432"
     volumes:
       - postgres_seller:/var/lib/postgresql/data
+    networks:
+      - burkina-network
+
+  postgres_product:
+    image: postgres:16
+    container_name: postgres_product
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: product_db
+    ports:
+      - "5443:5432"
+    volumes:
+      - postgres_product:/var/lib/postgresql/data
+    networks:
+      - burkina-network
 
   zookeeper:
     image: wurstmeister/zookeeper:latest
     container_name: zookeeper
     ports:
       - "2181:2181"
+    networks:
+      - burkina-network
 
   kafka:
     image: wurstmeister/kafka:latest
@@ -33,6 +51,8 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
     depends_on:
       - zookeeper
+    networks:
+      - burkina-network
 
   seller-service:
     build:
@@ -50,10 +70,33 @@ services:
       SERVER_PORT: 8080
     ports:
       - "8091:8080"
+    networks:
+      - burkina-network
+
+  product-service:
+    build:
+      context: ./services/product-service
+      dockerfile: Dockerfile
+    container_name: product-service
+    depends_on:
+      - postgres_product
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_product:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SERVER_PORT: 8080
+    ports:
+      - "8092:8080"
+    networks:
+      - burkina-network
 
 volumes:
   postgres_seller:
+  postgres_product:
 
 networks:
-  app_network:
+  burkina-network:
+    name: burkina-network
     driver: bridge
