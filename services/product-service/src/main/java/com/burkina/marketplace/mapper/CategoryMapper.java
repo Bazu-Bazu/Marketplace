@@ -7,27 +7,28 @@ import com.burkina.marketplace.domain.entity.Category;
 import com.burkina.marketplace.dto.response.CategoryResponse;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class CategoryMapper {
 
     public CategoryResponse toResponse(Category category) {
-        CategoryResponse response = CategoryResponse.builder()
+        return CategoryResponse.builder()
                 .id(category.getId())
                 .name(category.getName())
                 .status(category.getStatus())
+                .parentId(Optional.ofNullable(category.getParent())
+                        .map(Category::getId)
+                        .orElse(null))
                 .build();
-
-        if (category.getParent() != null) {
-               response.setParentId(category.getParent().getId());
-        }
-
-        return response;
     }
 
     public CategoryCreatedEvent toCategoryCreatedEvent(Category category) {
         return CategoryCreatedEvent.builder()
                 .categoryId(category.getId())
-                .parentId(category.getParent().getId())
+                .parentId(Optional.ofNullable(category.getParent())
+                        .map(Category::getId)
+                        .orElse(null))
                 .name(category.getName())
                 .build();
     }

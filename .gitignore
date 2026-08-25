@@ -33,9 +33,6 @@ build/
 ### VS Code ###
 .vscode/
 
-/service-order/src/main/resources/application.yaml
-/service-product/src/main/resources/application.yaml
-
 /.gitattributes
 /service-auth/.gitattributes
 /service-order/.gitattributes
@@ -54,3 +51,4 @@ build/
 /service-product/.mvn
 
 /services/seller-service/src/main/resources/public.pem
+/services/product-service/src/main/resources/public.pem

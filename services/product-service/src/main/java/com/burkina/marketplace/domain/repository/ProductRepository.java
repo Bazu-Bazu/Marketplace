@@ -38,7 +38,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findUpdatableProduct(@Param("userId") Long userId, @Param("productId") Long productId);
 
     @EntityGraph(attributePaths = {"categories", "categories.category", "medias"})
-    Optional<Product> findByIdWithDetails(Long id);
+    @Query("""
+            SELECT p
+            FROM Product p
+            WHERE p.id = :productId
+    """)
+    Optional<Product> findByIdWithDetails(@Param("productId") Long productId);
 
     @Query("""
             SELECT p

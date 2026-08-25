@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin/categories")
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('ADMIN')")
-public class CategoryController {
+public class AdminCategoryController {
 
     private final CategoryMapper categoryMapper;
     private final CategoryService categoryService;
