@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - include:
+      file: db/migrations/001_create_seller_access_table.sql
+  - include:
+      file: db/migrations/002_create_categories_table.sql
+  - include:
+      file: db/migrations/003_create_products_table.sql
+  - include:
+      file: db/migrations/004_create_product_category_table.sql
+  - include:
+      file: db/migrations/005_create_product_media_table.sql
+  - include:
+      file: db/migrations/006_create_outbox_events_table.sql

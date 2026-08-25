@@ -1,0 +1,5 @@
+CREATE TABLE sellers (
+    seller_id BIGINT PRIMARY KEY,
+    user_id BIGINT NOT NULL UNIQUE,
+    status VARCHAR(255) NOT NULL DEFAULT 'ACTIVE'
+);
