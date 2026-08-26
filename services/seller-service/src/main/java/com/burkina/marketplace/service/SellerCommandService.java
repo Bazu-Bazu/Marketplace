@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class SellerCommandService {
@@ -57,6 +59,26 @@ public class SellerCommandService {
     @Transactional
     public void unlock(Long sellerId) {
         Seller seller = sellerQueryService.getSellerById(sellerId);
+
+        boolean unlocked = seller.unlock();
+        if (unlocked) {
+            sellerEventPublisher.publishSellerUnlocked(seller);
+        }
+    }
+
+    @Transactional
+    public void lockByUserId(Long userId) {
+        Seller seller = sellerQueryService.getSellerByUserId(userId);
+
+        boolean locked = seller.lock();
+        if (locked) {
+            sellerEventPublisher.publishSellerLocked(seller);
+        }
+    }
+
+    @Transactional
+    public void unlockByUserId(Long userId) {
+        Seller seller = sellerQueryService.getSellerByUserId(userId);
 
         boolean unlocked = seller.unlock();
         if (unlocked) {
