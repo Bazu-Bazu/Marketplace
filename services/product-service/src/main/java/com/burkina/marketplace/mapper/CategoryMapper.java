@@ -1,8 +1,8 @@
 package com.burkina.marketplace.mapper;
 
-import com.burkina.common.dto.event.CategoryActivatedEvent;
-import com.burkina.common.dto.event.CategoryCreatedEvent;
-import com.burkina.common.dto.event.CategoryInactivatedEvent;
+import com.burkina.common.dto.event.marketplace.category.CategoryActivatedEvent;
+import com.burkina.common.dto.event.marketplace.category.CategoryCreatedEvent;
+import com.burkina.common.dto.event.marketplace.category.CategoryInactivatedEvent;
 import com.burkina.marketplace.domain.entity.Category;
 import com.burkina.marketplace.dto.response.CategoryResponse;
 import org.springframework.stereotype.Component;

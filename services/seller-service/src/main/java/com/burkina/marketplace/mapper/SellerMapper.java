@@ -1,9 +1,9 @@
 package com.burkina.marketplace.mapper;
 
-import com.burkina.common.dto.event.SellerDeletedEvent;
-import com.burkina.common.dto.event.SellerLockedEvent;
-import com.burkina.common.dto.event.SellerRegisteredEvent;
-import com.burkina.common.dto.event.SellerUnlockedEvent;
+import com.burkina.common.dto.event.marketplace.seller.SellerDeletedEvent;
+import com.burkina.common.dto.event.marketplace.seller.SellerLockedEvent;
+import com.burkina.common.dto.event.marketplace.seller.SellerRegisteredEvent;
+import com.burkina.common.dto.event.marketplace.seller.SellerUnlockedEvent;
 import com.burkina.marketplace.domain.entity.Seller;
 import com.burkina.marketplace.dto.data.SellerData;
 import com.burkina.marketplace.dto.request.SellerUpdateInfoRequest;

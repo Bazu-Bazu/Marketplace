@@ -1,6 +1,6 @@
 package com.burkina.marketplace.mapper;
 
-import com.burkina.common.dto.event.*;
+import com.burkina.common.dto.event.marketplace.product.*;
 import com.burkina.marketplace.domain.entity.Product;
 import com.burkina.marketplace.domain.entity.ProductMedia;
 import com.burkina.marketplace.dto.data.ProductData;

@@ -1,9 +1,6 @@
 package com.burkina.marketplace.service;
 
-import com.burkina.common.dto.event.SellerDeletedEvent;
-import com.burkina.common.dto.event.SellerLockedEvent;
-import com.burkina.common.dto.event.SellerRegisteredEvent;
-import com.burkina.common.dto.event.SellerUnlockedEvent;
+import com.burkina.common.dto.event.marketplace.seller.*;
 import com.burkina.marketplace.domain.entity.SellerAccess;
 import com.burkina.marketplace.domain.repository.SellerAccessRepository;
 import com.burkina.marketplace.exception.AuthorizationException;

@@ -1,9 +1,6 @@
 package com.burkina.marketplace.kafka.consumer;
 
-import com.burkina.common.dto.event.SellerDeletedEvent;
-import com.burkina.common.dto.event.SellerLockedEvent;
-import com.burkina.common.dto.event.SellerRegisteredEvent;
-import com.burkina.common.dto.event.SellerUnlockedEvent;
+import com.burkina.common.dto.event.marketplace.seller.*;
 import com.burkina.marketplace.service.SellerAccessService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
