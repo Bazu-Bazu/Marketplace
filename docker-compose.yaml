@@ -29,6 +29,20 @@ services:
     networks:
       - burkina-network
 
+  postgres_cart:
+    image: postgres:16
+    container_name: postgres_cart
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cart_db
+    ports:
+      - "5444:5432"
+    volumes:
+      - postgres_cart:/var/lib/postgresql/data
+    networks:
+      - burkina-network
+
   zookeeper:
     image: wurstmeister/zookeeper:latest
     container_name: zookeeper
@@ -61,6 +75,7 @@ services:
     container_name: seller-service
     depends_on:
       - postgres_seller
+      - kafka
     environment:
       SPRING_PROFILES_ACTIVE: dev
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_seller:5432/postgres
@@ -80,6 +95,7 @@ services:
     container_name: product-service
     depends_on:
       - postgres_product
+      - kafka
     environment:
       SPRING_PROFILES_ACTIVE: dev
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_product:5432/postgres
@@ -87,14 +103,39 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
       SERVER_PORT: 8080
+      GRPC_SERVER_PORT: 6565
     ports:
       - "8092:8080"
+      - "6592:6565"
+    networks:
+      - burkina-network
+
+  cart-service:
+    build:
+      context: ./services/cart-service
+      dockerfile: Dockerfile
+    container_name: cart-service
+    depends_on:
+      - postgres_cart
+      - product-service
+      - kafka
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_cart:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      PRODUCT_SERVICE_GRPC_ADDRESS: static://product-service:6565
+      SERVER_PORT: 8080
+    ports:
+      - "8093:8080"
     networks:
       - burkina-network
 
 volumes:
   postgres_seller:
   postgres_product:
+  postgres_cart:
 
 networks:
   burkina-network:
