@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/migrations/001_create_carts_table.sql
+  - include:
+      file: db/migrations/002_create_cart_items_table.sql
