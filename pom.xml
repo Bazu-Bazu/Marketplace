@@ -17,6 +17,7 @@
         <module>services/inventory-service</module>
         <module>services/payment-service</module>
         <module>services/search-service</module>
+        <module>proto</module>
     </modules>
 
     <parent>
@@ -30,6 +31,10 @@
         <java.version>21</java.version>
         <spring-boot.version>3.5.5</spring-boot.version>
         <jjwt.version>0.12.7</jjwt.version>
+        <grpc.version>1.63.0</grpc.version>
+        <protobuf.version>3.25.1</protobuf.version>
+        <grpc-spring.version>3.1.0.RELEASE</grpc-spring.version>
+        <protobuf.plugin.version>0.6.1</protobuf.plugin.version>
     </properties>
 
     <dependencyManagement>

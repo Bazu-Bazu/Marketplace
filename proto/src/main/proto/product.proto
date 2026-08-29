@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package marketplace.product;
+
+service ProductService {
+  rpc GetProductForCart(GetProductForCartRequest) returns (GetProductForCartResponse);
+}
+
+message GetProductForCartRequest {
+  int64 product_id = 1;
+}
+
+message GetProductForCartResponse {
+  int64 product_id = 1;
+  string price = 2;
+  bool available = 3;
+}
