@@ -3,6 +3,7 @@ package com.burkina.marketplace.mapper;
 import com.burkina.common.dto.event.marketplace.product.*;
 import com.burkina.marketplace.domain.entity.Product;
 import com.burkina.marketplace.domain.entity.ProductMedia;
+import com.burkina.marketplace.domain.enums.ProductStatus;
 import com.burkina.marketplace.dto.data.ProductData;
 import com.burkina.marketplace.dto.request.UpdateProductRequest;
 import com.burkina.marketplace.dto.response.ProductResponse;
@@ -103,6 +104,14 @@ public class ProductMapper {
     public ProductRecalledEvent toProductRecalledEvent(Product product) {
         return ProductRecalledEvent.builder()
                 .productId(product.getId())
+                .build();
+    }
+
+    public marketplace.product.Product.GetProductForCartResponse toProductForCartResponse(Product product) {
+        return marketplace.product.Product.GetProductForCartResponse.newBuilder()
+                .setProductId(product.getId())
+                .setPrice(product.getPrice().toPlainString())
+                .setAvailable(product.getStatus() == ProductStatus.PUBLISHED)
                 .build();
     }
 }
