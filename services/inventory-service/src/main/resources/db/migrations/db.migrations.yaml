@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/migrations/001_create_seller_access_table.sql
+  - include:
+      file: db/migrations/002_create_inventories_table.sql
