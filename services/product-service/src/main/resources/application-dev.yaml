@@ -31,7 +31,7 @@ spring:
   kafka:
     bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS}
     consumer:
-      group-id: marketplace-seller-service-group
+      group-id: marketplace-product-service-group
       auto-offset-reset: earliest
 
   security:
