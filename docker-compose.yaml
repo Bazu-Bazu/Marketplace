@@ -43,6 +43,20 @@ services:
     networks:
       - burkina-network
 
+  postgres_inventory:
+    image: postgres:16
+    container_name: postgres_inventory
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: inventory_db
+    ports:
+      - "5445:5432"
+    volumes:
+      - postgres_inventory:/var/lib/postgresql/data
+    networks:
+      - burkina-network
+
   zookeeper:
     image: wurstmeister/zookeeper:latest
     container_name: zookeeper
@@ -132,10 +146,31 @@ services:
     networks:
       - burkina-network
 
+  inventory-service:
+    build:
+      context: ./services/inventory-service
+      dockerfile: Dockerfile
+    container_name: inventory-service
+    depends_on:
+      - postgres_inventory
+      - kafka
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_inventory:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SERVER_PORT: 8080
+    ports:
+      - "8094:8080"
+    networks:
+      - burkina-network
+
 volumes:
   postgres_seller:
   postgres_product:
   postgres_cart:
+  postgres_inventory:
 
 networks:
   burkina-network:
