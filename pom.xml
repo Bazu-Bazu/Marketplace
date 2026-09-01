@@ -18,6 +18,7 @@
         <module>services/payment-service</module>
         <module>services/search-service</module>
         <module>proto</module>
+        <module>services/saga-orchestrator</module>
     </modules>
 
     <parent>

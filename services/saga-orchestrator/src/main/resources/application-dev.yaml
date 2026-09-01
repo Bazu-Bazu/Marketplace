@@ -1,0 +1,68 @@
+server:
+  port: ${SERVER_PORT}
+
+spring:
+  application:
+    name: saga-orchestrator
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 10
+      connection-timeout: 30000
+      max-lifetime: 300000
+      idle-timeout: 30000
+      leak-detection-threshold: 60000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  liquibase:
+    change-log: classpath:db/migrations/db.migrations.yaml
+
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS}
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: classpath:public.pem
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
+
+grpc:
+  client:
+    cart-service:
+      address: ${CART_SERVICE_GRPC_ADDRESS}
+      negotiationType: plaintext
+    product-service:
+      address: ${PRODUCT_SERVICE_GRPC_ADDRESS}
+      negotiationType: plaintext
+    inventory-service:
+      address: ${INVENTORY_SERVICE_GRPC_ADDRESS}
+      negotiationType: plaintext
+    payment-service:
+      address: ${PAYMENT_SERVICE_GRPC_ADDRESS}
+      negotiationType: plaintext
+    order-service:
+      address: ${ORDER_SERVICE_GRPC_ADDRESS}
+      negotiationType: plaintext
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-service:8761/eureka

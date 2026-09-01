@@ -57,3 +57,4 @@ build/
 /services/payment-service/src/main/resources/public.pem
 /services/search-service/src/main/resources/public.pem
 /services/order-service/src/main/resources/public.pem
+/services/saga-orchestrator/src/main/resources/public.pem
