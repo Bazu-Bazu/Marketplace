@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package marketplace.cart;
+
+service CartService {
+  rpc GetCart(GetCartRequest) returns (GetCartResponse);
+  rpc ClearCart(ClearCartRequest) returns (ClearCartResponse);
+}
+
+message GetCartRequest {
+  int64 user_id = 1;
+}
+
+message GetCartResponse {
+  int64 cart_id = 1;
+  repeated CartItem items = 2;
+}
+
+message CartItem {
+  int64 product_id = 1;
+  int32 quantity = 2;
+}
+
+message ClearCartRequest {
+  int64 user_id = 1;
+}
+
+message ClearCartResponse {
+}

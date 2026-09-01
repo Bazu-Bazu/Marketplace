@@ -4,6 +4,7 @@ package marketplace.product;
 
 service ProductService {
   rpc GetProductForCart(GetProductForCartRequest) returns (GetProductForCartResponse);
+  rpc ValidateProducts(ValidateProductsRequest) returns (ValidateProductsResponse);
 }
 
 message GetProductForCartRequest {
@@ -14,4 +15,23 @@ message GetProductForCartResponse {
   int64 product_id = 1;
   string price = 2;
   bool available = 3;
+}
+
+message ValidateProductsRequest {
+  repeated ProductRequest products = 1;
+}
+
+message ProductRequest {
+  int64 product_id = 1;
+}
+
+message ValidateProductsResponse {
+  repeated ProductInfo products = 1;
+}
+
+message ProductInfo {
+  int64 product_id = 1;
+  string price = 2;
+  bool available = 3;
+  bool exists = 4;
 }

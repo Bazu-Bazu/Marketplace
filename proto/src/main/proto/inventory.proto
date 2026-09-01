@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package marketplace.inventory;
+
+service InventoryService {
+  rpc Reserve(ReserveRequest) returns (ReserveResponse);
+  rpc Release(ReleaseRequest) returns (ReleaseResponse);
+}
+
+message ReserveRequest {
+  int64 saga_id = 1;
+  repeated ReserveItem items = 2;
+}
+
+message ReserveItem {
+  int64 product_id = 1;
+  int32 quantity = 2;
+}
+
+message ReserveResponse {
+  int64 reservation_id = 1;
+  ReservationStatus status = 2;
+}
+
+enum ReservationStatus {
+  RESERVED = 0;
+  REJECTED = 1;
+}
+
+message ReleaseRequest {
+  int64 reservation_id = 1;
+}
+
+message ReleaseResponse {
+}

@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package marketplace.saga;
+
+service SagaService {
+  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
+}
+
+message CreateOrderRequest {
+  int64 user_id = 1;
+}
+
+message CreateOrderResponse {
+  int64 order_id = 1;
+}

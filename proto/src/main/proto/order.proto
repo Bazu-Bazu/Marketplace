@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package marketplace.order;
+
+service OrderService {
+  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
+  rpc CancelOrder(CancelOrderRequest) returns (CancelOrderResponse);
+}
+
+message CreateOrderRequest {
+  int64 user_id = 1;
+  repeated OrderItem items = 2;
+  string total_price = 3;
+  int64 reservation_id = 4;
+  int64 payment_id = 5;
+}
+
+message OrderItem {
+  int64 product_id = 1;
+  int32 quantity = 2;
+  string price = 3;
+}
+
+message CreateOrderResponse {
+  int64 order_id = 1;
+}
+
+message CancelOrderRequest {
+  int64 order_id = 1;
+}
+
+message CancelOrderResponse {
+}

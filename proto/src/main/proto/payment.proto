@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package marketplace.payment;
+
+service PaymentService {
+  rpc Pay(PayRequest) returns (PayResponse);
+  rpc Refund(RefundRequest) returns (RefundResponse);
+}
+
+message PayRequest {
+  int64 user_id = 1;
+  int64 saga_id = 2;
+  string amount = 3;
+}
+
+message PayResponse {
+  int64 payment_id = 1;
+  PaymentStatus status = 2;
+}
+
+enum PaymentStatus {
+  SUCCESS = 0;
+  FAILED = 1;
+}
+
+message RefundRequest {
+  int64 payment_id = 1;
+}
+
+message RefundResponse {
+}

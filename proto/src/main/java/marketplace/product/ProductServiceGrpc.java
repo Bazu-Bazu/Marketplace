@@ -46,6 +46,37 @@ public final class ProductServiceGrpc {
     return getGetProductForCartMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<marketplace.product.Product.ValidateProductsRequest,
+      marketplace.product.Product.ValidateProductsResponse> getValidateProductsMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "ValidateProducts",
+      requestType = marketplace.product.Product.ValidateProductsRequest.class,
+      responseType = marketplace.product.Product.ValidateProductsResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<marketplace.product.Product.ValidateProductsRequest,
+      marketplace.product.Product.ValidateProductsResponse> getValidateProductsMethod() {
+    io.grpc.MethodDescriptor<marketplace.product.Product.ValidateProductsRequest, marketplace.product.Product.ValidateProductsResponse> getValidateProductsMethod;
+    if ((getValidateProductsMethod = ProductServiceGrpc.getValidateProductsMethod) == null) {
+      synchronized (ProductServiceGrpc.class) {
+        if ((getValidateProductsMethod = ProductServiceGrpc.getValidateProductsMethod) == null) {
+          ProductServiceGrpc.getValidateProductsMethod = getValidateProductsMethod =
+              io.grpc.MethodDescriptor.<marketplace.product.Product.ValidateProductsRequest, marketplace.product.Product.ValidateProductsResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "ValidateProducts"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  marketplace.product.Product.ValidateProductsRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  marketplace.product.Product.ValidateProductsResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new ProductServiceMethodDescriptorSupplier("ValidateProducts"))
+              .build();
+        }
+      }
+    }
+    return getValidateProductsMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -100,6 +131,13 @@ public final class ProductServiceGrpc {
         io.grpc.stub.StreamObserver<marketplace.product.Product.GetProductForCartResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetProductForCartMethod(), responseObserver);
     }
+
+    /**
+     */
+    default void validateProducts(marketplace.product.Product.ValidateProductsRequest request,
+        io.grpc.stub.StreamObserver<marketplace.product.Product.ValidateProductsResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getValidateProductsMethod(), responseObserver);
+    }
   }
 
   /**
@@ -136,6 +174,14 @@ public final class ProductServiceGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getGetProductForCartMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void validateProducts(marketplace.product.Product.ValidateProductsRequest request,
+        io.grpc.stub.StreamObserver<marketplace.product.Product.ValidateProductsResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getValidateProductsMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -159,6 +205,13 @@ public final class ProductServiceGrpc {
     public marketplace.product.Product.GetProductForCartResponse getProductForCart(marketplace.product.Product.GetProductForCartRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetProductForCartMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public marketplace.product.Product.ValidateProductsResponse validateProducts(marketplace.product.Product.ValidateProductsRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getValidateProductsMethod(), getCallOptions(), request);
     }
   }
 
@@ -185,9 +238,18 @@ public final class ProductServiceGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetProductForCartMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<marketplace.product.Product.ValidateProductsResponse> validateProducts(
+        marketplace.product.Product.ValidateProductsRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getValidateProductsMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_GET_PRODUCT_FOR_CART = 0;
+  private static final int METHODID_VALIDATE_PRODUCTS = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -209,6 +271,10 @@ public final class ProductServiceGrpc {
         case METHODID_GET_PRODUCT_FOR_CART:
           serviceImpl.getProductForCart((marketplace.product.Product.GetProductForCartRequest) request,
               (io.grpc.stub.StreamObserver<marketplace.product.Product.GetProductForCartResponse>) responseObserver);
+          break;
+        case METHODID_VALIDATE_PRODUCTS:
+          serviceImpl.validateProducts((marketplace.product.Product.ValidateProductsRequest) request,
+              (io.grpc.stub.StreamObserver<marketplace.product.Product.ValidateProductsResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -235,6 +301,13 @@ public final class ProductServiceGrpc {
               marketplace.product.Product.GetProductForCartRequest,
               marketplace.product.Product.GetProductForCartResponse>(
                 service, METHODID_GET_PRODUCT_FOR_CART)))
+        .addMethod(
+          getValidateProductsMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              marketplace.product.Product.ValidateProductsRequest,
+              marketplace.product.Product.ValidateProductsResponse>(
+                service, METHODID_VALIDATE_PRODUCTS)))
         .build();
   }
 
@@ -284,6 +357,7 @@ public final class ProductServiceGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new ProductServiceFileDescriptorSupplier())
               .addMethod(getGetProductForCartMethod())
+              .addMethod(getValidateProductsMethod())
               .build();
         }
       }

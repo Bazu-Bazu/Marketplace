@@ -1190,6 +1190,2818 @@ public final class Product {
 
   }
 
+  public interface ValidateProductsRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:marketplace.product.ValidateProductsRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+     */
+    java.util.List<marketplace.product.Product.ProductRequest> 
+        getProductsList();
+    /**
+     * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+     */
+    marketplace.product.Product.ProductRequest getProducts(int index);
+    /**
+     * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+     */
+    int getProductsCount();
+    /**
+     * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+     */
+    java.util.List<? extends marketplace.product.Product.ProductRequestOrBuilder> 
+        getProductsOrBuilderList();
+    /**
+     * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+     */
+    marketplace.product.Product.ProductRequestOrBuilder getProductsOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code marketplace.product.ValidateProductsRequest}
+   */
+  public static final class ValidateProductsRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:marketplace.product.ValidateProductsRequest)
+      ValidateProductsRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ValidateProductsRequest.newBuilder() to construct.
+    private ValidateProductsRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ValidateProductsRequest() {
+      products_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ValidateProductsRequest();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return marketplace.product.Product.internal_static_marketplace_product_ValidateProductsRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return marketplace.product.Product.internal_static_marketplace_product_ValidateProductsRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              marketplace.product.Product.ValidateProductsRequest.class, marketplace.product.Product.ValidateProductsRequest.Builder.class);
+    }
+
+    public static final int PRODUCTS_FIELD_NUMBER = 1;
+    @SuppressWarnings("serial")
+    private java.util.List<marketplace.product.Product.ProductRequest> products_;
+    /**
+     * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<marketplace.product.Product.ProductRequest> getProductsList() {
+      return products_;
+    }
+    /**
+     * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends marketplace.product.Product.ProductRequestOrBuilder> 
+        getProductsOrBuilderList() {
+      return products_;
+    }
+    /**
+     * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+     */
+    @java.lang.Override
+    public int getProductsCount() {
+      return products_.size();
+    }
+    /**
+     * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+     */
+    @java.lang.Override
+    public marketplace.product.Product.ProductRequest getProducts(int index) {
+      return products_.get(index);
+    }
+    /**
+     * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+     */
+    @java.lang.Override
+    public marketplace.product.Product.ProductRequestOrBuilder getProductsOrBuilder(
+        int index) {
+      return products_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < products_.size(); i++) {
+        output.writeMessage(1, products_.get(i));
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < products_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, products_.get(i));
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof marketplace.product.Product.ValidateProductsRequest)) {
+        return super.equals(obj);
+      }
+      marketplace.product.Product.ValidateProductsRequest other = (marketplace.product.Product.ValidateProductsRequest) obj;
+
+      if (!getProductsList()
+          .equals(other.getProductsList())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getProductsCount() > 0) {
+        hash = (37 * hash) + PRODUCTS_FIELD_NUMBER;
+        hash = (53 * hash) + getProductsList().hashCode();
+      }
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static marketplace.product.Product.ValidateProductsRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static marketplace.product.Product.ValidateProductsRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static marketplace.product.Product.ValidateProductsRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static marketplace.product.Product.ValidateProductsRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static marketplace.product.Product.ValidateProductsRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static marketplace.product.Product.ValidateProductsRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static marketplace.product.Product.ValidateProductsRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static marketplace.product.Product.ValidateProductsRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static marketplace.product.Product.ValidateProductsRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static marketplace.product.Product.ValidateProductsRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static marketplace.product.Product.ValidateProductsRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static marketplace.product.Product.ValidateProductsRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(marketplace.product.Product.ValidateProductsRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code marketplace.product.ValidateProductsRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:marketplace.product.ValidateProductsRequest)
+        marketplace.product.Product.ValidateProductsRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return marketplace.product.Product.internal_static_marketplace_product_ValidateProductsRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return marketplace.product.Product.internal_static_marketplace_product_ValidateProductsRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                marketplace.product.Product.ValidateProductsRequest.class, marketplace.product.Product.ValidateProductsRequest.Builder.class);
+      }
+
+      // Construct using marketplace.product.Product.ValidateProductsRequest.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        if (productsBuilder_ == null) {
+          products_ = java.util.Collections.emptyList();
+        } else {
+          products_ = null;
+          productsBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return marketplace.product.Product.internal_static_marketplace_product_ValidateProductsRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public marketplace.product.Product.ValidateProductsRequest getDefaultInstanceForType() {
+        return marketplace.product.Product.ValidateProductsRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public marketplace.product.Product.ValidateProductsRequest build() {
+        marketplace.product.Product.ValidateProductsRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public marketplace.product.Product.ValidateProductsRequest buildPartial() {
+        marketplace.product.Product.ValidateProductsRequest result = new marketplace.product.Product.ValidateProductsRequest(this);
+        buildPartialRepeatedFields(result);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartialRepeatedFields(marketplace.product.Product.ValidateProductsRequest result) {
+        if (productsBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            products_ = java.util.Collections.unmodifiableList(products_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.products_ = products_;
+        } else {
+          result.products_ = productsBuilder_.build();
+        }
+      }
+
+      private void buildPartial0(marketplace.product.Product.ValidateProductsRequest result) {
+        int from_bitField0_ = bitField0_;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof marketplace.product.Product.ValidateProductsRequest) {
+          return mergeFrom((marketplace.product.Product.ValidateProductsRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(marketplace.product.Product.ValidateProductsRequest other) {
+        if (other == marketplace.product.Product.ValidateProductsRequest.getDefaultInstance()) return this;
+        if (productsBuilder_ == null) {
+          if (!other.products_.isEmpty()) {
+            if (products_.isEmpty()) {
+              products_ = other.products_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureProductsIsMutable();
+              products_.addAll(other.products_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.products_.isEmpty()) {
+            if (productsBuilder_.isEmpty()) {
+              productsBuilder_.dispose();
+              productsBuilder_ = null;
+              products_ = other.products_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              productsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getProductsFieldBuilder() : null;
+            } else {
+              productsBuilder_.addAllMessages(other.products_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                marketplace.product.Product.ProductRequest m =
+                    input.readMessage(
+                        marketplace.product.Product.ProductRequest.parser(),
+                        extensionRegistry);
+                if (productsBuilder_ == null) {
+                  ensureProductsIsMutable();
+                  products_.add(m);
+                } else {
+                  productsBuilder_.addMessage(m);
+                }
+                break;
+              } // case 10
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<marketplace.product.Product.ProductRequest> products_ =
+        java.util.Collections.emptyList();
+      private void ensureProductsIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          products_ = new java.util.ArrayList<marketplace.product.Product.ProductRequest>(products_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          marketplace.product.Product.ProductRequest, marketplace.product.Product.ProductRequest.Builder, marketplace.product.Product.ProductRequestOrBuilder> productsBuilder_;
+
+      /**
+       * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+       */
+      public java.util.List<marketplace.product.Product.ProductRequest> getProductsList() {
+        if (productsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(products_);
+        } else {
+          return productsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+       */
+      public int getProductsCount() {
+        if (productsBuilder_ == null) {
+          return products_.size();
+        } else {
+          return productsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+       */
+      public marketplace.product.Product.ProductRequest getProducts(int index) {
+        if (productsBuilder_ == null) {
+          return products_.get(index);
+        } else {
+          return productsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+       */
+      public Builder setProducts(
+          int index, marketplace.product.Product.ProductRequest value) {
+        if (productsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureProductsIsMutable();
+          products_.set(index, value);
+          onChanged();
+        } else {
+          productsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+       */
+      public Builder setProducts(
+          int index, marketplace.product.Product.ProductRequest.Builder builderForValue) {
+        if (productsBuilder_ == null) {
+          ensureProductsIsMutable();
+          products_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          productsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+       */
+      public Builder addProducts(marketplace.product.Product.ProductRequest value) {
+        if (productsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureProductsIsMutable();
+          products_.add(value);
+          onChanged();
+        } else {
+          productsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+       */
+      public Builder addProducts(
+          int index, marketplace.product.Product.ProductRequest value) {
+        if (productsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureProductsIsMutable();
+          products_.add(index, value);
+          onChanged();
+        } else {
+          productsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+       */
+      public Builder addProducts(
+          marketplace.product.Product.ProductRequest.Builder builderForValue) {
+        if (productsBuilder_ == null) {
+          ensureProductsIsMutable();
+          products_.add(builderForValue.build());
+          onChanged();
+        } else {
+          productsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+       */
+      public Builder addProducts(
+          int index, marketplace.product.Product.ProductRequest.Builder builderForValue) {
+        if (productsBuilder_ == null) {
+          ensureProductsIsMutable();
+          products_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          productsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+       */
+      public Builder addAllProducts(
+          java.lang.Iterable<? extends marketplace.product.Product.ProductRequest> values) {
+        if (productsBuilder_ == null) {
+          ensureProductsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, products_);
+          onChanged();
+        } else {
+          productsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+       */
+      public Builder clearProducts() {
+        if (productsBuilder_ == null) {
+          products_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          productsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+       */
+      public Builder removeProducts(int index) {
+        if (productsBuilder_ == null) {
+          ensureProductsIsMutable();
+          products_.remove(index);
+          onChanged();
+        } else {
+          productsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+       */
+      public marketplace.product.Product.ProductRequest.Builder getProductsBuilder(
+          int index) {
+        return getProductsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+       */
+      public marketplace.product.Product.ProductRequestOrBuilder getProductsOrBuilder(
+          int index) {
+        if (productsBuilder_ == null) {
+          return products_.get(index);  } else {
+          return productsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+       */
+      public java.util.List<? extends marketplace.product.Product.ProductRequestOrBuilder> 
+           getProductsOrBuilderList() {
+        if (productsBuilder_ != null) {
+          return productsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(products_);
+        }
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+       */
+      public marketplace.product.Product.ProductRequest.Builder addProductsBuilder() {
+        return getProductsFieldBuilder().addBuilder(
+            marketplace.product.Product.ProductRequest.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+       */
+      public marketplace.product.Product.ProductRequest.Builder addProductsBuilder(
+          int index) {
+        return getProductsFieldBuilder().addBuilder(
+            index, marketplace.product.Product.ProductRequest.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductRequest products = 1;</code>
+       */
+      public java.util.List<marketplace.product.Product.ProductRequest.Builder> 
+           getProductsBuilderList() {
+        return getProductsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          marketplace.product.Product.ProductRequest, marketplace.product.Product.ProductRequest.Builder, marketplace.product.Product.ProductRequestOrBuilder> 
+          getProductsFieldBuilder() {
+        if (productsBuilder_ == null) {
+          productsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              marketplace.product.Product.ProductRequest, marketplace.product.Product.ProductRequest.Builder, marketplace.product.Product.ProductRequestOrBuilder>(
+                  products_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          products_ = null;
+        }
+        return productsBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:marketplace.product.ValidateProductsRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:marketplace.product.ValidateProductsRequest)
+    private static final marketplace.product.Product.ValidateProductsRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new marketplace.product.Product.ValidateProductsRequest();
+    }
+
+    public static marketplace.product.Product.ValidateProductsRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ValidateProductsRequest>
+        PARSER = new com.google.protobuf.AbstractParser<ValidateProductsRequest>() {
+      @java.lang.Override
+      public ValidateProductsRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<ValidateProductsRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ValidateProductsRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public marketplace.product.Product.ValidateProductsRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ProductRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:marketplace.product.ProductRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int64 product_id = 1;</code>
+     * @return The productId.
+     */
+    long getProductId();
+  }
+  /**
+   * Protobuf type {@code marketplace.product.ProductRequest}
+   */
+  public static final class ProductRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:marketplace.product.ProductRequest)
+      ProductRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ProductRequest.newBuilder() to construct.
+    private ProductRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ProductRequest() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ProductRequest();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return marketplace.product.Product.internal_static_marketplace_product_ProductRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return marketplace.product.Product.internal_static_marketplace_product_ProductRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              marketplace.product.Product.ProductRequest.class, marketplace.product.Product.ProductRequest.Builder.class);
+    }
+
+    public static final int PRODUCT_ID_FIELD_NUMBER = 1;
+    private long productId_ = 0L;
+    /**
+     * <code>int64 product_id = 1;</code>
+     * @return The productId.
+     */
+    @java.lang.Override
+    public long getProductId() {
+      return productId_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (productId_ != 0L) {
+        output.writeInt64(1, productId_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (productId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, productId_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof marketplace.product.Product.ProductRequest)) {
+        return super.equals(obj);
+      }
+      marketplace.product.Product.ProductRequest other = (marketplace.product.Product.ProductRequest) obj;
+
+      if (getProductId()
+          != other.getProductId()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + PRODUCT_ID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getProductId());
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static marketplace.product.Product.ProductRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static marketplace.product.Product.ProductRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static marketplace.product.Product.ProductRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static marketplace.product.Product.ProductRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static marketplace.product.Product.ProductRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static marketplace.product.Product.ProductRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static marketplace.product.Product.ProductRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static marketplace.product.Product.ProductRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static marketplace.product.Product.ProductRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static marketplace.product.Product.ProductRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static marketplace.product.Product.ProductRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static marketplace.product.Product.ProductRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(marketplace.product.Product.ProductRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code marketplace.product.ProductRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:marketplace.product.ProductRequest)
+        marketplace.product.Product.ProductRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return marketplace.product.Product.internal_static_marketplace_product_ProductRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return marketplace.product.Product.internal_static_marketplace_product_ProductRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                marketplace.product.Product.ProductRequest.class, marketplace.product.Product.ProductRequest.Builder.class);
+      }
+
+      // Construct using marketplace.product.Product.ProductRequest.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        productId_ = 0L;
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return marketplace.product.Product.internal_static_marketplace_product_ProductRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public marketplace.product.Product.ProductRequest getDefaultInstanceForType() {
+        return marketplace.product.Product.ProductRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public marketplace.product.Product.ProductRequest build() {
+        marketplace.product.Product.ProductRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public marketplace.product.Product.ProductRequest buildPartial() {
+        marketplace.product.Product.ProductRequest result = new marketplace.product.Product.ProductRequest(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(marketplace.product.Product.ProductRequest result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.productId_ = productId_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof marketplace.product.Product.ProductRequest) {
+          return mergeFrom((marketplace.product.Product.ProductRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(marketplace.product.Product.ProductRequest other) {
+        if (other == marketplace.product.Product.ProductRequest.getDefaultInstance()) return this;
+        if (other.getProductId() != 0L) {
+          setProductId(other.getProductId());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                productId_ = input.readInt64();
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 8
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private long productId_ ;
+      /**
+       * <code>int64 product_id = 1;</code>
+       * @return The productId.
+       */
+      @java.lang.Override
+      public long getProductId() {
+        return productId_;
+      }
+      /**
+       * <code>int64 product_id = 1;</code>
+       * @param value The productId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setProductId(long value) {
+
+        productId_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 product_id = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearProductId() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        productId_ = 0L;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:marketplace.product.ProductRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:marketplace.product.ProductRequest)
+    private static final marketplace.product.Product.ProductRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new marketplace.product.Product.ProductRequest();
+    }
+
+    public static marketplace.product.Product.ProductRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ProductRequest>
+        PARSER = new com.google.protobuf.AbstractParser<ProductRequest>() {
+      @java.lang.Override
+      public ProductRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<ProductRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ProductRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public marketplace.product.Product.ProductRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ValidateProductsResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:marketplace.product.ValidateProductsResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+     */
+    java.util.List<marketplace.product.Product.ProductInfo> 
+        getProductsList();
+    /**
+     * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+     */
+    marketplace.product.Product.ProductInfo getProducts(int index);
+    /**
+     * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+     */
+    int getProductsCount();
+    /**
+     * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+     */
+    java.util.List<? extends marketplace.product.Product.ProductInfoOrBuilder> 
+        getProductsOrBuilderList();
+    /**
+     * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+     */
+    marketplace.product.Product.ProductInfoOrBuilder getProductsOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code marketplace.product.ValidateProductsResponse}
+   */
+  public static final class ValidateProductsResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:marketplace.product.ValidateProductsResponse)
+      ValidateProductsResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ValidateProductsResponse.newBuilder() to construct.
+    private ValidateProductsResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ValidateProductsResponse() {
+      products_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ValidateProductsResponse();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return marketplace.product.Product.internal_static_marketplace_product_ValidateProductsResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return marketplace.product.Product.internal_static_marketplace_product_ValidateProductsResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              marketplace.product.Product.ValidateProductsResponse.class, marketplace.product.Product.ValidateProductsResponse.Builder.class);
+    }
+
+    public static final int PRODUCTS_FIELD_NUMBER = 1;
+    @SuppressWarnings("serial")
+    private java.util.List<marketplace.product.Product.ProductInfo> products_;
+    /**
+     * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<marketplace.product.Product.ProductInfo> getProductsList() {
+      return products_;
+    }
+    /**
+     * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends marketplace.product.Product.ProductInfoOrBuilder> 
+        getProductsOrBuilderList() {
+      return products_;
+    }
+    /**
+     * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+     */
+    @java.lang.Override
+    public int getProductsCount() {
+      return products_.size();
+    }
+    /**
+     * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+     */
+    @java.lang.Override
+    public marketplace.product.Product.ProductInfo getProducts(int index) {
+      return products_.get(index);
+    }
+    /**
+     * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+     */
+    @java.lang.Override
+    public marketplace.product.Product.ProductInfoOrBuilder getProductsOrBuilder(
+        int index) {
+      return products_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < products_.size(); i++) {
+        output.writeMessage(1, products_.get(i));
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < products_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, products_.get(i));
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof marketplace.product.Product.ValidateProductsResponse)) {
+        return super.equals(obj);
+      }
+      marketplace.product.Product.ValidateProductsResponse other = (marketplace.product.Product.ValidateProductsResponse) obj;
+
+      if (!getProductsList()
+          .equals(other.getProductsList())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getProductsCount() > 0) {
+        hash = (37 * hash) + PRODUCTS_FIELD_NUMBER;
+        hash = (53 * hash) + getProductsList().hashCode();
+      }
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static marketplace.product.Product.ValidateProductsResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static marketplace.product.Product.ValidateProductsResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static marketplace.product.Product.ValidateProductsResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static marketplace.product.Product.ValidateProductsResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static marketplace.product.Product.ValidateProductsResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static marketplace.product.Product.ValidateProductsResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static marketplace.product.Product.ValidateProductsResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static marketplace.product.Product.ValidateProductsResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static marketplace.product.Product.ValidateProductsResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static marketplace.product.Product.ValidateProductsResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static marketplace.product.Product.ValidateProductsResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static marketplace.product.Product.ValidateProductsResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(marketplace.product.Product.ValidateProductsResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code marketplace.product.ValidateProductsResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:marketplace.product.ValidateProductsResponse)
+        marketplace.product.Product.ValidateProductsResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return marketplace.product.Product.internal_static_marketplace_product_ValidateProductsResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return marketplace.product.Product.internal_static_marketplace_product_ValidateProductsResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                marketplace.product.Product.ValidateProductsResponse.class, marketplace.product.Product.ValidateProductsResponse.Builder.class);
+      }
+
+      // Construct using marketplace.product.Product.ValidateProductsResponse.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        if (productsBuilder_ == null) {
+          products_ = java.util.Collections.emptyList();
+        } else {
+          products_ = null;
+          productsBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return marketplace.product.Product.internal_static_marketplace_product_ValidateProductsResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public marketplace.product.Product.ValidateProductsResponse getDefaultInstanceForType() {
+        return marketplace.product.Product.ValidateProductsResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public marketplace.product.Product.ValidateProductsResponse build() {
+        marketplace.product.Product.ValidateProductsResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public marketplace.product.Product.ValidateProductsResponse buildPartial() {
+        marketplace.product.Product.ValidateProductsResponse result = new marketplace.product.Product.ValidateProductsResponse(this);
+        buildPartialRepeatedFields(result);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartialRepeatedFields(marketplace.product.Product.ValidateProductsResponse result) {
+        if (productsBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            products_ = java.util.Collections.unmodifiableList(products_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.products_ = products_;
+        } else {
+          result.products_ = productsBuilder_.build();
+        }
+      }
+
+      private void buildPartial0(marketplace.product.Product.ValidateProductsResponse result) {
+        int from_bitField0_ = bitField0_;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof marketplace.product.Product.ValidateProductsResponse) {
+          return mergeFrom((marketplace.product.Product.ValidateProductsResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(marketplace.product.Product.ValidateProductsResponse other) {
+        if (other == marketplace.product.Product.ValidateProductsResponse.getDefaultInstance()) return this;
+        if (productsBuilder_ == null) {
+          if (!other.products_.isEmpty()) {
+            if (products_.isEmpty()) {
+              products_ = other.products_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureProductsIsMutable();
+              products_.addAll(other.products_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.products_.isEmpty()) {
+            if (productsBuilder_.isEmpty()) {
+              productsBuilder_.dispose();
+              productsBuilder_ = null;
+              products_ = other.products_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              productsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getProductsFieldBuilder() : null;
+            } else {
+              productsBuilder_.addAllMessages(other.products_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                marketplace.product.Product.ProductInfo m =
+                    input.readMessage(
+                        marketplace.product.Product.ProductInfo.parser(),
+                        extensionRegistry);
+                if (productsBuilder_ == null) {
+                  ensureProductsIsMutable();
+                  products_.add(m);
+                } else {
+                  productsBuilder_.addMessage(m);
+                }
+                break;
+              } // case 10
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<marketplace.product.Product.ProductInfo> products_ =
+        java.util.Collections.emptyList();
+      private void ensureProductsIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          products_ = new java.util.ArrayList<marketplace.product.Product.ProductInfo>(products_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          marketplace.product.Product.ProductInfo, marketplace.product.Product.ProductInfo.Builder, marketplace.product.Product.ProductInfoOrBuilder> productsBuilder_;
+
+      /**
+       * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+       */
+      public java.util.List<marketplace.product.Product.ProductInfo> getProductsList() {
+        if (productsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(products_);
+        } else {
+          return productsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+       */
+      public int getProductsCount() {
+        if (productsBuilder_ == null) {
+          return products_.size();
+        } else {
+          return productsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+       */
+      public marketplace.product.Product.ProductInfo getProducts(int index) {
+        if (productsBuilder_ == null) {
+          return products_.get(index);
+        } else {
+          return productsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+       */
+      public Builder setProducts(
+          int index, marketplace.product.Product.ProductInfo value) {
+        if (productsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureProductsIsMutable();
+          products_.set(index, value);
+          onChanged();
+        } else {
+          productsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+       */
+      public Builder setProducts(
+          int index, marketplace.product.Product.ProductInfo.Builder builderForValue) {
+        if (productsBuilder_ == null) {
+          ensureProductsIsMutable();
+          products_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          productsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+       */
+      public Builder addProducts(marketplace.product.Product.ProductInfo value) {
+        if (productsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureProductsIsMutable();
+          products_.add(value);
+          onChanged();
+        } else {
+          productsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+       */
+      public Builder addProducts(
+          int index, marketplace.product.Product.ProductInfo value) {
+        if (productsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureProductsIsMutable();
+          products_.add(index, value);
+          onChanged();
+        } else {
+          productsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+       */
+      public Builder addProducts(
+          marketplace.product.Product.ProductInfo.Builder builderForValue) {
+        if (productsBuilder_ == null) {
+          ensureProductsIsMutable();
+          products_.add(builderForValue.build());
+          onChanged();
+        } else {
+          productsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+       */
+      public Builder addProducts(
+          int index, marketplace.product.Product.ProductInfo.Builder builderForValue) {
+        if (productsBuilder_ == null) {
+          ensureProductsIsMutable();
+          products_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          productsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+       */
+      public Builder addAllProducts(
+          java.lang.Iterable<? extends marketplace.product.Product.ProductInfo> values) {
+        if (productsBuilder_ == null) {
+          ensureProductsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, products_);
+          onChanged();
+        } else {
+          productsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+       */
+      public Builder clearProducts() {
+        if (productsBuilder_ == null) {
+          products_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          productsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+       */
+      public Builder removeProducts(int index) {
+        if (productsBuilder_ == null) {
+          ensureProductsIsMutable();
+          products_.remove(index);
+          onChanged();
+        } else {
+          productsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+       */
+      public marketplace.product.Product.ProductInfo.Builder getProductsBuilder(
+          int index) {
+        return getProductsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+       */
+      public marketplace.product.Product.ProductInfoOrBuilder getProductsOrBuilder(
+          int index) {
+        if (productsBuilder_ == null) {
+          return products_.get(index);  } else {
+          return productsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+       */
+      public java.util.List<? extends marketplace.product.Product.ProductInfoOrBuilder> 
+           getProductsOrBuilderList() {
+        if (productsBuilder_ != null) {
+          return productsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(products_);
+        }
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+       */
+      public marketplace.product.Product.ProductInfo.Builder addProductsBuilder() {
+        return getProductsFieldBuilder().addBuilder(
+            marketplace.product.Product.ProductInfo.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+       */
+      public marketplace.product.Product.ProductInfo.Builder addProductsBuilder(
+          int index) {
+        return getProductsFieldBuilder().addBuilder(
+            index, marketplace.product.Product.ProductInfo.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .marketplace.product.ProductInfo products = 1;</code>
+       */
+      public java.util.List<marketplace.product.Product.ProductInfo.Builder> 
+           getProductsBuilderList() {
+        return getProductsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          marketplace.product.Product.ProductInfo, marketplace.product.Product.ProductInfo.Builder, marketplace.product.Product.ProductInfoOrBuilder> 
+          getProductsFieldBuilder() {
+        if (productsBuilder_ == null) {
+          productsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              marketplace.product.Product.ProductInfo, marketplace.product.Product.ProductInfo.Builder, marketplace.product.Product.ProductInfoOrBuilder>(
+                  products_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          products_ = null;
+        }
+        return productsBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:marketplace.product.ValidateProductsResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:marketplace.product.ValidateProductsResponse)
+    private static final marketplace.product.Product.ValidateProductsResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new marketplace.product.Product.ValidateProductsResponse();
+    }
+
+    public static marketplace.product.Product.ValidateProductsResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ValidateProductsResponse>
+        PARSER = new com.google.protobuf.AbstractParser<ValidateProductsResponse>() {
+      @java.lang.Override
+      public ValidateProductsResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<ValidateProductsResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ValidateProductsResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public marketplace.product.Product.ValidateProductsResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ProductInfoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:marketplace.product.ProductInfo)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int64 product_id = 1;</code>
+     * @return The productId.
+     */
+    long getProductId();
+
+    /**
+     * <code>string price = 2;</code>
+     * @return The price.
+     */
+    java.lang.String getPrice();
+    /**
+     * <code>string price = 2;</code>
+     * @return The bytes for price.
+     */
+    com.google.protobuf.ByteString
+        getPriceBytes();
+
+    /**
+     * <code>bool available = 3;</code>
+     * @return The available.
+     */
+    boolean getAvailable();
+
+    /**
+     * <code>bool exists = 4;</code>
+     * @return The exists.
+     */
+    boolean getExists();
+  }
+  /**
+   * Protobuf type {@code marketplace.product.ProductInfo}
+   */
+  public static final class ProductInfo extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:marketplace.product.ProductInfo)
+      ProductInfoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ProductInfo.newBuilder() to construct.
+    private ProductInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ProductInfo() {
+      price_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ProductInfo();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return marketplace.product.Product.internal_static_marketplace_product_ProductInfo_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return marketplace.product.Product.internal_static_marketplace_product_ProductInfo_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              marketplace.product.Product.ProductInfo.class, marketplace.product.Product.ProductInfo.Builder.class);
+    }
+
+    public static final int PRODUCT_ID_FIELD_NUMBER = 1;
+    private long productId_ = 0L;
+    /**
+     * <code>int64 product_id = 1;</code>
+     * @return The productId.
+     */
+    @java.lang.Override
+    public long getProductId() {
+      return productId_;
+    }
+
+    public static final int PRICE_FIELD_NUMBER = 2;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object price_ = "";
+    /**
+     * <code>string price = 2;</code>
+     * @return The price.
+     */
+    @java.lang.Override
+    public java.lang.String getPrice() {
+      java.lang.Object ref = price_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        price_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string price = 2;</code>
+     * @return The bytes for price.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getPriceBytes() {
+      java.lang.Object ref = price_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        price_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int AVAILABLE_FIELD_NUMBER = 3;
+    private boolean available_ = false;
+    /**
+     * <code>bool available = 3;</code>
+     * @return The available.
+     */
+    @java.lang.Override
+    public boolean getAvailable() {
+      return available_;
+    }
+
+    public static final int EXISTS_FIELD_NUMBER = 4;
+    private boolean exists_ = false;
+    /**
+     * <code>bool exists = 4;</code>
+     * @return The exists.
+     */
+    @java.lang.Override
+    public boolean getExists() {
+      return exists_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (productId_ != 0L) {
+        output.writeInt64(1, productId_);
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(price_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, price_);
+      }
+      if (available_ != false) {
+        output.writeBool(3, available_);
+      }
+      if (exists_ != false) {
+        output.writeBool(4, exists_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (productId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, productId_);
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(price_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, price_);
+      }
+      if (available_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(3, available_);
+      }
+      if (exists_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(4, exists_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof marketplace.product.Product.ProductInfo)) {
+        return super.equals(obj);
+      }
+      marketplace.product.Product.ProductInfo other = (marketplace.product.Product.ProductInfo) obj;
+
+      if (getProductId()
+          != other.getProductId()) return false;
+      if (!getPrice()
+          .equals(other.getPrice())) return false;
+      if (getAvailable()
+          != other.getAvailable()) return false;
+      if (getExists()
+          != other.getExists()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + PRODUCT_ID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getProductId());
+      hash = (37 * hash) + PRICE_FIELD_NUMBER;
+      hash = (53 * hash) + getPrice().hashCode();
+      hash = (37 * hash) + AVAILABLE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getAvailable());
+      hash = (37 * hash) + EXISTS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getExists());
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static marketplace.product.Product.ProductInfo parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static marketplace.product.Product.ProductInfo parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static marketplace.product.Product.ProductInfo parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static marketplace.product.Product.ProductInfo parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static marketplace.product.Product.ProductInfo parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static marketplace.product.Product.ProductInfo parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static marketplace.product.Product.ProductInfo parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static marketplace.product.Product.ProductInfo parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static marketplace.product.Product.ProductInfo parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static marketplace.product.Product.ProductInfo parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static marketplace.product.Product.ProductInfo parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static marketplace.product.Product.ProductInfo parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(marketplace.product.Product.ProductInfo prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code marketplace.product.ProductInfo}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:marketplace.product.ProductInfo)
+        marketplace.product.Product.ProductInfoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return marketplace.product.Product.internal_static_marketplace_product_ProductInfo_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return marketplace.product.Product.internal_static_marketplace_product_ProductInfo_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                marketplace.product.Product.ProductInfo.class, marketplace.product.Product.ProductInfo.Builder.class);
+      }
+
+      // Construct using marketplace.product.Product.ProductInfo.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        productId_ = 0L;
+        price_ = "";
+        available_ = false;
+        exists_ = false;
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return marketplace.product.Product.internal_static_marketplace_product_ProductInfo_descriptor;
+      }
+
+      @java.lang.Override
+      public marketplace.product.Product.ProductInfo getDefaultInstanceForType() {
+        return marketplace.product.Product.ProductInfo.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public marketplace.product.Product.ProductInfo build() {
+        marketplace.product.Product.ProductInfo result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public marketplace.product.Product.ProductInfo buildPartial() {
+        marketplace.product.Product.ProductInfo result = new marketplace.product.Product.ProductInfo(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(marketplace.product.Product.ProductInfo result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.productId_ = productId_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.price_ = price_;
+        }
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.available_ = available_;
+        }
+        if (((from_bitField0_ & 0x00000008) != 0)) {
+          result.exists_ = exists_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof marketplace.product.Product.ProductInfo) {
+          return mergeFrom((marketplace.product.Product.ProductInfo)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(marketplace.product.Product.ProductInfo other) {
+        if (other == marketplace.product.Product.ProductInfo.getDefaultInstance()) return this;
+        if (other.getProductId() != 0L) {
+          setProductId(other.getProductId());
+        }
+        if (!other.getPrice().isEmpty()) {
+          price_ = other.price_;
+          bitField0_ |= 0x00000002;
+          onChanged();
+        }
+        if (other.getAvailable() != false) {
+          setAvailable(other.getAvailable());
+        }
+        if (other.getExists() != false) {
+          setExists(other.getExists());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                productId_ = input.readInt64();
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 8
+              case 18: {
+                price_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000002;
+                break;
+              } // case 18
+              case 24: {
+                available_ = input.readBool();
+                bitField0_ |= 0x00000004;
+                break;
+              } // case 24
+              case 32: {
+                exists_ = input.readBool();
+                bitField0_ |= 0x00000008;
+                break;
+              } // case 32
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private long productId_ ;
+      /**
+       * <code>int64 product_id = 1;</code>
+       * @return The productId.
+       */
+      @java.lang.Override
+      public long getProductId() {
+        return productId_;
+      }
+      /**
+       * <code>int64 product_id = 1;</code>
+       * @param value The productId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setProductId(long value) {
+
+        productId_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 product_id = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearProductId() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        productId_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object price_ = "";
+      /**
+       * <code>string price = 2;</code>
+       * @return The price.
+       */
+      public java.lang.String getPrice() {
+        java.lang.Object ref = price_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          price_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string price = 2;</code>
+       * @return The bytes for price.
+       */
+      public com.google.protobuf.ByteString
+          getPriceBytes() {
+        java.lang.Object ref = price_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          price_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string price = 2;</code>
+       * @param value The price to set.
+       * @return This builder for chaining.
+       */
+      public Builder setPrice(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        price_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string price = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearPrice() {
+        price_ = getDefaultInstance().getPrice();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string price = 2;</code>
+       * @param value The bytes for price to set.
+       * @return This builder for chaining.
+       */
+      public Builder setPriceBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        price_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+
+      private boolean available_ ;
+      /**
+       * <code>bool available = 3;</code>
+       * @return The available.
+       */
+      @java.lang.Override
+      public boolean getAvailable() {
+        return available_;
+      }
+      /**
+       * <code>bool available = 3;</code>
+       * @param value The available to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAvailable(boolean value) {
+
+        available_ = value;
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool available = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAvailable() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        available_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean exists_ ;
+      /**
+       * <code>bool exists = 4;</code>
+       * @return The exists.
+       */
+      @java.lang.Override
+      public boolean getExists() {
+        return exists_;
+      }
+      /**
+       * <code>bool exists = 4;</code>
+       * @param value The exists to set.
+       * @return This builder for chaining.
+       */
+      public Builder setExists(boolean value) {
+
+        exists_ = value;
+        bitField0_ |= 0x00000008;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool exists = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearExists() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        exists_ = false;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:marketplace.product.ProductInfo)
+    }
+
+    // @@protoc_insertion_point(class_scope:marketplace.product.ProductInfo)
+    private static final marketplace.product.Product.ProductInfo DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new marketplace.product.Product.ProductInfo();
+    }
+
+    public static marketplace.product.Product.ProductInfo getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ProductInfo>
+        PARSER = new com.google.protobuf.AbstractParser<ProductInfo>() {
+      @java.lang.Override
+      public ProductInfo parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<ProductInfo> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ProductInfo> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public marketplace.product.Product.ProductInfo getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_marketplace_product_GetProductForCartRequest_descriptor;
   private static final 
@@ -1200,6 +4012,26 @@ public final class Product {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_marketplace_product_GetProductForCartResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_marketplace_product_ValidateProductsRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_marketplace_product_ValidateProductsRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_marketplace_product_ProductRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_marketplace_product_ProductRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_marketplace_product_ValidateProductsResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_marketplace_product_ValidateProductsResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_marketplace_product_ProductInfo_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_marketplace_product_ProductInfo_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -1213,10 +4045,20 @@ public final class Product {
       "GetProductForCartRequest\022\022\n\nproduct_id\030\001" +
       " \001(\003\"Q\n\031GetProductForCartResponse\022\022\n\npro" +
       "duct_id\030\001 \001(\003\022\r\n\005price\030\002 \001(\t\022\021\n\tavailabl" +
-      "e\030\003 \001(\0102\204\001\n\016ProductService\022r\n\021GetProduct" +
-      "ForCart\022-.marketplace.product.GetProduct" +
-      "ForCartRequest\032..marketplace.product.Get" +
-      "ProductForCartResponseb\006proto3"
+      "e\030\003 \001(\010\"P\n\027ValidateProductsRequest\0225\n\010pr" +
+      "oducts\030\001 \003(\0132#.marketplace.product.Produ" +
+      "ctRequest\"$\n\016ProductRequest\022\022\n\nproduct_i" +
+      "d\030\001 \001(\003\"N\n\030ValidateProductsResponse\0222\n\010p" +
+      "roducts\030\001 \003(\0132 .marketplace.product.Prod" +
+      "uctInfo\"S\n\013ProductInfo\022\022\n\nproduct_id\030\001 \001" +
+      "(\003\022\r\n\005price\030\002 \001(\t\022\021\n\tavailable\030\003 \001(\010\022\016\n\006" +
+      "exists\030\004 \001(\0102\365\001\n\016ProductService\022r\n\021GetPr" +
+      "oductForCart\022-.marketplace.product.GetPr" +
+      "oductForCartRequest\032..marketplace.produc" +
+      "t.GetProductForCartResponse\022o\n\020ValidateP" +
+      "roducts\022,.marketplace.product.ValidatePr" +
+      "oductsRequest\032-.marketplace.product.Vali" +
+      "dateProductsResponseb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -1234,6 +4076,30 @@ public final class Product {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_marketplace_product_GetProductForCartResponse_descriptor,
         new java.lang.String[] { "ProductId", "Price", "Available", });
+    internal_static_marketplace_product_ValidateProductsRequest_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_marketplace_product_ValidateProductsRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_marketplace_product_ValidateProductsRequest_descriptor,
+        new java.lang.String[] { "Products", });
+    internal_static_marketplace_product_ProductRequest_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_marketplace_product_ProductRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_marketplace_product_ProductRequest_descriptor,
+        new java.lang.String[] { "ProductId", });
+    internal_static_marketplace_product_ValidateProductsResponse_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_marketplace_product_ValidateProductsResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_marketplace_product_ValidateProductsResponse_descriptor,
+        new java.lang.String[] { "Products", });
+    internal_static_marketplace_product_ProductInfo_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_marketplace_product_ProductInfo_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_marketplace_product_ProductInfo_descriptor,
+        new java.lang.String[] { "ProductId", "Price", "Available", "Exists", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
