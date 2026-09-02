@@ -141,8 +141,10 @@ services:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
       PRODUCT_SERVICE_GRPC_ADDRESS: static://product-service:6565
       SERVER_PORT: 8080
+      GRPC_SERVER_PORT: 6565
     ports:
       - "8093:8080"
+      - "6593:6565"
     networks:
       - burkina-network
 

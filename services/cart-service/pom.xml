@@ -69,6 +69,12 @@
         </dependency>
 
         <dependency>
+            <groupId>net.devh</groupId>
+            <artifactId>grpc-server-spring-boot-starter</artifactId>
+            <version>${grpc-spring.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.burkina</groupId>
             <artifactId>common</artifactId>
             <version>1.0.0</version>
