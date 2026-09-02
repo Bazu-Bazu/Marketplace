@@ -13,7 +13,7 @@ import java.time.Instant;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "sagas")
+@Table(name = "order_sagas")
 @Builder
 @Getter
 @NoArgsConstructor
