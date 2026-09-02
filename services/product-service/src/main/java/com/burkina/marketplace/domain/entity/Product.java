@@ -97,6 +97,10 @@ public class Product {
         return false;
     }
 
+    public boolean isActive() {
+        return status == ProductStatus.PUBLISHED;
+    }
+
     public boolean complete() {
         return !categories.isEmpty() && !medias.isEmpty();
     }

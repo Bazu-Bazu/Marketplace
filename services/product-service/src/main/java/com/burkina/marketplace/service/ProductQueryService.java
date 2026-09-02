@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProductQueryService {
@@ -51,5 +53,10 @@ public class ProductQueryService {
     @Transactional(readOnly = true)
     public Page<Product> getProductsByUserId(Long userId, Pageable pageable) {
         return productRepository.findAllByUserId(userId, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Product> getProductsById(List<Long> productIds) {
+        return productRepository.findAllById(productIds);
     }
 }

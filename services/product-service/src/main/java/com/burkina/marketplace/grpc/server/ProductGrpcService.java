@@ -10,6 +10,8 @@ import marketplace.product.Product;
 import marketplace.product.ProductServiceGrpc;
 import net.devh.boot.grpc.server.service.GrpcService;
 
+import java.util.List;
+
 @GrpcService
 @RequiredArgsConstructor
 public class ProductGrpcService extends ProductServiceGrpc.ProductServiceImplBase {
@@ -33,6 +35,29 @@ public class ProductGrpcService extends ProductServiceGrpc.ProductServiceImplBas
                             .withDescription(e.getMessage())
                             .asRuntimeException()
             );
+        } catch (Exception e) {
+            responseObserver.onError(e);
+        }
+    }
+
+    @Override
+    public void validateProducts(
+            Product.ValidateProductsRequest request,
+            StreamObserver<Product.ValidateProductsResponse> responseObserver
+    ) {
+        try {
+            List<Long> productIds = request.getProductsList().stream()
+                    .map(Product.ProductRequest::getProductId)
+                    .distinct()
+                    .toList();
+
+            List<com.burkina.marketplace.domain.entity.Product> products =
+                    productQueryService.getProductsById(productIds);
+
+            responseObserver.onNext(productMapper.toValidateProductsResponse(productIds, products));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onError(e);
         }
     }
 }

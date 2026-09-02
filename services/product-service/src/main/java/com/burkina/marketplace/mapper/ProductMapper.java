@@ -11,6 +11,11 @@ import com.burkina.marketplace.dto.response.ProductWithDetailsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 @Component
 @RequiredArgsConstructor
 public class ProductMapper {
@@ -113,5 +118,46 @@ public class ProductMapper {
                 .setPrice(product.getPrice().toPlainString())
                 .setAvailable(product.getStatus() == ProductStatus.PUBLISHED)
                 .build();
+    }
+
+    public marketplace.product.Product.ValidateProductsResponse toValidateProductsResponse(
+            List<Long> productIds,
+            List<Product> existingProducts
+    ) {
+        Map<Long, Product> productsById =
+                existingProducts.stream()
+                        .collect(Collectors.toMap(
+                                com.burkina.marketplace.domain.entity.Product::getId,
+                                Function.identity()
+                        ));
+
+        var response = marketplace.product.Product.ValidateProductsResponse.newBuilder();
+
+        for (Long productId : productIds) {
+            var product = productsById.get(productId);
+
+            if (product == null) {
+                response.addProducts(
+                        marketplace.product.Product.ProductInfo.newBuilder()
+                                .setProductId(productId)
+                                .setExists(false)
+                                .setAvailable(false)
+                                .build()
+                );
+
+                continue;
+            }
+
+            response.addProducts(
+                    marketplace.product.Product.ProductInfo.newBuilder()
+                            .setProductId(product.getId())
+                            .setPrice(product.getPrice().toPlainString())
+                            .setExists(true)
+                            .setAvailable(product.isActive())
+                            .build()
+            );
+        }
+
+        return response.build();
     }
 }
