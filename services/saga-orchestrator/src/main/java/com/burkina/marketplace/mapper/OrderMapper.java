@@ -18,7 +18,6 @@ public class OrderMapper {
                             .map(this::toOrderItem)
                             .toList())
                     .setTotalPrice(orderRequest.totalPrice().toString())
-                    .setReservationId(orderRequest.reservationId())
                     .setPaymentId(orderRequest.paymentId())
                     .build();
     }
@@ -50,7 +49,6 @@ public class OrderMapper {
                             .map(this::toOrderItem)
                             .toList())
                     .totalPrice(cart.getTotalPrice())
-                    .reservationId(saga.getReservationId())
                     .paymentId(saga.getPaymentId())
                     .build();
     }

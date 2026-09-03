@@ -11,8 +11,7 @@ message CreateOrderRequest {
   int64 user_id = 1;
   repeated OrderItem items = 2;
   string total_price = 3;
-  int64 reservation_id = 4;
-  int64 payment_id = 5;
+  int64 payment_id = 4;
 }
 
 message OrderItem {

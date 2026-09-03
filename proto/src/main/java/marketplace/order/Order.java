@@ -62,13 +62,7 @@ public final class Order {
         getTotalPriceBytes();
 
     /**
-     * <code>int64 reservation_id = 4;</code>
-     * @return The reservationId.
-     */
-    long getReservationId();
-
-    /**
-     * <code>int64 payment_id = 5;</code>
+     * <code>int64 payment_id = 4;</code>
      * @return The paymentId.
      */
     long getPaymentId();
@@ -201,21 +195,10 @@ public final class Order {
       }
     }
 
-    public static final int RESERVATION_ID_FIELD_NUMBER = 4;
-    private long reservationId_ = 0L;
-    /**
-     * <code>int64 reservation_id = 4;</code>
-     * @return The reservationId.
-     */
-    @java.lang.Override
-    public long getReservationId() {
-      return reservationId_;
-    }
-
-    public static final int PAYMENT_ID_FIELD_NUMBER = 5;
+    public static final int PAYMENT_ID_FIELD_NUMBER = 4;
     private long paymentId_ = 0L;
     /**
-     * <code>int64 payment_id = 5;</code>
+     * <code>int64 payment_id = 4;</code>
      * @return The paymentId.
      */
     @java.lang.Override
@@ -246,11 +229,8 @@ public final class Order {
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(totalPrice_)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, totalPrice_);
       }
-      if (reservationId_ != 0L) {
-        output.writeInt64(4, reservationId_);
-      }
       if (paymentId_ != 0L) {
-        output.writeInt64(5, paymentId_);
+        output.writeInt64(4, paymentId_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -272,13 +252,9 @@ public final class Order {
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(totalPrice_)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, totalPrice_);
       }
-      if (reservationId_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(4, reservationId_);
-      }
       if (paymentId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(5, paymentId_);
+          .computeInt64Size(4, paymentId_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -301,8 +277,6 @@ public final class Order {
           .equals(other.getItemsList())) return false;
       if (!getTotalPrice()
           .equals(other.getTotalPrice())) return false;
-      if (getReservationId()
-          != other.getReservationId()) return false;
       if (getPaymentId()
           != other.getPaymentId()) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
@@ -325,9 +299,6 @@ public final class Order {
       }
       hash = (37 * hash) + TOTAL_PRICE_FIELD_NUMBER;
       hash = (53 * hash) + getTotalPrice().hashCode();
-      hash = (37 * hash) + RESERVATION_ID_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getReservationId());
       hash = (37 * hash) + PAYMENT_ID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getPaymentId());
@@ -471,7 +442,6 @@ public final class Order {
         }
         bitField0_ = (bitField0_ & ~0x00000002);
         totalPrice_ = "";
-        reservationId_ = 0L;
         paymentId_ = 0L;
         return this;
       }
@@ -526,9 +496,6 @@ public final class Order {
           result.totalPrice_ = totalPrice_;
         }
         if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.reservationId_ = reservationId_;
-        }
-        if (((from_bitField0_ & 0x00000010) != 0)) {
           result.paymentId_ = paymentId_;
         }
       }
@@ -611,9 +578,6 @@ public final class Order {
           bitField0_ |= 0x00000004;
           onChanged();
         }
-        if (other.getReservationId() != 0L) {
-          setReservationId(other.getReservationId());
-        }
         if (other.getPaymentId() != 0L) {
           setPaymentId(other.getPaymentId());
         }
@@ -667,15 +631,10 @@ public final class Order {
                 break;
               } // case 26
               case 32: {
-                reservationId_ = input.readInt64();
+                paymentId_ = input.readInt64();
                 bitField0_ |= 0x00000008;
                 break;
               } // case 32
-              case 40: {
-                paymentId_ = input.readInt64();
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 40
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -1037,41 +996,9 @@ public final class Order {
         return this;
       }
 
-      private long reservationId_ ;
-      /**
-       * <code>int64 reservation_id = 4;</code>
-       * @return The reservationId.
-       */
-      @java.lang.Override
-      public long getReservationId() {
-        return reservationId_;
-      }
-      /**
-       * <code>int64 reservation_id = 4;</code>
-       * @param value The reservationId to set.
-       * @return This builder for chaining.
-       */
-      public Builder setReservationId(long value) {
-
-        reservationId_ = value;
-        bitField0_ |= 0x00000008;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int64 reservation_id = 4;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearReservationId() {
-        bitField0_ = (bitField0_ & ~0x00000008);
-        reservationId_ = 0L;
-        onChanged();
-        return this;
-      }
-
       private long paymentId_ ;
       /**
-       * <code>int64 payment_id = 5;</code>
+       * <code>int64 payment_id = 4;</code>
        * @return The paymentId.
        */
       @java.lang.Override
@@ -1079,23 +1006,23 @@ public final class Order {
         return paymentId_;
       }
       /**
-       * <code>int64 payment_id = 5;</code>
+       * <code>int64 payment_id = 4;</code>
        * @param value The paymentId to set.
        * @return This builder for chaining.
        */
       public Builder setPaymentId(long value) {
 
         paymentId_ = value;
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000008;
         onChanged();
         return this;
       }
       /**
-       * <code>int64 payment_id = 5;</code>
+       * <code>int64 payment_id = 4;</code>
        * @return This builder for chaining.
        */
       public Builder clearPaymentId() {
-        bitField0_ = (bitField0_ & ~0x00000010);
+        bitField0_ = (bitField0_ & ~0x00000008);
         paymentId_ = 0L;
         onChanged();
         return this;
@@ -3246,21 +3173,20 @@ public final class Order {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\013order.proto\022\021marketplace.order\"\223\001\n\022Cre" +
-      "ateOrderRequest\022\017\n\007user_id\030\001 \001(\003\022+\n\005item" +
-      "s\030\002 \003(\0132\034.marketplace.order.OrderItem\022\023\n" +
-      "\013total_price\030\003 \001(\t\022\026\n\016reservation_id\030\004 \001" +
-      "(\003\022\022\n\npayment_id\030\005 \001(\003\"@\n\tOrderItem\022\022\n\np" +
-      "roduct_id\030\001 \001(\003\022\020\n\010quantity\030\002 \001(\005\022\r\n\005pri" +
-      "ce\030\003 \001(\t\"\'\n\023CreateOrderResponse\022\020\n\010order" +
-      "_id\030\001 \001(\003\"&\n\022CancelOrderRequest\022\020\n\010order" +
-      "_id\030\001 \001(\003\"\025\n\023CancelOrderResponse2\312\001\n\014Ord" +
-      "erService\022\\\n\013CreateOrder\022%.marketplace.o" +
-      "rder.CreateOrderRequest\032&.marketplace.or" +
-      "der.CreateOrderResponse\022\\\n\013CancelOrder\022%" +
-      ".marketplace.order.CancelOrderRequest\032&." +
-      "marketplace.order.CancelOrderResponseb\006p" +
-      "roto3"
+      "\n\013order.proto\022\021marketplace.order\"{\n\022Crea" +
+      "teOrderRequest\022\017\n\007user_id\030\001 \001(\003\022+\n\005items" +
+      "\030\002 \003(\0132\034.marketplace.order.OrderItem\022\023\n\013" +
+      "total_price\030\003 \001(\t\022\022\n\npayment_id\030\004 \001(\003\"@\n" +
+      "\tOrderItem\022\022\n\nproduct_id\030\001 \001(\003\022\020\n\010quanti" +
+      "ty\030\002 \001(\005\022\r\n\005price\030\003 \001(\t\"\'\n\023CreateOrderRe" +
+      "sponse\022\020\n\010order_id\030\001 \001(\003\"&\n\022CancelOrderR" +
+      "equest\022\020\n\010order_id\030\001 \001(\003\"\025\n\023CancelOrderR" +
+      "esponse2\312\001\n\014OrderService\022\\\n\013CreateOrder\022" +
+      "%.marketplace.order.CreateOrderRequest\032&" +
+      ".marketplace.order.CreateOrderResponse\022\\" +
+      "\n\013CancelOrder\022%.marketplace.order.Cancel" +
+      "OrderRequest\032&.marketplace.order.CancelO" +
+      "rderResponseb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -3271,7 +3197,7 @@ public final class Order {
     internal_static_marketplace_order_CreateOrderRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_marketplace_order_CreateOrderRequest_descriptor,
-        new java.lang.String[] { "UserId", "Items", "TotalPrice", "ReservationId", "PaymentId", });
+        new java.lang.String[] { "UserId", "Items", "TotalPrice", "PaymentId", });
     internal_static_marketplace_order_OrderItem_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_marketplace_order_OrderItem_fieldAccessorTable = new

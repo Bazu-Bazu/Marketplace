@@ -10,7 +10,6 @@ public record CreateOrderRequest(
         Long userId,
         List<OrderItem> items,
         BigDecimal totalPrice,
-        Long reservationId,
         Long paymentId
 ) {
 
