@@ -1,0 +1,7 @@
+CREATE TABLE payments (
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    saga_id BIGINT NOT NULL,
+    amount DECIMAL(19, 2) NOT NULL,
+    status VARCHAR(50) NOT NULL DEFAULT 'PENDING'
+);
