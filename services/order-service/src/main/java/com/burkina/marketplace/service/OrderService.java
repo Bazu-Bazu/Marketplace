@@ -6,6 +6,8 @@ import com.burkina.marketplace.domain.repository.OrderRepository;
 import com.burkina.marketplace.dto.data.CreateOrderData;
 import com.burkina.marketplace.exception.OrderNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,10 +36,12 @@ public class OrderService {
     }
 
     @Transactional
-    public void cancelOrder(Long orderId) {
+    public Order cancelOrder(Long orderId) {
         Order order = getById(orderId);
 
         order.cancel();
+
+        return order;
     }
 
     @Transactional(readOnly = true)
@@ -46,5 +50,10 @@ public class OrderService {
                 .orElseThrow(() -> new OrderNotFoundException(
                         String.format("Order %d not found", orderId)
                 ));
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Order> getAllByUserId(Long userId, Pageable pageable) {
+        return orderRepository.findAllByUserId(userId, pageable);
     }
 }

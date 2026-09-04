@@ -32,7 +32,7 @@ public class Order {
     @Column(nullable = false)
     private BigDecimal totalPrice;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private Long paymentId;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/migrations/001_create_order_table.sql
+  - include:
+      file: db/migrations/002_create_order_items_table.sql

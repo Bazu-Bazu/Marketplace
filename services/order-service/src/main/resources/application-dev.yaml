@@ -28,12 +28,6 @@ spring:
   liquibase:
     change-log: classpath:db/migrations/db.migrations.yaml
 
-  kafka:
-    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS}
-    consumer:
-      group-id: marketplace-product-service-group
-      auto-offset-reset: earliest
-
   security:
     oauth2:
       resourceserver:
