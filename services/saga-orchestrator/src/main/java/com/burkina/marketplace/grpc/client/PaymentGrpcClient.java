@@ -1,7 +1,9 @@
 package com.burkina.marketplace.grpc.client;
 
+import com.burkina.marketplace.dto.request.PayRequest;
 import com.burkina.marketplace.dto.response.PaymentResponse;
-import com.burkina.marketplace.exception.PaymentServiceUnavailableException;
+import com.burkina.marketplace.exception.PaymentFailedException;
+import com.burkina.marketplace.exception.PaymentServiceException;
 import com.burkina.marketplace.mapper.PaymentMapper;
 import io.grpc.StatusRuntimeException;
 import lombok.RequiredArgsConstructor;
@@ -9,8 +11,6 @@ import marketplace.payment.Payment;
 import marketplace.payment.PaymentServiceGrpc;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
 
 @Component
 @RequiredArgsConstructor
@@ -21,17 +21,23 @@ public class PaymentGrpcClient {
     @GrpcClient("payment-service")
     private PaymentServiceGrpc.PaymentServiceBlockingStub paymentServiceStub;
 
-    public PaymentResponse pay(Long userId, Long sagaId, BigDecimal amount) {
-        Payment.PayRequest request = paymentMapper.toPayRequest(userId, sagaId, amount);
+    public PaymentResponse pay(PayRequest payRequest) {
+        Payment.PayRequest request = paymentMapper.toPayRequest(payRequest);
 
         try {
             Payment.PayResponse response = paymentServiceStub.pay(request);
 
             return paymentMapper.toPaymentResponse(response);
         } catch (StatusRuntimeException e) {
-            throw new PaymentServiceUnavailableException(
-                    String.format("Payment service is unavailable: %s", e.getMessage())
-            );
+            throw switch (e.getStatus().getCode()) {
+                case FAILED_PRECONDITION -> new PaymentFailedException(
+                                String.format("Payment failed for saga %d", payRequest.sagaId())
+                );
+
+                default -> new PaymentServiceException(
+                        String.format("Payment service returned %s", e.getStatus())
+                );
+            };
         }
     }
 
@@ -41,8 +47,8 @@ public class PaymentGrpcClient {
         try {
             paymentServiceStub.refund(request);
         } catch (StatusRuntimeException e) {
-            throw new PaymentServiceUnavailableException(
-                    String.format("Payment service is unavailable: %s", e.getMessage())
+            throw new PaymentServiceException(
+                        String.format("Payment service returned %s", e.getMessage())
             );
         }
     }

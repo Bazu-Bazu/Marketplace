@@ -1,10 +1,8 @@
 package com.burkina.marketplace.grpc.client;
 
 import com.burkina.marketplace.dto.response.CartResponse;
-import com.burkina.marketplace.exception.CartNotFoundException;
-import com.burkina.marketplace.exception.CartServiceUnavailableException;
+import com.burkina.marketplace.exception.CartServiceException;
 import com.burkina.marketplace.mapper.CartMapper;
-import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import lombok.RequiredArgsConstructor;
 import marketplace.cart.Cart;
@@ -29,14 +27,8 @@ public class CartGrpcClient {
 
             return cartMapper.toCartResponse(response);
         } catch (StatusRuntimeException e) {
-            if (e.getStatus().getCode() == Status.Code.NOT_FOUND) {
-                throw new CartNotFoundException(
-                        String.format("Cart with userId %d not found", userId)
-                );
-            }
-
-            throw new CartServiceUnavailableException(
-                    String.format("Cart service is unavailable: %s", e.getMessage())
+            throw new CartServiceException(
+                    String.format("Cart service returned %s", e.getMessage())
             );
         }
     }
@@ -47,14 +39,8 @@ public class CartGrpcClient {
         try {
             cartServiceStub.clearCart(request);
         } catch (StatusRuntimeException e) {
-            if (e.getStatus().getCode() == Status.Code.NOT_FOUND) {
-                throw new CartNotFoundException(
-                        String.format("Cart with userId %d not found", userId)
-                );
-            }
-
-            throw new CartServiceUnavailableException(
-                    String.format("Cart service is unavailable: %s", e.getMessage())
+            throw new CartServiceException(
+                    String.format("Cart service returned %s", e.getMessage())
             );
         }
     }

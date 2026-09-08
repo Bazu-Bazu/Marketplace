@@ -8,6 +8,7 @@ import com.burkina.marketplace.exception.*;
 import com.burkina.marketplace.grpc.client.*;
 import com.burkina.marketplace.mapper.InventoryMapper;
 import com.burkina.marketplace.mapper.OrderMapper;
+import com.burkina.marketplace.mapper.PaymentMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class OrderSagaOrchestrator {
 
     private final OrderMapper orderMapper;
+    private final PaymentMapper paymentMapper;
     private final InventoryMapper inventoryMapper;
 
     private final OrderSagaService sagaService;
@@ -71,7 +73,7 @@ public class OrderSagaOrchestrator {
 
             return order;
         } catch (RuntimeException e) {
-            handleFailure(saga, e);
+            handleFailure(saga);
 
             throw e;
         }
@@ -137,26 +139,12 @@ public class OrderSagaOrchestrator {
 
         ReserveResponse response = inventoryGrpcClient.reserve(saga.getId(), inventoryMapper.toReserveItemsRequest(items));
 
-        if (!response.isSuccess()) {
-            throw new ReserveProductsException(
-                    String.format("Failed to reserve products: %s", items.stream()
-                            .map(ValidatedCart.ValidatedCartItem::productId)
-                            .toList())
-            );
-        }
-
         saga.setReservationId(response.reservationId());
         sagaService.save(saga);
     }
 
     private void processPayment(OrderSaga saga, ValidatedCart cart) {
-        PaymentResponse paymentResponse = paymentGrpcClient.pay(saga.getUserId(), saga.getId(), cart.getTotalPrice());
-
-        if (!paymentResponse.isSuccess()) {
-            throw new PaymentException(
-                    String.format("Failed to process payment for saga %d", saga.getId())
-            );
-        }
+        PaymentResponse paymentResponse = paymentGrpcClient.pay(paymentMapper.toPayRequest(saga, cart));
 
         saga.setPaymentId(paymentResponse.paymentId());
         sagaService.save(saga);
@@ -175,7 +163,7 @@ public class OrderSagaOrchestrator {
         cartGrpcClient.clearCart(userId);
     }
 
-    private void handleFailure(OrderSaga saga, RuntimeException originalException) {
+    private void handleFailure(OrderSaga saga) {
         saga.startCompensation();
         sagaService.save(saga);
 

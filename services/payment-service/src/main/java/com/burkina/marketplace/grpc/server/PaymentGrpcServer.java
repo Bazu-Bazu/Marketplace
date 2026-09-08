@@ -1,7 +1,10 @@
 package com.burkina.marketplace.grpc.server;
 
+import com.burkina.marketplace.exception.PaymentFailedException;
+import com.burkina.marketplace.exception.PaymentNotFoundException;
 import com.burkina.marketplace.mapper.PaymentMapper;
 import com.burkina.marketplace.service.PaymentService;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import marketplace.payment.Payment;
@@ -22,8 +25,18 @@ public class PaymentGrpcServer extends PaymentServiceGrpc.PaymentServiceImplBase
 
             responseObserver.onNext(paymentMapper.toPayResponse(payment));
             responseObserver.onCompleted();
+        } catch (PaymentFailedException e) {
+            responseObserver.onError(
+                    Status.FAILED_PRECONDITION
+                            .withDescription(e.getMessage())
+                            .asRuntimeException()
+            );
         } catch (Exception e) {
-            responseObserver.onError(e);
+            responseObserver.onError(
+                    Status.INTERNAL
+                            .withDescription("Failed to process payment")
+                            .asRuntimeException()
+            );
         }
     }
 
@@ -34,8 +47,19 @@ public class PaymentGrpcServer extends PaymentServiceGrpc.PaymentServiceImplBase
 
             responseObserver.onNext(Payment.RefundResponse.newBuilder().build());
             responseObserver.onCompleted();
+        } catch (PaymentNotFoundException e) {
+            responseObserver.onError(
+                    Status.NOT_FOUND
+                            .withDescription(e.getMessage())
+                            .asRuntimeException()
+            );
         } catch (Exception e) {
-            responseObserver.onError(e);
+            responseObserver.onError(
+                    Status.INTERNAL
+                            .withDescription("Failed to process payment")
+                            .withCause(e)
+                            .asRuntimeException()
+            );
         }
     }
 }

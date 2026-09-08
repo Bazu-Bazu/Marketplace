@@ -11,22 +11,20 @@ public class ErrorMapper extends AbstractErrorMapper {
     protected int getErrorCode(Throwable e) {
         if (e instanceof EmptyCartException
             || e instanceof ProductNotAvailableException
-            || e instanceof ReserveProductsException
+            || e instanceof ReservationFailedException
         ) {
             return 409;
-        } else if (e instanceof CartNotFoundException
-                || e instanceof ProductNotFoundException
-        ) {
+        } else if (e instanceof ProductNotFoundException) {
             return 404;
-        } else if (e instanceof CartServiceUnavailableException
-                || e instanceof InventoryServiceUnavailableException
-                || e instanceof OrderServiceUnavailableException
-                || e instanceof PaymentServiceUnavailableException
-                || e instanceof ProductServiceUnavailableException
-        ) {
-            return 503;
-        } else if (e instanceof PaymentException) {
+        } else if (e instanceof PaymentFailedException) {
             return 402;
+        } else if (e instanceof CartServiceException
+                || e instanceof InventoryServiceException
+                || e instanceof OrderServiceException
+                || e instanceof PaymentServiceException
+                || e instanceof ProductServiceException
+        ) {
+            return 500;
         }
 
         return 500;

@@ -30,15 +30,8 @@ public class InventoryMapper {
     }
 
     public ReserveResponse toReserveResponse(Inventory.ReserveResponse response) {
-        ReserveResponse.ReservationStatus status = switch (response.getStatus()) {
-            case RESERVED -> ReserveResponse.ReservationStatus.RESERVED;
-            case REJECTED -> ReserveResponse.ReservationStatus.REJECTED;
-            default -> throw new IllegalArgumentException("Unknown status: " + response.getStatus());
-        };
-
         return ReserveResponse.builder()
                 .reservationId(response.getReservationId())
-                .status(status)
                 .build();
     }
 

@@ -1,7 +1,7 @@
 package com.burkina.marketplace.grpc.client;
 
 import com.burkina.marketplace.dto.response.ProductResponse;
-import com.burkina.marketplace.exception.ProductServiceUnavailableException;
+import com.burkina.marketplace.exception.ProductServiceException;
 import com.burkina.marketplace.mapper.ProductMapper;
 import io.grpc.StatusRuntimeException;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +29,8 @@ public class ProductGrpcClient {
 
             return productMapper.toProductsResponse(response);
         } catch (StatusRuntimeException e) {
-            throw new ProductServiceUnavailableException(
-                    String.format("Product service is unavailable: %s", e.getMessage())
+            throw new ProductServiceException(
+                    String.format("Product service returned %s", e.getMessage())
             );
         }
     }

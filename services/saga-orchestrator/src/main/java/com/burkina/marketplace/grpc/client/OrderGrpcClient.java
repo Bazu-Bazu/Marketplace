@@ -2,7 +2,7 @@ package com.burkina.marketplace.grpc.client;
 
 import com.burkina.marketplace.dto.request.CreateOrderRequest;
 import com.burkina.marketplace.dto.response.OrderResponse;
-import com.burkina.marketplace.exception.OrderServiceUnavailableException;
+import com.burkina.marketplace.exception.OrderServiceException;
 import com.burkina.marketplace.mapper.OrderMapper;
 import io.grpc.StatusRuntimeException;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +28,8 @@ public class OrderGrpcClient {
 
             return orderMapper.toOrderResponse(response);
         } catch (StatusRuntimeException e) {
-            throw new OrderServiceUnavailableException(
-                    String.format("Order service is unavailable: %s", e.getMessage())
+            throw new OrderServiceException(
+                    String.format("Order service returned %s", e.getMessage())
             );
         }
     }
@@ -40,8 +40,8 @@ public class OrderGrpcClient {
         try {
             orderServiceStub.cancelOrder(request);
         } catch (StatusRuntimeException e) {
-            throw new OrderServiceUnavailableException(
-                    String.format("Order service is unavailable: %s", e.getMessage())
+            throw new OrderServiceException(
+                    String.format("Order service returned: %s", e.getMessage())
             );
         }
     }

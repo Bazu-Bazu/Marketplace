@@ -3,11 +3,13 @@ package com.burkina.marketplace.service;
 import com.burkina.marketplace.domain.entity.Payment;
 import com.burkina.marketplace.domain.repository.PaymentRepository;
 import com.burkina.marketplace.dto.data.PaymentCreateData;
+import com.burkina.marketplace.exception.PaymentFailedException;
 import com.burkina.marketplace.exception.PaymentNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -16,8 +18,14 @@ public class PaymentService {
 
     private final PaymentRepository paymentRepository;
 
-    @Transactional
+    @Transactional(noRollbackFor = PaymentFailedException.class)
     public Payment createPayment(PaymentCreateData paymentCreateData) {
+        Optional<Payment> existingPayment = paymentRepository.findBySagaId(paymentCreateData.sagaId());
+
+        if (existingPayment.isPresent()) {
+            return existingPayment.get();
+        }
+
         Payment payment = Payment.builder()
                 .userId(paymentCreateData.userId())
                 .sagaId(paymentCreateData.sagaId())
@@ -39,7 +47,11 @@ public class PaymentService {
         if (result == 0) {
             payment.pay();
         } else {
-            payment.cancel();
+            payment.fail();
+
+            throw new PaymentFailedException(
+                            String.format("Payment failed for saga %d", payment.getSagaId()
+                    ));
         }
     }
 

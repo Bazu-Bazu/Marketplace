@@ -19,12 +19,6 @@ message ReserveItem {
 
 message ReserveResponse {
   int64 reservation_id = 1;
-  ReservationStatus status = 2;
-}
-
-enum ReservationStatus {
-  RESERVED = 0;
-  REJECTED = 1;
 }
 
 message ReleaseRequest {

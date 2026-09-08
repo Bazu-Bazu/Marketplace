@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({
             EmptyCartException.class,
             ProductNotAvailableException.class,
-            ReserveProductsException.class
+            ReservationFailedException.class
     })
     public ResponseEntity<ErrorResponse> handleConflict(RuntimeException e) {
         ErrorResponse response = errorMapper.from(e);
@@ -26,10 +26,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
 
-    @ExceptionHandler({
-            CartNotFoundException.class,
-            ProductNotFoundException.class,
-    })
+    @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleNotFound(RuntimeException e) {
         ErrorResponse response = errorMapper.from(e);
 
@@ -37,29 +34,22 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({
-            CartServiceUnavailableException.class,
-            InventoryServiceUnavailableException.class,
-            OrderServiceUnavailableException.class,
-            PaymentServiceUnavailableException.class,
-            ProductServiceUnavailableException.class
+            CartServiceException.class,
+            InventoryServiceException.class,
+            OrderServiceException.class,
+            PaymentServiceException.class,
+            ProductServiceException.class
     })
-    public ResponseEntity<ErrorResponse> handleServiceUnavailable(RuntimeException e) {
+    public ResponseEntity<ErrorResponse> handleServiceError(RuntimeException e) {
         ErrorResponse response = errorMapper.from(e);
 
-        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
-    @ExceptionHandler(PaymentException.class)
+    @ExceptionHandler(PaymentFailedException.class)
     public ResponseEntity<ErrorResponse> handlePaymentRequired(RuntimeException e) {
         ErrorResponse response = errorMapper.from(e);
 
         return ResponseEntity.status(HttpStatus.PAYMENT_REQUIRED).body(response);
-    }
-
-    @ExceptionHandler(SagaCompensationFailedException.class)
-    public ResponseEntity<ErrorResponse> handleServerError(RuntimeException e) {
-        ErrorResponse response = errorMapper.from(e);
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }

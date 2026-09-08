@@ -28,12 +28,6 @@ spring:
   liquibase:
     change-log: classpath:db/migrations/db.migrations.yaml
 
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          public-key-location: classpath:public.pem
-
 springdoc:
   api-docs:
     path: /v3/api-docs

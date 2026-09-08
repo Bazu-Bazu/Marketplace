@@ -15,114 +15,6 @@ public final class Inventory {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  /**
-   * Protobuf enum {@code marketplace.inventory.ReservationStatus}
-   */
-  public enum ReservationStatus
-      implements com.google.protobuf.ProtocolMessageEnum {
-    /**
-     * <code>RESERVED = 0;</code>
-     */
-    RESERVED(0),
-    /**
-     * <code>REJECTED = 1;</code>
-     */
-    REJECTED(1),
-    UNRECOGNIZED(-1),
-    ;
-
-    /**
-     * <code>RESERVED = 0;</code>
-     */
-    public static final int RESERVED_VALUE = 0;
-    /**
-     * <code>REJECTED = 1;</code>
-     */
-    public static final int REJECTED_VALUE = 1;
-
-
-    public final int getNumber() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalArgumentException(
-            "Can't get the number of an unknown enum value.");
-      }
-      return value;
-    }
-
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
-    @java.lang.Deprecated
-    public static ReservationStatus valueOf(int value) {
-      return forNumber(value);
-    }
-
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
-    public static ReservationStatus forNumber(int value) {
-      switch (value) {
-        case 0: return RESERVED;
-        case 1: return REJECTED;
-        default: return null;
-      }
-    }
-
-    public static com.google.protobuf.Internal.EnumLiteMap<ReservationStatus>
-        internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        ReservationStatus> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<ReservationStatus>() {
-            public ReservationStatus findValueByNumber(int number) {
-              return ReservationStatus.forNumber(number);
-            }
-          };
-
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
-        getValueDescriptor() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalStateException(
-            "Can't get the descriptor of an unrecognized enum value.");
-      }
-      return getDescriptor().getValues().get(ordinal());
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptor() {
-      return marketplace.inventory.Inventory.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final ReservationStatus[] VALUES = values();
-
-    public static ReservationStatus valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
-
-    private final int value;
-
-    private ReservationStatus(int value) {
-      this.value = value;
-    }
-
-    // @@protoc_insertion_point(enum_scope:marketplace.inventory.ReservationStatus)
-  }
-
   public interface ReserveRequestOrBuilder extends
       // @@protoc_insertion_point(interface_extends:marketplace.inventory.ReserveRequest)
       com.google.protobuf.MessageOrBuilder {
@@ -1536,17 +1428,6 @@ public final class Inventory {
      * @return The reservationId.
      */
     long getReservationId();
-
-    /**
-     * <code>.marketplace.inventory.ReservationStatus status = 2;</code>
-     * @return The enum numeric value on the wire for status.
-     */
-    int getStatusValue();
-    /**
-     * <code>.marketplace.inventory.ReservationStatus status = 2;</code>
-     * @return The status.
-     */
-    marketplace.inventory.Inventory.ReservationStatus getStatus();
   }
   /**
    * Protobuf type {@code marketplace.inventory.ReserveResponse}
@@ -1561,7 +1442,6 @@ public final class Inventory {
       super(builder);
     }
     private ReserveResponse() {
-      status_ = 0;
     }
 
     @java.lang.Override
@@ -1595,24 +1475,6 @@ public final class Inventory {
       return reservationId_;
     }
 
-    public static final int STATUS_FIELD_NUMBER = 2;
-    private int status_ = 0;
-    /**
-     * <code>.marketplace.inventory.ReservationStatus status = 2;</code>
-     * @return The enum numeric value on the wire for status.
-     */
-    @java.lang.Override public int getStatusValue() {
-      return status_;
-    }
-    /**
-     * <code>.marketplace.inventory.ReservationStatus status = 2;</code>
-     * @return The status.
-     */
-    @java.lang.Override public marketplace.inventory.Inventory.ReservationStatus getStatus() {
-      marketplace.inventory.Inventory.ReservationStatus result = marketplace.inventory.Inventory.ReservationStatus.forNumber(status_);
-      return result == null ? marketplace.inventory.Inventory.ReservationStatus.UNRECOGNIZED : result;
-    }
-
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -1630,9 +1492,6 @@ public final class Inventory {
       if (reservationId_ != 0L) {
         output.writeInt64(1, reservationId_);
       }
-      if (status_ != marketplace.inventory.Inventory.ReservationStatus.RESERVED.getNumber()) {
-        output.writeEnum(2, status_);
-      }
       getUnknownFields().writeTo(output);
     }
 
@@ -1645,10 +1504,6 @@ public final class Inventory {
       if (reservationId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(1, reservationId_);
-      }
-      if (status_ != marketplace.inventory.Inventory.ReservationStatus.RESERVED.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(2, status_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -1667,7 +1522,6 @@ public final class Inventory {
 
       if (getReservationId()
           != other.getReservationId()) return false;
-      if (status_ != other.status_) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -1682,8 +1536,6 @@ public final class Inventory {
       hash = (37 * hash) + RESERVATION_ID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getReservationId());
-      hash = (37 * hash) + STATUS_FIELD_NUMBER;
-      hash = (53 * hash) + status_;
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1816,7 +1668,6 @@ public final class Inventory {
         super.clear();
         bitField0_ = 0;
         reservationId_ = 0L;
-        status_ = 0;
         return this;
       }
 
@@ -1852,9 +1703,6 @@ public final class Inventory {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.reservationId_ = reservationId_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.status_ = status_;
         }
       }
 
@@ -1905,9 +1753,6 @@ public final class Inventory {
         if (other.getReservationId() != 0L) {
           setReservationId(other.getReservationId());
         }
-        if (other.status_ != 0) {
-          setStatusValue(other.getStatusValue());
-        }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
@@ -1939,11 +1784,6 @@ public final class Inventory {
                 bitField0_ |= 0x00000001;
                 break;
               } // case 8
-              case 16: {
-                status_ = input.readEnum();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 16
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -1989,59 +1829,6 @@ public final class Inventory {
       public Builder clearReservationId() {
         bitField0_ = (bitField0_ & ~0x00000001);
         reservationId_ = 0L;
-        onChanged();
-        return this;
-      }
-
-      private int status_ = 0;
-      /**
-       * <code>.marketplace.inventory.ReservationStatus status = 2;</code>
-       * @return The enum numeric value on the wire for status.
-       */
-      @java.lang.Override public int getStatusValue() {
-        return status_;
-      }
-      /**
-       * <code>.marketplace.inventory.ReservationStatus status = 2;</code>
-       * @param value The enum numeric value on the wire for status to set.
-       * @return This builder for chaining.
-       */
-      public Builder setStatusValue(int value) {
-        status_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.marketplace.inventory.ReservationStatus status = 2;</code>
-       * @return The status.
-       */
-      @java.lang.Override
-      public marketplace.inventory.Inventory.ReservationStatus getStatus() {
-        marketplace.inventory.Inventory.ReservationStatus result = marketplace.inventory.Inventory.ReservationStatus.forNumber(status_);
-        return result == null ? marketplace.inventory.Inventory.ReservationStatus.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>.marketplace.inventory.ReservationStatus status = 2;</code>
-       * @param value The status to set.
-       * @return This builder for chaining.
-       */
-      public Builder setStatus(marketplace.inventory.Inventory.ReservationStatus value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000002;
-        status_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.marketplace.inventory.ReservationStatus status = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearStatus() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        status_ = 0;
         onChanged();
         return this;
       }
@@ -3021,17 +2808,15 @@ public final class Inventory {
       "\"T\n\016ReserveRequest\022\017\n\007saga_id\030\001 \001(\003\0221\n\005i" +
       "tems\030\002 \003(\0132\".marketplace.inventory.Reser" +
       "veItem\"3\n\013ReserveItem\022\022\n\nproduct_id\030\001 \001(" +
-      "\003\022\020\n\010quantity\030\002 \001(\005\"c\n\017ReserveResponse\022\026" +
-      "\n\016reservation_id\030\001 \001(\003\0228\n\006status\030\002 \001(\0162(" +
-      ".marketplace.inventory.ReservationStatus" +
-      "\"(\n\016ReleaseRequest\022\026\n\016reservation_id\030\001 \001" +
-      "(\003\"\021\n\017ReleaseResponse*/\n\021ReservationStat" +
-      "us\022\014\n\010RESERVED\020\000\022\014\n\010REJECTED\020\0012\306\001\n\020Inven" +
-      "toryService\022X\n\007Reserve\022%.marketplace.inv" +
-      "entory.ReserveRequest\032&.marketplace.inve" +
-      "ntory.ReserveResponse\022X\n\007Release\022%.marke" +
-      "tplace.inventory.ReleaseRequest\032&.market" +
-      "place.inventory.ReleaseResponseb\006proto3"
+      "\003\022\020\n\010quantity\030\002 \001(\005\")\n\017ReserveResponse\022\026" +
+      "\n\016reservation_id\030\001 \001(\003\"(\n\016ReleaseRequest" +
+      "\022\026\n\016reservation_id\030\001 \001(\003\"\021\n\017ReleaseRespo" +
+      "nse2\306\001\n\020InventoryService\022X\n\007Reserve\022%.ma" +
+      "rketplace.inventory.ReserveRequest\032&.mar" +
+      "ketplace.inventory.ReserveResponse\022X\n\007Re" +
+      "lease\022%.marketplace.inventory.ReleaseReq" +
+      "uest\032&.marketplace.inventory.ReleaseResp" +
+      "onseb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -3054,7 +2839,7 @@ public final class Inventory {
     internal_static_marketplace_inventory_ReserveResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_marketplace_inventory_ReserveResponse_descriptor,
-        new java.lang.String[] { "ReservationId", "Status", });
+        new java.lang.String[] { "ReservationId", });
     internal_static_marketplace_inventory_ReleaseRequest_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_marketplace_inventory_ReleaseRequest_fieldAccessorTable = new

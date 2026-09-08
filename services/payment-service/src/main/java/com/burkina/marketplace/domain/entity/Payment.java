@@ -24,7 +24,7 @@ public class Payment {
     @Column(nullable = false)
     private Long userId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private Long sagaId;
 
     @Column(nullable = false)
@@ -41,5 +41,9 @@ public class Payment {
 
     public void cancel() {
         this.status = PaymentStatus.CANCELLED;
+    }
+
+    public void fail() {
+        this.status = PaymentStatus.FAILED;
     }
 }

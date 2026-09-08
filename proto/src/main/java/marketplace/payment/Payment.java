@@ -15,114 +15,6 @@ public final class Payment {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  /**
-   * Protobuf enum {@code marketplace.payment.PaymentStatus}
-   */
-  public enum PaymentStatus
-      implements com.google.protobuf.ProtocolMessageEnum {
-    /**
-     * <code>SUCCESS = 0;</code>
-     */
-    SUCCESS(0),
-    /**
-     * <code>FAILED = 1;</code>
-     */
-    FAILED(1),
-    UNRECOGNIZED(-1),
-    ;
-
-    /**
-     * <code>SUCCESS = 0;</code>
-     */
-    public static final int SUCCESS_VALUE = 0;
-    /**
-     * <code>FAILED = 1;</code>
-     */
-    public static final int FAILED_VALUE = 1;
-
-
-    public final int getNumber() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalArgumentException(
-            "Can't get the number of an unknown enum value.");
-      }
-      return value;
-    }
-
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
-    @java.lang.Deprecated
-    public static PaymentStatus valueOf(int value) {
-      return forNumber(value);
-    }
-
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
-    public static PaymentStatus forNumber(int value) {
-      switch (value) {
-        case 0: return SUCCESS;
-        case 1: return FAILED;
-        default: return null;
-      }
-    }
-
-    public static com.google.protobuf.Internal.EnumLiteMap<PaymentStatus>
-        internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        PaymentStatus> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<PaymentStatus>() {
-            public PaymentStatus findValueByNumber(int number) {
-              return PaymentStatus.forNumber(number);
-            }
-          };
-
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
-        getValueDescriptor() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalStateException(
-            "Can't get the descriptor of an unrecognized enum value.");
-      }
-      return getDescriptor().getValues().get(ordinal());
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptor() {
-      return marketplace.payment.Payment.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final PaymentStatus[] VALUES = values();
-
-    public static PaymentStatus valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
-
-    private final int value;
-
-    private PaymentStatus(int value) {
-      this.value = value;
-    }
-
-    // @@protoc_insertion_point(enum_scope:marketplace.payment.PaymentStatus)
-  }
-
   public interface PayRequestOrBuilder extends
       // @@protoc_insertion_point(interface_extends:marketplace.payment.PayRequest)
       com.google.protobuf.MessageOrBuilder {
@@ -830,17 +722,6 @@ public final class Payment {
      * @return The paymentId.
      */
     long getPaymentId();
-
-    /**
-     * <code>.marketplace.payment.PaymentStatus status = 2;</code>
-     * @return The enum numeric value on the wire for status.
-     */
-    int getStatusValue();
-    /**
-     * <code>.marketplace.payment.PaymentStatus status = 2;</code>
-     * @return The status.
-     */
-    marketplace.payment.Payment.PaymentStatus getStatus();
   }
   /**
    * Protobuf type {@code marketplace.payment.PayResponse}
@@ -855,7 +736,6 @@ public final class Payment {
       super(builder);
     }
     private PayResponse() {
-      status_ = 0;
     }
 
     @java.lang.Override
@@ -889,24 +769,6 @@ public final class Payment {
       return paymentId_;
     }
 
-    public static final int STATUS_FIELD_NUMBER = 2;
-    private int status_ = 0;
-    /**
-     * <code>.marketplace.payment.PaymentStatus status = 2;</code>
-     * @return The enum numeric value on the wire for status.
-     */
-    @java.lang.Override public int getStatusValue() {
-      return status_;
-    }
-    /**
-     * <code>.marketplace.payment.PaymentStatus status = 2;</code>
-     * @return The status.
-     */
-    @java.lang.Override public marketplace.payment.Payment.PaymentStatus getStatus() {
-      marketplace.payment.Payment.PaymentStatus result = marketplace.payment.Payment.PaymentStatus.forNumber(status_);
-      return result == null ? marketplace.payment.Payment.PaymentStatus.UNRECOGNIZED : result;
-    }
-
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -924,9 +786,6 @@ public final class Payment {
       if (paymentId_ != 0L) {
         output.writeInt64(1, paymentId_);
       }
-      if (status_ != marketplace.payment.Payment.PaymentStatus.SUCCESS.getNumber()) {
-        output.writeEnum(2, status_);
-      }
       getUnknownFields().writeTo(output);
     }
 
@@ -939,10 +798,6 @@ public final class Payment {
       if (paymentId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(1, paymentId_);
-      }
-      if (status_ != marketplace.payment.Payment.PaymentStatus.SUCCESS.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(2, status_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -961,7 +816,6 @@ public final class Payment {
 
       if (getPaymentId()
           != other.getPaymentId()) return false;
-      if (status_ != other.status_) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -976,8 +830,6 @@ public final class Payment {
       hash = (37 * hash) + PAYMENT_ID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getPaymentId());
-      hash = (37 * hash) + STATUS_FIELD_NUMBER;
-      hash = (53 * hash) + status_;
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1110,7 +962,6 @@ public final class Payment {
         super.clear();
         bitField0_ = 0;
         paymentId_ = 0L;
-        status_ = 0;
         return this;
       }
 
@@ -1146,9 +997,6 @@ public final class Payment {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.paymentId_ = paymentId_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.status_ = status_;
         }
       }
 
@@ -1199,9 +1047,6 @@ public final class Payment {
         if (other.getPaymentId() != 0L) {
           setPaymentId(other.getPaymentId());
         }
-        if (other.status_ != 0) {
-          setStatusValue(other.getStatusValue());
-        }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
@@ -1233,11 +1078,6 @@ public final class Payment {
                 bitField0_ |= 0x00000001;
                 break;
               } // case 8
-              case 16: {
-                status_ = input.readEnum();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 16
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -1283,59 +1123,6 @@ public final class Payment {
       public Builder clearPaymentId() {
         bitField0_ = (bitField0_ & ~0x00000001);
         paymentId_ = 0L;
-        onChanged();
-        return this;
-      }
-
-      private int status_ = 0;
-      /**
-       * <code>.marketplace.payment.PaymentStatus status = 2;</code>
-       * @return The enum numeric value on the wire for status.
-       */
-      @java.lang.Override public int getStatusValue() {
-        return status_;
-      }
-      /**
-       * <code>.marketplace.payment.PaymentStatus status = 2;</code>
-       * @param value The enum numeric value on the wire for status to set.
-       * @return This builder for chaining.
-       */
-      public Builder setStatusValue(int value) {
-        status_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.marketplace.payment.PaymentStatus status = 2;</code>
-       * @return The status.
-       */
-      @java.lang.Override
-      public marketplace.payment.Payment.PaymentStatus getStatus() {
-        marketplace.payment.Payment.PaymentStatus result = marketplace.payment.Payment.PaymentStatus.forNumber(status_);
-        return result == null ? marketplace.payment.Payment.PaymentStatus.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>.marketplace.payment.PaymentStatus status = 2;</code>
-       * @param value The status to set.
-       * @return This builder for chaining.
-       */
-      public Builder setStatus(marketplace.payment.Payment.PaymentStatus value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000002;
-        status_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.marketplace.payment.PaymentStatus status = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearStatus() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        status_ = 0;
         onChanged();
         return this;
       }
@@ -2308,16 +2095,14 @@ public final class Payment {
     java.lang.String[] descriptorData = {
       "\n\rpayment.proto\022\023marketplace.payment\">\n\n" +
       "PayRequest\022\017\n\007user_id\030\001 \001(\003\022\017\n\007saga_id\030\002" +
-      " \001(\003\022\016\n\006amount\030\003 \001(\t\"U\n\013PayResponse\022\022\n\np" +
-      "ayment_id\030\001 \001(\003\0222\n\006status\030\002 \001(\0162\".market" +
-      "place.payment.PaymentStatus\"#\n\rRefundReq" +
-      "uest\022\022\n\npayment_id\030\001 \001(\003\"\020\n\016RefundRespon" +
-      "se*(\n\rPaymentStatus\022\013\n\007SUCCESS\020\000\022\n\n\006FAIL" +
-      "ED\020\0012\255\001\n\016PaymentService\022H\n\003Pay\022\037.marketp" +
-      "lace.payment.PayRequest\032 .marketplace.pa" +
-      "yment.PayResponse\022Q\n\006Refund\022\".marketplac" +
-      "e.payment.RefundRequest\032#.marketplace.pa" +
-      "yment.RefundResponseb\006proto3"
+      " \001(\003\022\016\n\006amount\030\003 \001(\t\"!\n\013PayResponse\022\022\n\np" +
+      "ayment_id\030\001 \001(\003\"#\n\rRefundRequest\022\022\n\npaym" +
+      "ent_id\030\001 \001(\003\"\020\n\016RefundResponse2\255\001\n\016Payme" +
+      "ntService\022H\n\003Pay\022\037.marketplace.payment.P" +
+      "ayRequest\032 .marketplace.payment.PayRespo" +
+      "nse\022Q\n\006Refund\022\".marketplace.payment.Refu" +
+      "ndRequest\032#.marketplace.payment.RefundRe" +
+      "sponseb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -2334,7 +2119,7 @@ public final class Payment {
     internal_static_marketplace_payment_PayResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_marketplace_payment_PayResponse_descriptor,
-        new java.lang.String[] { "PaymentId", "Status", });
+        new java.lang.String[] { "PaymentId", });
     internal_static_marketplace_payment_RefundRequest_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_marketplace_payment_RefundRequest_fieldAccessorTable = new

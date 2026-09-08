@@ -2,7 +2,8 @@ package com.burkina.marketplace.grpc.client;
 
 import com.burkina.marketplace.dto.request.ReserveItemRequest;
 import com.burkina.marketplace.dto.response.ReserveResponse;
-import com.burkina.marketplace.exception.InventoryServiceUnavailableException;
+import com.burkina.marketplace.exception.InventoryServiceException;
+import com.burkina.marketplace.exception.ReservationFailedException;
 import com.burkina.marketplace.mapper.InventoryMapper;
 import io.grpc.StatusRuntimeException;
 import lombok.RequiredArgsConstructor;
@@ -30,9 +31,15 @@ public class InventoryGrpcClient {
 
             return inventoryMapper.toReserveResponse(response);
         } catch (StatusRuntimeException e) {
-            throw new InventoryServiceUnavailableException(
-                    String.format("Inventory service is unavailable: %s", e.getMessage())
-            );
+            throw switch (e.getStatus().getCode()) {
+                case FAILED_PRECONDITION -> new ReservationFailedException(
+                        String.format("Reservation failed for saga %d", sagaId)
+                );
+
+                default -> new InventoryServiceException(
+                        String.format("Inventory service returned %s", e.getStatus())
+                );
+            };
         }
     }
 
@@ -42,8 +49,8 @@ public class InventoryGrpcClient {
         try {
             inventoryServiceStub.release(request);
         } catch (StatusRuntimeException e) {
-            throw new InventoryServiceUnavailableException(
-                    String.format("Inventory service is unavailable: %s", e.getMessage())
+            throw new InventoryServiceException(
+                    String.format("Inventory service returned %s", e.getMessage())
             );
         }
     }

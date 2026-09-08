@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/migrations/001_create_payments_table.sql
+  - include:
+      file: db/migrations/002_add_unique_constraint_in_saga_id_column.sql

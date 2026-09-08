@@ -15,12 +15,6 @@ message PayRequest {
 
 message PayResponse {
   int64 payment_id = 1;
-  PaymentStatus status = 2;
-}
-
-enum PaymentStatus {
-  SUCCESS = 0;
-  FAILED = 1;
 }
 
 message RefundRequest {
