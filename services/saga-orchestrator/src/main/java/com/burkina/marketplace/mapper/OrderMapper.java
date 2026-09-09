@@ -1,5 +1,6 @@
 package com.burkina.marketplace.mapper;
 
+import com.burkina.common.dto.event.marketplace.order.OrderCreatedEvent;
 import com.burkina.marketplace.domain.entity.OrderSaga;
 import com.burkina.marketplace.dto.data.ValidatedCart;
 import com.burkina.marketplace.dto.request.CreateOrderRequest;
@@ -58,6 +59,14 @@ public class OrderMapper {
                     .productId(item.productId())
                     .quantity(item.quantity())
                     .price(item.price())
+                    .build();
+    }
+
+    public OrderCreatedEvent toOrderCreatedEvent(OrderSaga saga) {
+        return OrderCreatedEvent.builder()
+                    .orderId(saga.getOrderId())
+                    .sagaId(saga.getId())
+                    .userId(saga.getUserId())
                     .build();
     }
 }

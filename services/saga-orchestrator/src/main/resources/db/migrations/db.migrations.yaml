@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/migrations/001_create_order_saga_table.sql
+  - include:
+      file: db/migrations/002_create_outbox_events_table.sql

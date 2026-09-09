@@ -6,6 +6,5 @@ public enum SagaStep {
     RESERVE_INVENTORY,
     PAY,
     CREATE_ORDER,
-    CLEAR_CART,
     COMPLETED
 }

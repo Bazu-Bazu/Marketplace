@@ -60,16 +60,11 @@ public class OrderSagaOrchestrator {
 
             OrderResponse order = processCreateOrder(saga, validatedCart);
 
-            sagaService.prepareStep(saga, SagaStep.CLEAR_CART);
+            sagaService.completeSaga(saga);
 
-            saga.complete();
-            sagaService.save(saga);
-
-            try {
+            Thread.startVirtualThread(() -> {
                 processClearCart(userId);
-            } catch (RuntimeException e) {
-                log.error("Failed to clear cart for user {}", userId);
-            }
+            });
 
             return order;
         } catch (RuntimeException e) {
