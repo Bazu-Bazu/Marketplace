@@ -3,3 +3,7 @@ databaseChangeLog:
       file: db/migrations/001_create_seller_access_table.sql
   - include:
       file: db/migrations/002_create_inventories_table.sql
+  - include:
+      file: db/migrations/003_create_reservations_table.sql
+  - include:
+      file: db/migrations/004_create_reservation_items_table.sql

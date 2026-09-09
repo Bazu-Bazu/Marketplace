@@ -1,0 +1,7 @@
+CREATE TABLE reservations (
+    id BIGSERIAL PRIMARY KEY,
+    saga_id BIGINT NOT NULL UNIQUE,
+    status VARCHAR(255) NOT NULL DEFAULT 'RESERVED',
+    created_at TIMESTAMPTZ NOT NULL,
+    updated_at TIMESTAMPTZ NOT NULL
+);

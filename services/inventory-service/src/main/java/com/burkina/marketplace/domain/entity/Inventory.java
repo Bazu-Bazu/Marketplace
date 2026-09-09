@@ -1,6 +1,7 @@
 package com.burkina.marketplace.domain.entity;
 
 import com.burkina.marketplace.domain.enums.InventoryStatus;
+import com.burkina.marketplace.exception.InsufficientStockException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,5 +45,33 @@ public class Inventory {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public void reserve(Integer amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Quantity must be positive");
+        }
+
+        if (getAvailableQuantity() < amount) {
+            throw new InsufficientStockException("Not enough available quantity");
+        }
+
+        reservedQuantity += amount;
+    }
+
+    public Integer getAvailableQuantity() {
+        return quantity - reservedQuantity;
+    }
+
+    public void release(Integer amount) {
+        if (amount <= 0) {
+            return;
+        }
+
+        reservedQuantity -= amount;
+
+        if (reservedQuantity < 0) {
+            reservedQuantity = 0;
+        }
     }
 }

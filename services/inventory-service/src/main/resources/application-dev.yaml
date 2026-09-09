@@ -47,6 +47,10 @@ springdoc:
     path: /swagger-ui.html
     disable-swagger-default-url: true
 
+grpc:
+  server:
+    port: ${GRPC_SERVER_PORT}
+
 eureka:
   client:
     service-url:

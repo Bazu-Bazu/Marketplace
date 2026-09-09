@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -68,5 +69,10 @@ public class InventoryService {
     @Transactional
     public void activateInventory(ProductUnlockedEvent event) {
         inventoryRepository.activate(event.productId());
+    }
+
+    @Transactional(readOnly = true)
+    public List<Inventory> getInventoriesByProductIdIn(List<Long> productIds) {
+        return inventoryRepository.findAllByProductIdIn(productIds);
     }
 }
