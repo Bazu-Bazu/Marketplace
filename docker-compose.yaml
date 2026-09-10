@@ -85,6 +85,20 @@ services:
     networks:
       - burkina-network
 
+  postgres_saga:
+    image: postgres:16
+    container_name: postgres_saga
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: saga_db
+    ports:
+      - "5448:5432"
+    volumes:
+      - postgres_saga:/var/lib/postgresql/data
+    networks:
+      - burkina-network
+
   zookeeper:
     image: wurstmeister/zookeeper:latest
     container_name: zookeeper
@@ -159,7 +173,6 @@ services:
     container_name: cart-service
     depends_on:
       - postgres_cart
-      - product-service
       - kafka
     environment:
       SPRING_PROFILES_ACTIVE: dev
@@ -191,8 +204,10 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
       SERVER_PORT: 8080
+      GRPC_SERVER_PORT: 6565
     ports:
       - "8094:8080"
+      - "6594:6565"
     networks:
       - burkina-network
 
@@ -240,6 +255,31 @@ services:
     networks:
       - burkina-network
 
+  saga-orchestrator:
+    build:
+      context: ./services/saga-orchestrator
+      dockerfile: Dockerfile
+    container_name: saga-orchestrator
+    depends_on:
+      - postgres_saga
+      - kafka
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_saga:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SERVER_PORT: 8080
+      CART_SERVICE_GRPC_ADDRESS: static://cart-service:6565
+      PRODUCT_SERVICE_GRPC_ADDRESS: static://product-service:6565
+      INVENTORY_SERVICE_GRPC_ADDRESS: static://inventory-service:6565
+      PAYMENT_SERVICE_GRPC_ADDRESS: static://payment-service:6565
+      ORDER_SERVICE_GRPC_ADDRESS: static://order-service:6565
+    ports:
+      - "8097:8080"
+    networks:
+      - burkina-network
+
 volumes:
   postgres_seller:
   postgres_product:
@@ -247,6 +287,7 @@ volumes:
   postgres_inventory:
   postgres_order:
   postgres_payment:
+  postgres_saga:
 
 networks:
   burkina-network:

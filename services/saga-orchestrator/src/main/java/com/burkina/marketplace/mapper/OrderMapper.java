@@ -67,6 +67,7 @@ public class OrderMapper {
                     .orderId(saga.getOrderId())
                     .sagaId(saga.getId())
                     .userId(saga.getUserId())
+                    .reservationId(saga.getReservationId())
                     .build();
     }
 }
