@@ -62,6 +62,10 @@ public class Reservation {
     }
 
     public void confirm() {
+        if (status != ReservationStatus.RESERVED) {
+            throw new IllegalStateException("Cannot confirm reservation with status: " + status);
+        }
+
         status = ReservationStatus.CONFIRMED;
     }
 

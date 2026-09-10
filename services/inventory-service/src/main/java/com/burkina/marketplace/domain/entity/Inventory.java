@@ -74,4 +74,17 @@ public class Inventory {
             reservedQuantity = 0;
         }
     }
+
+    public void confirm(Integer amount) {
+        if (amount <= 0) {
+            return;
+        }
+
+        if (reservedQuantity < amount) {
+            throw new IllegalStateException("Cannot confirm more than reserved quantity");
+        }
+
+        quantity -= amount;
+        reservedQuantity -= amount;
+    }
 }

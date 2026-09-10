@@ -1,5 +1,6 @@
 package com.burkina.marketplace.service;
 
+import com.burkina.common.dto.event.marketplace.order.OrderCreatedEvent;
 import com.burkina.marketplace.domain.entity.Inventory;
 import com.burkina.marketplace.domain.entity.Reservation;
 import com.burkina.marketplace.domain.entity.ReservationItem;
@@ -94,7 +95,6 @@ public class ReservationService {
     @Transactional
     public Reservation release(Long reservationId) {
         Reservation reservation = getReservationById(reservationId);
-        reservation.release();
 
         List<ReservationItem> items = reservation.getItems();
 
@@ -119,6 +119,39 @@ public class ReservationService {
         reservation.release();
 
         return reservation;
+    }
+
+    @Transactional
+    public void confirm(OrderCreatedEvent event) {
+        Reservation reservation = getReservationById(event.reservationId());
+
+        List<ReservationItem> items = reservation.getItems();
+
+        List<Long> productIds = items.stream()
+                .map(ReservationItem::getProductId)
+                .toList();
+
+        List<Inventory> inventories = inventoryService.getInventoriesByProductIdIn(productIds);
+
+        Map<Long, Inventory> inventoryMap = inventories.stream()
+                .collect(Collectors.toMap(
+                        Inventory::getProductId,
+                        Function.identity()
+                ));
+
+        for (ReservationItem item : items) {
+            Inventory inventory = inventoryMap.get(item.getProductId());
+
+            if (inventory == null) {
+                throw new InventoryNotFoundException(
+                        String.format("Inventory not found: %d", item.getProductId())
+                );
+            }
+
+            inventory.confirm(item.getQuantity());
+        }
+
+        reservation.confirm();
     }
 
     @Transactional(readOnly = true)
