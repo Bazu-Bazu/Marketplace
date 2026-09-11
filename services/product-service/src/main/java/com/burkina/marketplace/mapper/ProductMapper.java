@@ -31,6 +31,7 @@ public class ProductMapper {
                 .description(product.getDescription())
                 .price(product.getPrice())
                 .complete(product.complete())
+                .status(product.getStatus())
                 .build();
     }
 
@@ -42,6 +43,7 @@ public class ProductMapper {
                 .description(product.getDescription())
                 .price(product.getPrice())
                 .complete(product.complete())
+                .status(product.getStatus())
                 .medias(product.getMedias().stream()
                         .map(productMediaMapper::toResponse)
                         .toList())

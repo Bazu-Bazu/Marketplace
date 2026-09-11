@@ -19,6 +19,7 @@ public class OrderItemService {
     private OrderItem createOrderItem(OrderItemData itemData, Order order) {
         return OrderItem.builder()
                 .productId(itemData.productId())
+                .quantity(itemData.quantity())
                 .price(itemData.price())
                 .order(order)
                 .build();

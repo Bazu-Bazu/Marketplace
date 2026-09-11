@@ -34,7 +34,8 @@ public class OrderSaga {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private SagaStep currentStep;
+    @Builder.Default
+    private SagaStep currentStep = SagaStep.CREATE_ORDER;
 
     @Column
     private Long orderId;

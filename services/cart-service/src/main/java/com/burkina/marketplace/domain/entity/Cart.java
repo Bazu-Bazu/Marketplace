@@ -81,8 +81,6 @@ public class Cart {
         return items.stream()
                 .filter(item -> item.getProductId().equals(productId))
                 .findFirst()
-                .orElseThrow(() -> new CartItemNotFoundException(
-                        String.format("Cart item with product id %d is not in cart %d", productId, id)
-                ));
+                .orElse(null);
     }
 }
