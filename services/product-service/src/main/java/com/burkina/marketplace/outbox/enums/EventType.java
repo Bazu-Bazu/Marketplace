@@ -11,7 +11,7 @@ public enum EventType {
     PRODUCT_PUBLISHED("product-published"),
     PRODUCT_LOCKED("product-locked"),
     PRODUCT_UNLOCKED("product-unlocked"),
-    PRODUCT_UPDATED("product-update"),
+    PRODUCT_UPDATED("product-updated"),
     PRODUCT_RECALLED("product-recalled");
 
     private final String topic;
