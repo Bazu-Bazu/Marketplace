@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: db/migrations/001_create_search_products_table.sql
+  - include:
+      file: db/migrations/002_create_search_categories_table.sql
+  - include:
+      file: db/migrations/003_create_search_product_categories_table.sql

@@ -99,6 +99,20 @@ services:
     networks:
       - burkina-network
 
+  postgres_search:
+    image: postgres:16
+    container_name: postgres_search
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: search_db
+    ports:
+      - "5449:5432"
+    volumes:
+      - postgres_search:/var/lib/postgresql/data
+    networks:
+      - burkina-network
+
   zookeeper:
     image: wurstmeister/zookeeper:latest
     container_name: zookeeper
@@ -280,6 +294,26 @@ services:
     networks:
       - burkina-network
 
+  search-service:
+    build:
+      context: ./services/search-service
+      dockerfile: Dockerfile
+    container_name: search-service
+    depends_on:
+      - postgres_search
+      - kafka
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_search:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SERVER_PORT: 8080
+    ports:
+      - "8098:8080"
+    networks:
+      - burkina-network
+
 volumes:
   postgres_seller:
   postgres_product:
@@ -288,6 +322,7 @@ volumes:
   postgres_order:
   postgres_payment:
   postgres_saga:
+  postgres_search:
 
 networks:
   burkina-network:
