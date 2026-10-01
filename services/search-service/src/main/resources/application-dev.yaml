@@ -34,12 +34,6 @@ spring:
       group-id: marketplace-search-service-group
       auto-offset-reset: earliest
 
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          public-key-location: classpath:public.pem
-
 springdoc:
   api-docs:
     path: /v3/api-docs
